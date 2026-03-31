@@ -20,6 +20,7 @@ export default function Footer() {
           src="/footer_luxury_bg.png" 
           alt="Emperor Sami Luxury Background" 
           fill 
+          sizes="100vw"
           className="object-cover opacity-[0.12] mix-blend-luminosity" 
         />
         <div className="absolute inset-0 bg-gradient-to-b from-[#0a0c0e] via-black/60 to-[#080B10]" />
@@ -35,6 +36,7 @@ export default function Footer() {
               src="/luxury_architect_team.png" 
               alt="Emperor Sami Group Expert Team" 
               fill 
+              sizes="(max-width: 768px) 100vw, 50vw"
               className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
             />
             {/* Dark gradient to make text readable */}

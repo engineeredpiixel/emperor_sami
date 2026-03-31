@@ -59,13 +59,7 @@ export default function ServicesSection() {
     return () => observer.disconnect();
   }, []);
 
-  // Preload Images for hardware-accelerated 60fps X-Ray wipe
-  useEffect(() => {
-    services.forEach(s => {
-      const img = new window.Image();
-      img.src = s.image;
-    });
-  }, []);
+  // 60fps X-Ray wipe relies exclusively on Next.js optimized caching rather than raw DOM unoptimized fetches
 
   return (
     <section
@@ -122,7 +116,7 @@ export default function ServicesSection() {
               
               {/* Blueprint Filtered Image (Pencil Tracing Effect) */}
               <div className={`absolute inset-0 z-0 opacity-40 mix-blend-multiply pointer-events-none filter grayscale contrast-125 brightness-[1.1] transition-opacity duration-[1s] will-change-opacity ${isActive ? 'opacity-0' : 'group-hover/scanner:opacity-0'}`}>
-                 <Image src={service.image} alt="Blueprint" fill priority className="object-cover scale-[1.05]" />
+                 <Image src={service.image} alt="Blueprint" fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className="object-cover scale-[1.05]" />
               </div>
 
                {/* Resting CAD Label (Top Left) */}
@@ -150,7 +144,7 @@ export default function ServicesSection() {
                       src={service.image} 
                       alt={service.title}
                       fill 
-                      priority
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       className={`object-cover transition-transform duration-[2.5s] ease-out origin-bottom ${isActive ? 'scale-100' : 'scale-[1.1] group-hover/scanner:scale-100'}`} 
                   />
                   {/* Internal ambient shadow */}

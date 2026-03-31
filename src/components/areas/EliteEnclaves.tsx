@@ -97,6 +97,7 @@ export default function EliteEnclaves() {
                        src={enclave.image} 
                        alt={enclave.title}
                        fill
+                       sizes="(max-width: 768px) 100vw, 50vw"
                        className="object-cover scale-[1.02] filter contrast-[1.1]"
                     />
                  </div>

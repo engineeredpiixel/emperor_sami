@@ -88,6 +88,7 @@ export default function ShieldBadges() {
                 src={badge.image}
                 alt={badge.title}
                 fill
+                sizes="(max-width: 768px) 100vw, 33vw"
                 className={`object-cover transition-all duration-[1.5s] ease-[0.16,1,0.3,1] ${
                   isActive ? "scale-[1.05] opacity-100 grayscale-0" : "scale-[1.3] opacity-40 grayscale-[80%]"
                 }`}

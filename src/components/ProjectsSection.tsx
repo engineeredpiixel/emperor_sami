@@ -47,7 +47,7 @@ export default function ProjectsSection() {
     >
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
         <div
-          className={`transition-[opacity,transform] duration-700 w-full min-h-[500px] will-change-transform ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+          className={`transition-[opacity,transform] duration-700 w-full min-h-[750px] md:min-h-[850px] will-change-transform ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
             }`}
         >
           {mounted && (

@@ -140,6 +140,7 @@ export const CardCarousel: React.FC<CarouselProps> = ({
                       <Image
                         src={img.src}
                         fill
+                        sizes="320px"
                         className="object-cover object-center transition-transform duration-700 group-hover/proj:scale-110"
                         alt={img.title}
                       />
