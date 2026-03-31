@@ -3,8 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-// @ts-expect-error Partytown generic types occasionally misalign with local tsconfig
-import { Partytown } from '@builder.io/partytown/react';
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,8 +32,6 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased overflow-x-clip w-full`}
     >
       <head>
-        {/* Establish strict third-party containment proxy (Web Worker execution) */}
-        <Partytown debug={false} forward={['dataLayer.push']} />
       </head>
       <body className="min-h-full flex flex-col overflow-x-clip w-full max-w-[100vw]" suppressHydrationWarning>
         <Navbar />
