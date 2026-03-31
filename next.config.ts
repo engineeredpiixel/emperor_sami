@@ -1,16 +1,16 @@
 import type { NextConfig } from "next";
 
 const cspHeader = `
-    default-src 'self';
+    default-src 'self' https: http: data: blob: 'unsafe-inline' 'unsafe-eval';
     script-src 'self' 'unsafe-eval' 'unsafe-inline' https: http:;
     style-src 'self' 'unsafe-inline' https: http:;
     img-src 'self' blob: data: https: http:;
     font-src 'self' data: https: http:;
+    connect-src 'self' https: http: wss:;
     object-src 'none';
     base-uri 'self';
     form-action 'self';
     frame-ancestors 'none';
-    require-trusted-types-for 'script';
 `.replace(/\n/g, '').trim();
 
 const nextConfig: NextConfig = {
