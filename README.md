@@ -28,24 +28,24 @@ graph TD
     classDef secondary fill:#222,stroke:#555,stroke-width:1px,color:#ccc;
     classDef worker fill:#D8A02A,stroke:#000,stroke-width:2px,color:#000;
 
-    Client((Incoming User)) --> Router{Next.js App Router}
+    Client(("Incoming User")) --> Router{"Next.js App Router"}
     
-    Router --> Home[app/page.tsx<br/>Home] :::primary
-    Router --> RegionDir[app/service-area/page.tsx<br/>Region Hub] :::primary
-    Router --> ProjectsDir[app/projects/page.tsx<br/>Portfolio Hub] :::primary
-    Router --> DynamicRegion[app/service-area/[slug]<br/>15x Static Regional Pages] :::primary
-    Router --> DynamicProject[app/projects/[slug]<br/>Custom Project Pages] :::primary
+    Router --> Home["app/page.tsx<br/>Home"]:::primary
+    Router --> RegionDir["app/service-area/page.tsx<br/>Region Hub"]:::primary
+    Router --> ProjectsDir["app/projects/page.tsx<br/>Portfolio Hub"]:::primary
+    Router --> DynamicRegion["app/service-area/[slug]<br/>15x Static Regional Pages"]:::primary
+    Router --> DynamicProject["app/projects/[slug]<br/>Custom Project Pages"]:::primary
 
-    Home --> Funnel[[The 7-Stage Global Trust Funnel]] :::secondary
+    Home --> Funnel[["The 7-Stage Global Trust Funnel"]]:::secondary
     RegionDir --> Funnel
     DynamicRegion --> Funnel
     DynamicProject -.-> Funnel
 
-    Funnel --> DataA[(territoryData.ts)]
-    Funnel --> DataB[(projectsData.ts)]
+    Funnel --> DataA[("territoryData.ts")]
+    Funnel --> DataB[("projectsData.ts")]
 
-    Worker[Partytown Web Worker] :::worker -.-> |Executes| Scripts[Heavy 3rd Party Telemetry]
-    Scripts -.-> |Isolated from Main Thread| Router
+    Worker["Partytown Web Worker"]:::worker -.->|"Executes"| Scripts["Heavy 3rd Party Telemetry"]
+    Scripts -.->|"Isolated from Main Thread"| Router
 ```
 
 ---
@@ -67,21 +67,21 @@ The project relies on a highly scalable, isolated directory format.
 
 ```mermaid
 graph LR
-    src --> app[app/]
-    src --> components[components/]
-    src --> lib[lib/]
+    src --> app["app/"]
+    src --> components["components/"]
+    src --> lib["lib/"]
 
-    app --> globals[globals.css]
-    app --> layout[layout.tsx]
-    app --> routes[Dynamic Routing Directories]
+    app --> globals["globals.css"]
+    app --> layout["layout.tsx"]
+    app --> routes["Dynamic Routing Directories"]
 
-    components --> territory[territory/]
-    components --> portfolio[portfolio/]
-    components --> ui[ui/ primitive blocks]
+    components --> territory["territory/"]
+    components --> portfolio["portfolio/"]
+    components --> ui["ui/ primitive blocks"]
 
-    lib --> tData[territoryData.ts]
-    lib --> pData[projectsData.ts]
-    lib --> sData[servicesData.ts]
+    lib --> tData["territoryData.ts"]
+    lib --> pData["projectsData.ts"]
+    lib --> sData["servicesData.ts"]
 ```
 
 ---
