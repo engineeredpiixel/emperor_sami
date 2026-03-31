@@ -15,7 +15,6 @@ export default function HeroSection() {
 
   // Magnetic Button State
   const magneticRef = useRef<HTMLDivElement>(null);
-  const [magneticPos, setMagneticPos] = useState({ x: 0, y: 0 });
 
   // Global Page Visibility trigger (staggered load)
   useEffect(() => {
@@ -95,15 +94,21 @@ export default function HeroSection() {
   const hoverExpand = () => setTargetCircle(prev => ({ ...prev, radius: 3000 }));
   const unhoverExpand = () => setTargetCircle(prev => ({ ...prev, radius: 450 }));
 
-  // Magnetic Friction Button Logics
+  // Magnetic Friction Button Logics (No React State Re-renders)
   const handleMagneticMove = (e: React.PointerEvent) => {
     if (!magneticRef.current) return;
     const rect = magneticRef.current.getBoundingClientRect();
     const x = (e.clientX - rect.left - rect.width / 2) * 0.35;
     const y = (e.clientY - rect.top - rect.height / 2) * 0.35;
-    setMagneticPos({ x, y });
+    magneticRef.current.style.setProperty('--mag-x', `${x}px`);
+    magneticRef.current.style.setProperty('--mag-y', `${y}px`);
   };
-  const handleMagneticLeave = () => setMagneticPos({ x: 0, y: 0 });
+  const handleMagneticLeave = () => {
+    if (magneticRef.current) {
+      magneticRef.current.style.setProperty('--mag-x', '0px');
+      magneticRef.current.style.setProperty('--mag-y', '0px');
+    }
+  };
 
   return (
     <section
@@ -190,7 +195,7 @@ export default function HeroSection() {
         </p>
 
         {/* Magnetic Interactions */}
-        <div className={`flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6 pointer-events-auto transition-all duration-[1.2s] ease-[0.16,1,0.3,1] delay-[850ms] will-change-transform ${visible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}>
+        <div className={`flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6 pointer-events-auto transition-all duration-[1.2s] ease-[0.16,1,0.3,1] delay-[850ms] ${visible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}>
 
           <div
             ref={magneticRef}
@@ -201,14 +206,14 @@ export default function HeroSection() {
           >
             <Link
               href="/projects"
-              style={{ transform: `translate3d(${magneticPos.x}px, ${magneticPos.y}px, 0)` }}
-              className="flex items-center justify-center gap-4 bg-white text-[#050505] font-black text-[11px] sm:text-sm uppercase tracking-[0.2em] px-8 sm:px-10 py-5 sm:py-6 overflow-hidden transition-all duration-[0.5s] ease-[0.16,1,0.3,1] hover:shadow-[0_20px_50px_rgba(255,255,255,0.15)] will-change-transform"
+              style={{ transform: `translate3d(var(--mag-x, 0px), var(--mag-y, 0px), 0)` } as React.CSSProperties}
+              className="flex items-center justify-center gap-4 bg-white text-[#050505] font-black text-[11px] sm:text-sm uppercase tracking-[0.2em] px-8 sm:px-10 py-5 sm:py-6 overflow-hidden transition-all duration-[0.5s] ease-[0.16,1,0.3,1] hover:shadow-[0_20px_50px_rgba(255,255,255,0.15)]"
             >
-              <span className="relative z-10 transition-transform duration-500 group-hover:-translate-x-2 mix-blend-difference text-white will-change-transform">View Latest Work</span>
-              <span className="absolute right-8 opacity-0 translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 z-10 will-change-transform">
+              <span className="relative z-10 transition-transform duration-500 group-hover:-translate-x-2 mix-blend-difference text-white">View Latest Work</span>
+              <span className="absolute right-8 opacity-0 translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 z-10">
                 <svg className="w-4 h-4 text-white mix-blend-difference" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
               </span>
-              <div className="absolute inset-0 bg-black translate-y-[100%] group-hover:translate-y-0 transition-transform duration-[0.6s] ease-[0.16,1,0.3,1] will-change-transform" />
+              <div className="absolute inset-0 bg-black translate-y-[100%] group-hover:translate-y-0 transition-transform duration-[0.6s] ease-[0.16,1,0.3,1]" />
             </Link>
           </div>
 
@@ -221,8 +226,8 @@ export default function HeroSection() {
               href="/contact#secure-data-link"
               className="flex items-center justify-center gap-3 bg-transparent border border-white/20 hover:border-[#F9A825] text-white font-black text-[11px] sm:text-sm uppercase tracking-[0.2em] px-8 sm:px-10 py-[18px] sm:py-[22px] overflow-hidden transition-all duration-[0.5s] ease-[0.16,1,0.3,1] hover:bg-[#F9A825]/10 hover:shadow-[0_0_30px_rgba(249,168,37,0.15)] group/btn"
             >
-              <span className="relative z-10 transition-transform duration-500 group-hover/btn:-translate-x-1 will-change-transform">Get Estimation</span>
-              <svg className="w-4 h-4 text-[#F9A825] opacity-0 -translate-x-4 group-hover/btn:opacity-100 group-hover/btn:translate-x-0 transition-all duration-[0.5s] ease-[0.16,1,0.3,1] will-change-transform" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+              <span className="relative z-10 transition-transform duration-500 group-hover/btn:-translate-x-1">Get Estimation</span>
+              <svg className="w-4 h-4 text-[#F9A825] opacity-0 -translate-x-4 group-hover/btn:opacity-100 group-hover/btn:translate-x-0 transition-all duration-[0.5s] ease-[0.16,1,0.3,1]" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
             </Link>
           </div>
 
