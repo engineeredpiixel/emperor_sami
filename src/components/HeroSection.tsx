@@ -136,6 +136,7 @@ export default function HeroSection() {
           alt="Emperor Sami Group architectural blueprint"
           fill
           sizes="100vw"
+          quality={50}
           className="object-cover object-center brightness-[0.7] sepia-[0.3] hue-rotate-[180deg] saturate-50 opacity-60 mix-blend-screen transition-transform duration-[10s] scale-105"
           priority
         />
@@ -158,6 +159,7 @@ export default function HeroSection() {
           alt="Revealed Luxury Masterpiece"
           fill
           sizes="100vw"
+          quality={60}
           className="object-cover object-center brightness-[0.8] contrast-[1.1] saturate-[1.1]"
           priority
         />

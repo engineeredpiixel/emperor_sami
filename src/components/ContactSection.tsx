@@ -180,6 +180,7 @@ export default function ContactSection() {
                 <input
                   type="text"
                   placeholder="Your Name *"
+                  aria-label="Your Name"
                   required
                   className="w-full bg-white border border-[#E5E5E5] px-5 py-3.5 text-[15px] text-gray-800 placeholder-gray-400 focus:outline-none focus:border-[#D19C2C] focus:ring-1 focus:ring-[#D19C2C] transition-shadow shadow-sm"
                 />
@@ -187,6 +188,7 @@ export default function ContactSection() {
                 <input
                   type="email"
                   placeholder="Your Email *"
+                  aria-label="Your Email"
                   required
                   className="w-full bg-white border border-[#E5E5E5] px-5 py-3.5 text-[15px] text-gray-800 placeholder-gray-400 focus:outline-none focus:border-[#D19C2C] focus:ring-1 focus:ring-[#D19C2C] transition-shadow shadow-sm"
                 />
@@ -194,11 +196,13 @@ export default function ContactSection() {
                 <input
                   type="tel"
                   placeholder="Your Phone"
+                  aria-label="Your Phone"
                   className="w-full bg-white border border-[#E5E5E5] px-5 py-3.5 text-[15px] text-gray-800 placeholder-gray-400 focus:outline-none focus:border-[#D19C2C] focus:ring-1 focus:ring-[#D19C2C] transition-shadow shadow-sm"
                 />
 
                 <select
                   defaultValue=""
+                  aria-label="Select a Service"
                   className="w-full bg-white border border-[#E5E5E5] px-5 py-3.5 text-[15px] text-gray-800 focus:outline-none focus:border-[#D19C2C] focus:ring-1 focus:ring-[#D19C2C] transition-shadow cursor-pointer shadow-sm appearance-none"
                   style={{
                     backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23000000'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
@@ -216,6 +220,7 @@ export default function ContactSection() {
 
                 <textarea
                   placeholder="Tell us about your construction needs... *"
+                  aria-label="Message details"
                   required
                   rows={5}
                   className="w-full bg-white border border-[#E5E5E5] px-5 py-3.5 text-[15px] text-gray-800 placeholder-gray-400 focus:outline-none focus:border-[#D19C2C] focus:ring-1 focus:ring-[#D19C2C] transition-shadow resize-none shadow-sm"

@@ -116,7 +116,7 @@ export default function ServicesSection() {
               
               {/* Blueprint Filtered Image (Pencil Tracing Effect) */}
               <div className={`absolute inset-0 z-0 opacity-40 mix-blend-multiply pointer-events-none filter grayscale contrast-125 brightness-[1.1] transition-opacity duration-[1s] will-change-opacity ${isActive ? 'opacity-0' : 'group-hover/scanner:opacity-0'}`}>
-                 <Image src={service.image} alt="Blueprint" fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className="object-cover scale-[1.05]" />
+                 <Image src={service.image} alt="Blueprint" fill quality={30} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className="object-cover scale-[1.05]" />
               </div>
 
                {/* Resting CAD Label (Top Left) */}
@@ -144,6 +144,7 @@ export default function ServicesSection() {
                       src={service.image} 
                       alt={service.title}
                       fill 
+                      quality={60}
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       className={`object-cover transition-transform duration-[2.5s] ease-out origin-bottom ${isActive ? 'scale-100' : 'scale-[1.1] group-hover/scanner:scale-100'}`} 
                   />
@@ -197,7 +198,11 @@ export default function ServicesSection() {
                      </p>
                      
                      <div className="flex">
-                        <Link href={`/services/${service.slug}`} className="group/btn inline-flex items-center gap-2 text-[10px] sm:text-xs font-black tracking-[0.2em] uppercase text-[#111] hover:text-[#F9A825] transition-colors">
+                        <Link 
+                           href={`/services/${service.slug}`} 
+                           aria-label={`View deep dive on ${service.title}`}
+                           className="group/btn inline-flex items-center gap-2 text-[10px] sm:text-xs font-black tracking-[0.2em] uppercase text-[#111] hover:text-[#F9A825] transition-colors"
+                        >
                            View Deep Dive 
                            <svg className="w-3 h-3 sm:w-4 sm:h-4 transition-transform group-hover/btn:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3"><path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                         </Link>

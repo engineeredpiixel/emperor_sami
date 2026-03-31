@@ -50,10 +50,10 @@ export default function Footer() {
 
           {/* Right: Yellow Subscription Box */}
           <div className="w-full md:w-1/2 bg-[#D8A02A] p-6 sm:p-8 hidden md:flex md:flex-col justify-center rounded-md overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.4)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_25px_60px_rgba(0,0,0,0.5)]">
-            <h3 className="text-white text-[1.3rem] sm:text-[1.5rem] font-bold leading-tight mb-2 shadow-black/10 drop-shadow-sm">
+            <h3 className="text-[#111111] text-[1.3rem] sm:text-[1.5rem] font-black leading-tight mb-2 drop-shadow-sm">
               Get in Touch with Our Construction Experts Today
             </h3>
-            <p className="text-white/95 text-[13px] leading-relaxed mb-4 max-w-[480px]">
+            <p className="text-[#2a1a09] text-[13px] font-medium leading-relaxed mb-4 max-w-[480px]">
               Ready to protect your home with a new build or renovation? One call or email and we&apos;ll take it from there!
             </p>
             
@@ -62,8 +62,9 @@ export default function Footer() {
               <input
                 type="email"
                 placeholder="Your Email Address.."
+                aria-label="Your Email Address"
                 required
-                className="flex-1 bg-white/20 border-none text-white placeholder-white/80 px-5 py-4 focus:outline-none focus:bg-white/30 transition-all font-medium text-[15px] outline-none"
+                className="flex-1 bg-black/10 border-none text-[#111111] placeholder-[#4a3512] px-5 py-4 focus:outline-none focus:bg-black/15 transition-all font-medium text-[15px] outline-none"
               />
               <button
                 type="submit"
@@ -110,16 +111,16 @@ export default function Footer() {
 
               {/* Social Icons matching exactly */}
               <div className="flex items-center gap-3">
-                <a href="#" className="w-10 h-10 rounded-full bg-[#D8A02A] text-white flex items-center justify-center hover:bg-[#C28C22] transition-colors shadow-lg shadow-[#D8A02A]/20">
+                <a href="#" aria-label="Facebook Profile" className="w-10 h-10 rounded-full bg-[#D8A02A] text-white flex items-center justify-center hover:bg-[#C28C22] transition-colors shadow-lg shadow-[#D8A02A]/20">
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path></svg>
                 </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20 transition-colors">
+                <a href="#" aria-label="Instagram Profile" className="w-10 h-10 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20 transition-colors">
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path><circle cx="4" cy="4" r="2"></circle></svg>
                 </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20 transition-colors">
+                <a href="#" aria-label="Twitter Profile" className="w-10 h-10 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20 transition-colors">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
                 </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20 transition-colors">
+                <a href="#" aria-label="Houzz Profile" className="w-10 h-10 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20 transition-colors">
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z" />
                   </svg>

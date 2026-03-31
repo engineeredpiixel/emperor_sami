@@ -103,6 +103,7 @@ export default function TestimonialsSection() {
           {/* Navigation Controls */}
           <div className="hidden md:flex items-center gap-3">
              <button 
+               aria-label="Previous Testimonial"
                onClick={() => executeShutter('prev')}
                className={`w-14 h-14 rounded-full border border-gray-700 flex items-center justify-center transition-all duration-500 overflow-hidden relative group/btn ${isAnimating ? 'opacity-50 cursor-not-allowed' : 'hover:border-[#F9A825]'}`}
              >
@@ -112,6 +113,7 @@ export default function TestimonialsSection() {
                 </svg>
              </button>
              <button 
+               aria-label="Next Testimonial"
                onClick={() => executeShutter('next')}
                className={`w-14 h-14 rounded-full border border-gray-700 flex items-center justify-center transition-all duration-500 overflow-hidden relative group/btn ${isAnimating ? 'opacity-50 cursor-not-allowed' : 'hover:border-[#F9A825]'}`}
              >
@@ -167,10 +169,10 @@ export default function TestimonialsSection() {
 
               {/* Mobile Navigation Controls */}
               <div className="flex md:hidden items-center gap-3 absolute -bottom-16 left-0">
-                 <button onClick={() => executeShutter('prev')} className={`w-12 h-12 rounded-full border border-gray-700 flex items-center justify-center ${isAnimating ? 'opacity-50' : 'active:bg-[#F9A825]'}`}>
+                 <button aria-label="Previous Testimonial" onClick={() => executeShutter('prev')} className={`w-12 h-12 rounded-full border border-gray-700 flex items-center justify-center ${isAnimating ? 'opacity-50' : 'active:bg-[#F9A825]'}`}>
                     <svg className="w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
                  </button>
-                 <button onClick={() => executeShutter('next')} className={`w-12 h-12 rounded-full border border-gray-700 flex items-center justify-center ${isAnimating ? 'opacity-50' : 'active:bg-[#F9A825]'}`}>
+                 <button aria-label="Next Testimonial" onClick={() => executeShutter('next')} className={`w-12 h-12 rounded-full border border-gray-700 flex items-center justify-center ${isAnimating ? 'opacity-50' : 'active:bg-[#F9A825]'}`}>
                     <svg className="w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
                  </button>
               </div>

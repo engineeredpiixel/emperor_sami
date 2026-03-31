@@ -107,7 +107,7 @@ export default function CommitmentSection({ hideButton = false }: { hideButton?:
             {/* Feature 1 */}
             <div className="flex flex-col gap-4 p-4 bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-gray-100 hover:-translate-y-1 transition-transform cursor-pointer group/card">
               <div className="w-full h-[140px] relative rounded-lg overflow-hidden shrink-0">
-                <Image src="/card_project_management_1774895647508.png" fill className="object-cover transition-transform duration-700 group-hover/card:scale-105" alt="Complete Project Management" />
+                <Image src="/card_project_management_1774895647508.png" fill sizes="(max-width: 768px) 100vw, 33vw" quality={50} className="object-cover transition-transform duration-700 group-hover/card:scale-105" alt="Complete Project Management" />
                 <div className="absolute top-2 right-2 w-8 h-8 rounded-full bg-[#F9A825] flex items-center justify-center text-[#111] shadow-md z-10">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 </div>
@@ -118,7 +118,7 @@ export default function CommitmentSection({ hideButton = false }: { hideButton?:
             {/* Feature 2 */}
             <div className="flex flex-col gap-4 p-4 bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-gray-100 hover:-translate-y-1 transition-transform cursor-pointer group/card">
               <div className="w-full h-[140px] relative rounded-lg overflow-hidden shrink-0">
-                <Image src="/card_budget_guarantee_1774895665774.png" fill className="object-cover transition-transform duration-700 group-hover/card:scale-105" alt="On-Time, On-Budget Guarantee" />
+                <Image src="/card_budget_guarantee_1774895665774.png" fill sizes="(max-width: 768px) 100vw, 33vw" quality={50} className="object-cover transition-transform duration-700 group-hover/card:scale-105" alt="On-Time, On-Budget Guarantee" />
                 <div className="absolute top-2 right-2 w-8 h-8 rounded-full bg-[#F9A825] flex items-center justify-center text-[#111] shadow-md z-10">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 </div>
@@ -129,7 +129,7 @@ export default function CommitmentSection({ hideButton = false }: { hideButton?:
             {/* Feature 3 */}
             <div className="hidden sm:flex flex-col gap-4 p-4 bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-gray-100 hover:-translate-y-1 transition-transform cursor-pointer group/card">
               <div className="w-full h-[140px] relative rounded-lg overflow-hidden shrink-0">
-                <Image src="/card_elite_quality_1774895683555.png" fill className="object-cover transition-transform duration-700 group-hover/card:scale-105" alt="Elite Custom Home Building Quality" />
+                <Image src="/card_elite_quality_1774895683555.png" fill sizes="(max-width: 768px) 100vw, 33vw" quality={50} className="object-cover transition-transform duration-700 group-hover/card:scale-105" alt="Elite Custom Home Building Quality" />
                 <div className="absolute top-2 right-2 w-8 h-8 rounded-full bg-[#F9A825] flex items-center justify-center text-[#111] shadow-md z-10">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>
                 </div>
@@ -140,7 +140,7 @@ export default function CommitmentSection({ hideButton = false }: { hideButton?:
             {/* Feature 4 */}
             <div className="hidden sm:flex flex-col gap-4 p-4 bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-gray-100 hover:-translate-y-1 transition-transform cursor-pointer group/card">
               <div className="w-full h-[140px] relative rounded-lg overflow-hidden shrink-0">
-                <Image src="/card_safety_compliant_1774895701318.png" fill className="object-cover transition-transform duration-700 group-hover/card:scale-105" alt="Fully Licensed & Insured" />
+                <Image src="/card_safety_compliant_1774895701318.png" fill sizes="(max-width: 768px) 100vw, 33vw" quality={50} className="object-cover transition-transform duration-700 group-hover/card:scale-105" alt="Fully Licensed & Insured" />
                 <div className="absolute top-2 right-2 w-8 h-8 rounded-full bg-[#F9A825] flex items-center justify-center text-[#111] shadow-md z-10">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
                 </div>
@@ -163,6 +163,7 @@ export default function CommitmentSection({ hideButton = false }: { hideButton?:
               </Link>
               <Link
                 href="/about"
+                aria-label="More About Us Arrow"
                 className="w-12 h-12 rounded-full bg-[#F9A825] hover:bg-[#F4511E] text-white flex items-center justify-center transition-all shadow-lg shadow-[#F9A825]/30 hover:shadow-[#F4511E]/40 group active:scale-95"
               >
                 <svg className="w-5 h-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">

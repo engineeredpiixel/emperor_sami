@@ -32,18 +32,24 @@ html, body {
   animation: slideDown 0.3s ease-out;
 }
 
-/* Glowing gold accent line */
-@keyframes goldGlow {
+/* GPU-Accelerated Glowing gold accent line */
+@keyframes goldGlowOp {
   0%, 100% {
-    box-shadow: 0 0 2px 0px rgba(249, 168, 37, 0.2);
+    opacity: 0.4;
   }
   50% {
-    box-shadow: 0 0 6px 1px rgba(249, 168, 37, 0.5);
+    opacity: 1;
   }
 }
 
-.glow-line {
-  animation: goldGlow 2s ease-in-out infinite;
+.glow-line::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: inherit;
+  box-shadow: 0 0 6px 1px rgba(249, 168, 37, 0.5);
+  animation: goldGlowOp 2s ease-in-out infinite;
+  pointer-events: none;
 }
 
 

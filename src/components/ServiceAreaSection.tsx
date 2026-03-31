@@ -80,10 +80,10 @@ export default function ServiceAreaSection({ hideButton = false }: { hideButton?
           
           {!hideButton && (
             <div className="flex items-center gap-2">
-              <Link href="/service-area" className="bg-[#F4511E] hover:bg-[#D84315] text-white font-bold px-8 py-3.5 rounded-md transition-colors text-sm shadow-lg shadow-[#F4511E]/30 text-center">
+              <Link href="/service-area" className="bg-[#D84315] hover:bg-[#BF360C] text-white font-bold px-8 py-3.5 rounded-md transition-colors text-sm shadow-lg shadow-[#D84315]/30 text-center">
                 View All Locations
               </Link>
-              <Link href="/service-area" className="w-12 h-12 rounded-md bg-[#F4511E] hover:bg-[#D84315] text-white flex items-center justify-center transition-colors shadow-lg shadow-[#F4511E]/30 shrink-0">
+              <Link href="/service-area" aria-label="View Service Areas Arrow" className="w-12 h-12 rounded-md bg-[#D84315] hover:bg-[#BF360C] text-white flex items-center justify-center transition-colors shadow-lg shadow-[#D84315]/30 shrink-0">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
                 </svg>
@@ -114,6 +114,7 @@ export default function ServiceAreaSection({ hideButton = false }: { hideButton?
               <select 
                 value={serviceFilter}
                 onChange={(e) => setServiceFilter(e.target.value)}
+                aria-label="Filter by Service Type"
                 className="w-full bg-[#F5F5F5] text-gray-700 rounded-md px-4 py-3.5 appearance-none focus:outline-none focus:ring-2 focus:ring-[#F9A825] text-sm font-medium cursor-pointer"
               >
                 <option value="Service Type">Service Type</option>
@@ -133,6 +134,7 @@ export default function ServiceAreaSection({ hideButton = false }: { hideButton?
               <select 
                 value={sizeFilter}
                 onChange={(e) => setSizeFilter(e.target.value)}
+                aria-label="Filter by Project Size"
                 className="w-full bg-[#F5F5F5] text-gray-700 rounded-md px-4 py-3.5 appearance-none focus:outline-none focus:ring-2 focus:ring-[#F9A825] text-sm font-medium cursor-pointer"
               >
                 <option value="Project Size">Project Size</option>
@@ -148,6 +150,7 @@ export default function ServiceAreaSection({ hideButton = false }: { hideButton?
               <select 
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
+                aria-label="Sort Projects By"
                 className="w-full bg-[#F5F5F5] text-gray-700 rounded-md px-4 py-3.5 appearance-none focus:outline-none focus:ring-2 focus:ring-[#F9A825] text-sm font-medium cursor-pointer"
               >
                 <option value="Sort By">Sort By</option>

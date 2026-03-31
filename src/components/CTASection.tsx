@@ -34,7 +34,7 @@ export default function CTASection() {
 
         {/* Right: Spinning Circular Button */}
         <div className="shrink-0 transform -translate-y-3 lg:-translate-y-2">
-          <a href="/contact#secure-data-link" className="relative w-36 h-36 lg:w-[180px] lg:h-[180px] rounded-full bg-[#F4511E] flex items-center justify-center group/btn shadow-[0_0_50px_rgba(244,81,30,0.6)] hover:shadow-[0_0_80px_rgba(244,81,30,0.9)] transition-shadow duration-500 cursor-pointer block">
+          <a href="/contact#secure-data-link" aria-label="Schedule a Consultation" className="relative w-36 h-36 lg:w-[180px] lg:h-[180px] rounded-full bg-[#F4511E] flex items-center justify-center group/btn shadow-[0_0_50px_rgba(244,81,30,0.6)] hover:shadow-[0_0_80px_rgba(244,81,30,0.9)] transition-shadow duration-500 cursor-pointer block">
 
             {/* Spinning Text SVG Ring */}
             <svg className="absolute inset-[6px] w-[92%] h-[92%] animate-[spin_12s_linear_infinite]" viewBox="0 0 100 100">
