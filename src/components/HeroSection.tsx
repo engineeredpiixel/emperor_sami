@@ -119,7 +119,7 @@ export default function HeroSection() {
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
       onTouchCancel={handleTouchEnd}
-      className={`relative w-full min-h-[100svh] overflow-hidden -mt-20 pt-20 flex flex-col justify-center pb-0 bg-[#050505] cursor-crosshair transition-opacity duration-1000 ${visible ? "opacity-100" : "opacity-0"}`}
+      className="relative w-full min-h-[100svh] overflow-hidden -mt-20 pt-20 flex flex-col justify-center pb-0 bg-[#050505] cursor-crosshair"
       style={{
         // Define default CSS vars to prevent hydration errors before loop starts
         '--lens-x': '-1000px',
@@ -135,10 +135,11 @@ export default function HeroSection() {
           src="/blueprint_bg_1774895613394.png"
           alt="Emperor Sami Group architectural blueprint"
           fill
-          sizes="100vw"
-          quality={50}
+          sizes="(max-width: 768px) 100vw, 100vw"
+          quality={45}
           className="object-cover object-center brightness-[0.7] sepia-[0.3] hue-rotate-[180deg] saturate-50 opacity-60 mix-blend-screen transition-transform duration-[10s] scale-105"
           priority
+          fetchPriority="high"
         />
         {/* Cinematic Grid Overlays */}
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:60px_60px] md:bg-[size:100px_100px] pointer-events-none" />
@@ -158,10 +159,11 @@ export default function HeroSection() {
           src="/custom_home_exterior_1774895595441.png"
           alt="Revealed Luxury Masterpiece"
           fill
-          sizes="100vw"
-          quality={60}
+          sizes="(max-width: 768px) 100vw, 100vw"
+          quality={50}
           className="object-cover object-center brightness-[0.8] contrast-[1.1] saturate-[1.1]"
           priority
+          fetchPriority="high"
         />
         <div className="absolute inset-0 bg-black/20" />
       </div>
