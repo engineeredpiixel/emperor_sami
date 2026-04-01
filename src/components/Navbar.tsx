@@ -96,8 +96,8 @@ export default function Navbar() {
       title: "How It Works",
       steps: [
         {
-          title: "Strategy Call",
-          desc: "Free 20-min call — we check your niche availability",
+          title: "Initial Consultation",
+          desc: "Discuss your vision, site requirements, and timeline with our experts.",
           icon: (
             <svg className="w-5 h-5 text-[#F9A825]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
@@ -105,8 +105,8 @@ export default function Navbar() {
           ),
         },
         {
-          title: "Custom Roadmap",
-          desc: "We build a plan specific to your trade and market",
+          title: "Custom Blueprint",
+          desc: "We engineer a comprehensive plan, from architectural design to permits.",
           icon: (
             <svg className="w-5 h-5 text-[#F9A825]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
@@ -114,8 +114,8 @@ export default function Navbar() {
           ),
         },
         {
-          title: "Full Execution",
-          desc: "We run it. You focus on the jobs.",
+          title: "Flawless Execution",
+          desc: "We build it. You step into a meticulously finished environment.",
           icon: (
             <svg className="w-5 h-5 text-[#F9A825]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -362,8 +362,8 @@ export default function Navbar() {
                             <Link href="/contact#secure-data-link" className="w-full text-center bg-gradient-to-r from-[#F9A825] to-[#b8960c] hover:from-[#F4511E] hover:to-[#e65100] text-[#1a1209] hover:text-white text-[12px] font-bold uppercase tracking-[0.2em] py-4 rounded transition-all duration-300 transform hover:-translate-y-0.5 shadow-lg">
                               Book A Free Strategy Call
                             </Link>
-                            <Link href="/services" className="w-full text-center py-2.5 text-[13px] text-gray-400 hover:text-white transition-colors font-semibold group/btn">
-                              View All Solutions <span className="inline-block transition-transform group-hover/btn:translate-x-1">&rarr;</span>
+                            <Link href="/all-services" className="w-full text-center py-2.5 text-[13px] text-gray-400 hover:text-white transition-colors font-semibold group/btn">
+                              View All Services <span className="inline-block transition-transform group-hover/btn:translate-x-1">&rarr;</span>
                             </Link>
                           </div>
                         </div>
@@ -513,8 +513,8 @@ export default function Navbar() {
 
                       {/* Mobile How It Works brief */}
                       <div className="mt-4 pt-4 border-t border-white/5">
-                        <Link onClick={() => setMenuOpen(false)} href="/services" className="inline-flex items-center justify-center w-full bg-[#1a1a1a] text-white/90 text-xs font-bold uppercase tracking-widest py-3 rounded border border-white/10 hover:bg-[#F9A825] hover:text-[#111] transition-all">
-                          View All Solutions &rarr;
+                        <Link onClick={() => setMenuOpen(false)} href="/all-services" className="inline-flex items-center justify-center w-full bg-[#1a1a1a] text-white/90 text-xs font-bold uppercase tracking-widest py-3 rounded border border-white/10 hover:bg-[#F9A825] hover:text-[#111] transition-all">
+                          View All Services &rarr;
                         </Link>
                       </div>
                     </div>
