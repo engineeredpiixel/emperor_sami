@@ -24,6 +24,7 @@ interface CarouselProps {
     src: string;
     title: string;
     category: string;
+    division?: string;
     location: string;
     slug?: string;
   }[]
@@ -148,7 +149,12 @@ export const CardCarousel: React.FC<CarouselProps> = ({
                       {/* Gradient Overlay & Content */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent flex items-end opacity-100 pointer-events-none">
                         <div className="p-6 w-full translate-y-2 group-hover/proj:translate-y-0 transition-transform duration-300">
-                          <div className="text-[#F9A825] text-[10px] font-bold tracking-[0.2em] uppercase mb-1">{img.category}</div>
+                          <div className="flex items-center gap-2 mb-1.5">
+                             {img.division && (
+                               <span className="bg-black/80 backdrop-blur-sm text-white/90 border border-white/20 text-[8px] font-black tracking-widest uppercase px-2 py-0.5 rounded-sm">{img.division}</span>
+                             )}
+                             <span className="text-[#F9A825] text-[9px] font-bold tracking-[0.2em] uppercase">{img.category}</span>
+                          </div>
                           <h4 className="text-white text-xl font-bold mb-1.5 leading-tight">{img.title}</h4>
 
                           <div className="flex items-center text-gray-300 text-xs mb-4">

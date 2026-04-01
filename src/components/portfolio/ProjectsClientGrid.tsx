@@ -145,9 +145,14 @@ export default function ProjectsClientGrid({ initialProjects }: { initialProject
                   {/* Data Payload Block */}
                   <div className="p-8 flex-1 flex flex-col items-center justify-between text-center w-full">
                      <div className="flex flex-col items-center gap-3 w-full">
-                        <span className="text-[#D8A02A] font-black text-[9px] tracking-[0.2em] uppercase line-clamp-1">
-                           {proj.category} — {proj.location}
-                        </span>
+                        <div className="flex items-center gap-2">
+                           {proj.division && (
+                             <span className="bg-[#f2f2f2] text-[#111] px-2 py-0.5 rounded-sm text-[8px] font-black uppercase tracking-widest">{proj.division}</span>
+                           )}
+                           <span className="text-[#D8A02A] font-black text-[9px] tracking-[0.2em] uppercase line-clamp-1">
+                              {proj.category} — {proj.location}
+                           </span>
+                        </div>
                         <h2 className="text-[#111] text-2xl font-black uppercase tracking-tighter leading-tight group-hover:text-[#D8A02A] transition-colors duration-500 line-clamp-2 min-h-[52px] flex items-center justify-center">
                            {proj.title}
                         </h2>

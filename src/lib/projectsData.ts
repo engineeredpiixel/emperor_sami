@@ -5,6 +5,7 @@ export type ProjectType = {
   slug: string;
   title: string;
   category: string;
+  division: string;
   location: string;
   lat: number;
   lng: number;
@@ -114,6 +115,7 @@ function generateProjectsForService(serviceKey: string, serviceTitle: string, se
       slug: finalSlug,
       title: finalTitle,
       category: serviceTitle, // Strictly matching the Dropdowns
+      division: isResidential ? "Residential" : "Commercial",
       location: `${loc.name}, Greater Toronto Area`,
       lat: offsetLat,
       lng: offsetLng,

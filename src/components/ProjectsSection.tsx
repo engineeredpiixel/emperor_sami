@@ -10,6 +10,7 @@ const projectImages = Object.values(masterProjects).slice(0, 20).map(p => ({
    src: p.heroImage,
    title: p.title,
    category: p.category,
+   division: p.division,
    location: p.location,
    slug: p.slug
 }));
