@@ -4,10 +4,18 @@ import { useState, useMemo, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ProjectType } from "@/lib/projectsData";
+import { residentialServicesData } from "@/lib/servicesDataResidential";
+import { commercialServicesData } from "@/lib/servicesDataCommercial";
+
+// Pre-compute the absolute lists of 21 services to inject into the dropdown
+const resTitles = Object.values(residentialServicesData).map(s => s.heroTitle);
+const comTitles = Object.values(commercialServicesData).map(s => s.heroTitle);
+const allServiceTitles = [...resTitles, ...comTitles];
 
 const ITEMS_PER_PAGE = 9;
 
 export default function ProjectsClientGrid({ initialProjects }: { initialProjects: ProjectType[] }) {
+  const [activeSector, setActiveSector] = useState<string>("All Sectors");
   const [activeCategory, setActiveCategory] = useState<string>("All Services");
   const [activeLocation, setActiveLocation] = useState<string>("All Territories");
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -19,7 +27,8 @@ export default function ProjectsClientGrid({ initialProjects }: { initialProject
 
   // Dynamically extract unique categories and primary cities from the 41-project database
   const categories = useMemo(() => {
-    const cats = new Set(initialProjects.map(p => p.category));
+    // We combine the new 21 services with whatever is already in initialProjects to ensure no data loss
+    const cats = new Set([...allServiceTitles, ...initialProjects.map(p => p.category)]);
     return ["All Services", ...Array.from(cats)].sort();
   }, [initialProjects]);
 
@@ -33,11 +42,17 @@ export default function ProjectsClientGrid({ initialProjects }: { initialProject
   // Execute Filtration
   const filteredProjects = useMemo(() => {
     return initialProjects.filter(p => {
+      // Logic for deducing Sector
+      const isComm = comTitles.includes(p.category) || p.category.toLowerCase().includes("commercial") || p.category.toLowerCase().includes("tenant");
+      const projectSector = isComm ? "Commercial" : "Residential";
+
+      const matchSector = activeSector === "All Sectors" || projectSector === activeSector;
       const matchCategory = activeCategory === "All Services" || p.category === activeCategory;
       const matchLocation = activeLocation === "All Territories" || p.location.includes(activeLocation);
-      return matchCategory && matchLocation;
+      
+      return matchSector && matchCategory && matchLocation;
     });
-  }, [initialProjects, activeCategory, activeLocation]);
+  }, [initialProjects, activeCategory, activeLocation, activeSector]);
 
   // Execute Pagination
   const totalPages = Math.ceil(filteredProjects.length / ITEMS_PER_PAGE);
@@ -49,7 +64,7 @@ export default function ProjectsClientGrid({ initialProjects }: { initialProject
   // Reset page to 1 if filters change
   useEffect(() => {
     setCurrentPage(1);
-  }, [activeCategory, activeLocation]);
+  }, [activeCategory, activeLocation, activeSector]);
 
   if (!isMounted) return null; // Prevent hydration mismatch
 
@@ -63,6 +78,16 @@ export default function ProjectsClientGrid({ initialProjects }: { initialProject
          </span>
          
          <div className="flex flex-col sm:flex-row w-full sm:w-auto gap-4">
+            <select 
+               value={activeSector} 
+               onChange={(e) => setActiveSector(e.target.value)}
+               className="bg-[#FAF9F6] border border-gray-200 text-[#111] text-xs font-bold uppercase tracking-widest px-4 py-3 outline-none cursor-pointer focus:border-[#D8A02A] transition-colors appearance-none min-w-[160px]"
+            >
+               <option value="All Sectors">All Sectors</option>
+               <option value="Residential">Residential</option>
+               <option value="Commercial">Commercial</option>
+            </select>
+            
             <select 
                value={activeLocation} 
                onChange={(e) => setActiveLocation(e.target.value)}
