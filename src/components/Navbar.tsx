@@ -20,21 +20,111 @@ export default function Navbar() {
     {
       label: "Services",
       href: "/services",
-      hasDropdown: true,
-      children: [
-        { label: "Custom Home Building", href: "/services/custom-home-building" },
-        { label: "High-End Renovations", href: "/services/high-end-renovations" },
-        { label: "Basement Optimization", href: "/services/basement-optimization" },
-        { label: "Project Management", href: "/services/project-management" },
-        { label: "Architectural Drafting", href: "/services/architectural-drafting" },
-        { label: "Exterior Improvement", href: "/services/exterior-improvements" },
-      ],
+      hasMegaMenu: true,
     },
     { label: "Service Area", href: "/service-area" },
     { label: "Projects", href: "/projects" },
     { label: "About Us", href: "/about" },
     { label: "Contact Us", href: "/contact#secure-data-link" },
   ];
+
+  const megaMenuData = {
+    residential: {
+      title: "Residential Services Division",
+      description: "This sector focuses on bespoke, single-family, and multi-family living environments.",
+      sections: [
+        {
+          title: "Planning & Management",
+          items: [
+            { name: "Architectural Drafting & 3D Rendering", href: "/services/architectural-drafting" },
+            { name: "Residential Project Management", href: "/services/project-management" },
+            { name: "Zoning & Permitting Acquisition", href: "/services/zoning-permitting", badge: "New" },
+          ],
+        },
+        {
+          title: "Core Construction & Development",
+          items: [
+            { name: "Custom Home Building", href: "/services/custom-home-building" },
+            { name: "High-End Renovations", href: "/services/high-end-renovations" },
+            { name: "Accessory Dwelling Unit (ADU) Construction", href: "/services/adu-construction", badge: "New" },
+            { name: "Sustainable & Passive Home Development", href: "/services/sustainable-homes", badge: "New" },
+          ],
+        },
+        {
+          title: "Targeted Improvements",
+          items: [
+            { name: "Basement Optimization & Finishing", href: "/services/basement-optimization" },
+            { name: "Residential Exterior Improvement", href: "/services/exterior-improvements" },
+            { name: "Precision Kitchen & Bath Remodeling", href: "/services/kitchen-bath-remodel", badge: "New" },
+            { name: "Smart Home Infrastructure Integration", href: "/services/smart-home-integration", badge: "New" },
+          ],
+        },
+      ],
+    },
+    commercial: {
+      title: "Commercial Services Division",
+      description: "This sector must project scalability, compliance, and ROI-driven execution to attract B2B clients.",
+      sections: [
+        {
+          title: "Pre-Construction & Consulting",
+          items: [
+            { name: "Commercial Architectural Drafting", href: "/services/commercial-drafting" },
+            { name: "Commercial Project Management", href: "/services/commercial-management" },
+            { name: "Pre-Construction Feasibility Analysis", href: "/services/feasibility-analysis", badge: "New" },
+          ],
+        },
+        {
+          title: "Commercial Build & Renovation",
+          items: [
+            { name: "Tenant Build-Outs / Leasehold Improvements", href: "/services/tenant-build-outs", badge: "New" },
+            { name: "White Box / Vanilla Shell Construction", href: "/services/vanilla-shell", badge: "New" },
+            { name: "Corporate & Retail Remodeling", href: "/services/corporate-remodel", badge: "New" },
+            { name: "Adaptive Reuse Construction", href: "/services/adaptive-reuse", badge: "New" },
+          ],
+        },
+        {
+          title: "Facility Upgrades",
+          items: [
+            { name: "Commercial Exterior & Façade Improvement", href: "/services/commercial-exteriors" },
+            { name: "Structural Retrofitting & Code Upgrades", href: "/services/structural-retrofitting", badge: "New" },
+            { name: "Commercial Preventative Maintenance Contracts", href: "/services/maintenance-contracts", badge: "New" },
+          ],
+        },
+      ],
+    },
+    howItWorks: {
+      title: "How It Works",
+      steps: [
+        {
+          title: "Strategy Call",
+          desc: "Free 20-min call — we check your niche availability",
+          icon: (
+            <svg className="w-5 h-5 text-[#F9A825]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+            </svg>
+          ),
+        },
+        {
+          title: "Custom Roadmap",
+          desc: "We build a plan specific to your trade and market",
+          icon: (
+            <svg className="w-5 h-5 text-[#F9A825]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+            </svg>
+          ),
+        },
+        {
+          title: "Full Execution",
+          desc: "We run it. You focus on the jobs.",
+          icon: (
+            <svg className="w-5 h-5 text-[#F9A825]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          ),
+        },
+      ],
+    },
+  };
 
   /* ── Shared cubic-bezier transition ── */
   const transitionStyle = {
@@ -161,8 +251,8 @@ export default function Navbar() {
             {/* Desktop nav links */}
             <div className="hidden lg:flex items-center gap-2">
               {navLinks.map((link) =>
-                link.hasDropdown ? (
-                  <div key={link.label} className="relative group">
+                link.hasMegaMenu ? (
+                  <div key={link.label} className="group">
                     <button
                       onMouseEnter={() => setServicesOpen(true)}
                       onMouseLeave={() => setServicesOpen(false)}
@@ -170,7 +260,7 @@ export default function Navbar() {
                     >
                       {link.label}
                       <svg
-                        className="w-3 h-3 mt-px opacity-60"
+                        className={`w-3 h-3 mt-px opacity-60 transition-transform duration-300 ${servicesOpen ? "-rotate-180" : ""}`}
                         fill="none"
                         stroke="currentColor"
                         strokeWidth="2.5"
@@ -184,23 +274,101 @@ export default function Navbar() {
                       </svg>
                     </button>
 
-                    {servicesOpen && (
-                      <div
-                        onMouseEnter={() => setServicesOpen(true)}
-                        onMouseLeave={() => setServicesOpen(false)}
-                        className="absolute top-full left-0 bg-[#111111] border-t-2 border-[#b8960c] shadow-2xl min-w-[200px] z-50"
-                      >
-                        {link.children?.map((child) => (
-                          <Link
-                            key={child.label}
-                            href={child.href}
-                            className="block px-5 py-3 text-sm text-gray-300 hover:text-[#b8960c] hover:bg-white/5 transition-colors tracking-wide"
-                          >
-                            {child.label}
-                          </Link>
-                        ))}
+                    {/* Mega Menu Dropdown */}
+                    <div
+                      onMouseEnter={() => setServicesOpen(true)}
+                      onMouseLeave={() => setServicesOpen(false)}
+                      className={`absolute top-full left-0 w-full bg-[#111111]/98 backdrop-blur-2xl border-t-2 border-[#b8960c] shadow-[0_20px_50px_rgba(0,0,0,0.5)] z-50 transition-all duration-300 transform origin-top ${
+                        servicesOpen ? "opacity-100 scale-y-100 pointer-events-auto" : "opacity-0 scale-y-95 pointer-events-none"
+                      }`}
+                    >
+                      <div className="mx-auto p-10 grid grid-cols-12 gap-10 xl:gap-14 bg-gradient-to-b from-white/[0.02] to-transparent">
+                        {/* Column 1: Residential */}
+                        <div className="col-span-4 flex flex-col gap-6">
+                          <div>
+                            <h3 className="text-white text-lg font-bold tracking-wider uppercase mb-1">{megaMenuData.residential.title}</h3>
+                            <p className="text-gray-400 text-xs leading-relaxed max-w-[90%]">{megaMenuData.residential.description}</p>
+                          </div>
+                          <div className="flex flex-col gap-6">
+                            {megaMenuData.residential.sections.map((section, idx) => (
+                              <div key={idx}>
+                                <h4 className="text-[#b8960c] text-[11px] font-bold tracking-[0.2em] uppercase mb-3">{section.title}</h4>
+                                <ul className="flex flex-col gap-2.5">
+                                  {section.items.map((item, iData) => (
+                                    <li key={iData}>
+                                      <Link href={item.href} className="group/item flex items-center text-[13px] font-medium text-gray-300 hover:text-white transition-colors">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-gray-700 mr-2.5 group-hover/item:bg-[#F9A825] transition-colors" />
+                                        {item.name}
+                                        {item.badge === "New" && (
+                                          <span className="ml-2.5 px-1.5 py-0.5 text-[9px] uppercase font-bold text-[#1a1209] bg-[#F9A825] rounded-sm tracking-widest hidden xl:inline-block">New</span>
+                                        )}
+                                      </Link>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Column 2: Commercial */}
+                        <div className="col-span-4 flex flex-col gap-6 border-l border-white/5 pl-10 xl:pl-14">
+                          <div>
+                            <h3 className="text-white text-lg font-bold tracking-wider uppercase mb-1">{megaMenuData.commercial.title}</h3>
+                            <p className="text-gray-400 text-xs leading-relaxed max-w-[90%]">{megaMenuData.commercial.description}</p>
+                          </div>
+                          <div className="flex flex-col gap-6">
+                            {megaMenuData.commercial.sections.map((section, idx) => (
+                              <div key={idx}>
+                                <h4 className="text-[#b8960c] text-[11px] font-bold tracking-[0.2em] uppercase mb-3">{section.title}</h4>
+                                <ul className="flex flex-col gap-2.5">
+                                  {section.items.map((item, iData) => (
+                                    <li key={iData}>
+                                      <Link href={item.href} className="group/item flex items-center text-[13px] font-medium text-gray-300 hover:text-white transition-colors">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-gray-700 mr-2.5 group-hover/item:bg-[#F9A825] transition-colors" />
+                                        {item.name}
+                                        {item.badge === "New" && (
+                                          <span className="ml-2.5 px-1.5 py-0.5 text-[9px] uppercase font-bold text-[#1a1209] bg-[#F9A825] rounded-sm tracking-widest hidden xl:inline-block">New</span>
+                                        )}
+                                      </Link>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Column 3: How It Works */}
+                        <div className="col-span-4 bg-[#1a1a1a]/80 rounded-xl border border-white/10 p-8 flex flex-col h-full shadow-inner relative overflow-hidden">
+                          {/* Accent glow */}
+                          <div className="absolute top-0 right-0 w-32 h-32 bg-[#F9A825]/5 blur-[60px] rounded-full point-events-none" />
+                          
+                          <h3 className="text-white text-[13px] font-bold tracking-[0.2em] uppercase mb-8 relative z-10">{megaMenuData.howItWorks.title}</h3>
+                          <div className="flex flex-col gap-6 xl:gap-8 flex-1 relative z-10">
+                            {megaMenuData.howItWorks.steps.map((step, idx) => (
+                              <div key={idx} className="flex items-start gap-4">
+                                <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-[#b8960c]/10 border border-[#b8960c]/30 flex items-center justify-center">
+                                  {step.icon}
+                                </div>
+                                <div>
+                                  <h4 className="text-white font-semibold text-[14px]">{step.title}</h4>
+                                  <p className="text-gray-400 text-xs mt-1 leading-relaxed xl:leading-normal">{step.desc}</p>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                          <div className="mt-8 flex flex-col gap-3 relative z-10">
+                            <Link href="/contact#secure-data-link" className="w-full text-center bg-gradient-to-r from-[#F9A825] to-[#b8960c] hover:from-[#F4511E] hover:to-[#e65100] text-[#1a1209] hover:text-white text-[12px] font-bold uppercase tracking-[0.2em] py-4 rounded transition-all duration-300 transform hover:-translate-y-0.5 shadow-lg">
+                              Book A Free Strategy Call
+                            </Link>
+                            <Link href="/services" className="w-full text-center py-2.5 text-[13px] text-gray-400 hover:text-white transition-colors font-semibold group/btn">
+                              View All Solutions <span className="inline-block transition-transform group-hover/btn:translate-x-1">&rarr;</span>
+                            </Link>
+                          </div>
+                        </div>
                       </div>
-                    )}
+                    </div>
                   </div>
                 ) : (
                   <Link
@@ -277,27 +445,80 @@ export default function Navbar() {
 
           {/* Mobile menu */}
           {menuOpen && (
-            <div className="lg:hidden bg-[#0a0a0a]/90 backdrop-blur-xl border-t border-white/10 px-4 pb-5">
+            <div className="lg:hidden bg-[#0a0a0a]/95 backdrop-blur-xl border-t border-white/10 px-4 pb-5 overflow-y-auto max-h-[85vh]">
               {navLinks.map((link) => (
                 <div key={link.label}>
-                  <Link
-                    href={link.href}
-                    onClick={() => setMenuOpen(false)}
-                    className="block py-3 text-sm font-semibold text-white/90 tracking-[0.12em] uppercase border-b border-white/5 hover:text-[#b8960c] transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                  {link.hasDropdown &&
-                    link.children?.map((child) => (
-                      <Link
-                        key={child.label}
-                        href={child.href}
-                        onClick={() => setMenuOpen(false)}
-                        className="block pl-4 py-2.5 text-sm text-gray-400 hover:text-[#b8960c] transition-colors"
+                  <div className="flex items-center justify-between border-b border-white/5 group">
+                    <Link
+                      href={link.href}
+                      onClick={() => !link.hasMegaMenu && setMenuOpen(false)}
+                      className="block flex-1 py-4 text-sm font-semibold text-white/90 tracking-[0.12em] uppercase group-hover:text-[#b8960c] transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                    {link.hasMegaMenu && (
+                      <button 
+                        onClick={() => setServicesOpen(!servicesOpen)} 
+                        className="px-4 py-4 text-white/60 hover:text-[#b8960c]"
                       >
-                        — {child.label}
-                      </Link>
-                    ))}
+                        <svg className={`w-4 h-4 transition-transform duration-300 ${servicesOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                      </button>
+                    )}
+                  </div>
+                  
+                  {/* Mobile Mega Menu Expansion */}
+                  {link.hasMegaMenu && servicesOpen && (
+                    <div className="bg-black/40 pl-4 py-3 my-2 border-l-2 border-[#b8960c] rounded-r-md">
+                      {/* Mobile Residential */}
+                      <div className="mb-5">
+                        <h4 className="text-[#b8960c] text-[11px] font-bold tracking-[0.15em] uppercase mb-3 border-b border-white/5 pb-2">{megaMenuData.residential.title}</h4>
+                        {megaMenuData.residential.sections.map((sec, i) => (
+                          <div key={i} className="mb-4">
+                            <span className="text-[10px] text-gray-500 font-semibold uppercase tracking-wider mb-2 block">{sec.title}</span>
+                            <div className="flex flex-col gap-2">
+                              {sec.items.map((item, j) => (
+                                <Link key={j} onClick={() => setMenuOpen(false)} href={item.href} className="flex items-center text-[12px] text-gray-300 hover:text-white transition-colors group/item">
+                                  <span className="w-1 h-1 rounded-full bg-gray-700 mr-2 group-hover/item:bg-[#F9A825]" />
+                                  {item.name}
+                                  {item.badge === "New" && (
+                                    <span className="ml-2 px-1 py-0.5 text-[8px] uppercase font-bold text-[#111] bg-[#F9A825] rounded-sm tracking-widest leading-none">New</span>
+                                  )}
+                                </Link>
+                              ))}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      
+                      {/* Mobile Commercial */}
+                      <div className="mb-2 mt-4 pt-4 border-t border-white/5">
+                         <h4 className="text-[#b8960c] text-[11px] font-bold tracking-[0.15em] uppercase mb-3 border-b border-white/5 pb-2">{megaMenuData.commercial.title}</h4>
+                         {megaMenuData.commercial.sections.map((sec, i) => (
+                          <div key={i} className="mb-4">
+                            <span className="text-[10px] text-gray-500 font-semibold uppercase tracking-wider mb-2 block">{sec.title}</span>
+                            <div className="flex flex-col gap-2">
+                              {sec.items.map((item, j) => (
+                                <Link key={j} onClick={() => setMenuOpen(false)} href={item.href} className="flex items-center text-[12px] text-gray-300 hover:text-white transition-colors group/item">
+                                  <span className="w-1 h-1 rounded-full bg-gray-700 mr-2 group-hover/item:bg-[#F9A825]" />
+                                  {item.name}
+                                  {item.badge === "New" && (
+                                    <span className="ml-2 px-1 py-0.5 text-[8px] uppercase font-bold text-[#111] bg-[#F9A825] rounded-sm tracking-widest leading-none">New</span>
+                                  )}
+                                </Link>
+                              ))}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Mobile How It Works brief */}
+                      <div className="mt-4 pt-4 border-t border-white/5">
+                        <Link onClick={() => setMenuOpen(false)} href="/services" className="inline-flex items-center justify-center w-full bg-[#1a1a1a] text-white/90 text-xs font-bold uppercase tracking-widest py-3 rounded border border-white/10 hover:bg-[#F9A825] hover:text-[#111] transition-all">
+                          View All Solutions &rarr;
+                        </Link>
+                      </div>
+                    </div>
+                  )}
                 </div>
               ))}
               <div className="mt-5 flex flex-col gap-3 pt-4 border-t border-white/10">
