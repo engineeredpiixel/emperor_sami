@@ -90,9 +90,27 @@ export default function TestimonialsSection() {
         {/* ── HEADER ── */}
         <div className={`mb-16 md:mb-24 flex items-end justify-between transition-all duration-1000 delay-100 will-change-transform ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
           <div>
-             <div className="flex items-center gap-3 mb-6">
-                <div className="h-[2px] w-8 bg-[#F9A825]" />
-                <span className="text-[#F9A825] text-xs font-black tracking-[0.4em] uppercase">Client Testimonials</span>
+             <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="h-[2px] w-8 bg-[#F9A825]" />
+                  <span className="text-[#F9A825] text-xs font-black tracking-[0.4em] uppercase">Client Testimonials</span>
+                </div>
+                {/* Overall Google Review Badge */}
+                <div className="flex items-center gap-2.5 bg-white/5 px-3 py-1.5 rounded border border-white/10 w-fit backdrop-blur-sm">
+                  <svg className="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                  </svg>
+                  <span className="text-white text-[13px] font-bold mt-px">5.0</span>
+                  <div className="flex gap-0.5">
+                    {[...Array(5)].map((_, i) => (
+                      <svg key={i} className="w-3.5 h-3.5 text-[#F9A825]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" /></svg>
+                    ))}
+                  </div>
+                  <span className="text-gray-400 text-[10px] uppercase tracking-wider font-bold ml-1 mt-0.5 whitespace-nowrap">84 Reviews</span>
+                </div>
              </div>
              <h2 className="text-4xl sm:text-5xl lg:text-7xl font-black text-white leading-[1.05] tracking-tighter">
                 Engineering <span className="text-gray-500 line-through decoration-[#F9A825]/50 decoration-4">Expectations.</span><br/>
@@ -145,21 +163,34 @@ export default function TestimonialsSection() {
                       className={`absolute top-1/2 -translate-y-1/2 w-full transition-opacity duration-300 ${isRendered ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'}`}
                     >
                        <div className="overflow-hidden mb-8">
-                          <p className={`text-white text-xl sm:text-2xl lg:text-[1.8rem] font-medium leading-[1.65] tracking-tight transition-transform duration-[1.2s] ease-[0.19,1,0.22,1]
-                             ${isRendered ? 'translate-y-0' : 'translate-y-[110%]'}
-                          `}>
-                            {test.text}
-                          </p>
+                          <div className={`transition-transform duration-[1.2s] ease-[0.19,1,0.22,1] ${isRendered ? 'translate-y-0' : 'translate-y-[110%]'}`}>
+                             <div className="flex gap-1 mb-5">
+                               {[...Array(5)].map((_, i) => (
+                                 <svg key={i} className="w-5 h-5 text-[#F9A825]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" /></svg>
+                               ))}
+                             </div>
+                             <p className="text-white text-xl sm:text-2xl lg:text-[1.8rem] font-medium leading-[1.65] tracking-tight">
+                               {test.text}
+                             </p>
+                          </div>
                        </div>
 
                        <div className="overflow-hidden flex items-center gap-6">
                           <div className={`w-12 h-[2px] bg-[#F9A825] transition-all duration-[1.2s] ease-[0.19,1,0.22,1] delay-[200ms] will-change-transform ${isRendered ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'}`} />
                           
                           <div className={`flex flex-col transition-transform duration-[1.2s] ease-[0.19,1,0.22,1] delay-[100ms] ${isRendered ? 'translate-y-0' : 'translate-y-[110%]'}`}>
-                             <Link href={`/projects/${test.slug}`} className="text-[#F9A825] hover:text-white transition-colors text-xl font-black uppercase tracking-tight mb-1 inline-block border-b border-transparent hover:border-white">
+                             <Link href={`/projects/${test.slug}`} className="text-[#F9A825] hover:text-white transition-colors text-xl font-black uppercase tracking-tight mb-1 inline-block border-b border-transparent hover:border-white w-fit">
                                {test.project}
                              </Link>
-                             <span className="text-gray-400 font-bold text-sm tracking-widest">{test.name}</span>
+                             <div className="flex items-center gap-2">
+                               <span className="text-gray-400 font-bold text-sm tracking-widest">{test.name}</span>
+                               <svg className="w-3.5 h-3.5 opacity-70" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                                 <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                                 <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                                 <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                               </svg>
+                             </div>
                              <span className="text-gray-600 text-[10px] uppercase font-bold tracking-[0.25em]">{test.title}</span>
                           </div>
                        </div>
