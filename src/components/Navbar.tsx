@@ -8,6 +8,18 @@ export default function Navbar() {
   const [servicesOpen, setServicesOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const topBarRef = useRef<HTMLDivElement>(null);
+  const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleServicesEnter = () => {
+    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+    setServicesOpen(true);
+  };
+
+  const handleServicesLeave = () => {
+    hoverTimeoutRef.current = setTimeout(() => {
+      setServicesOpen(false);
+    }, 150);
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -249,13 +261,16 @@ export default function Navbar() {
             </div>
 
             {/* Desktop nav links */}
-            <div className="hidden lg:flex items-center gap-2">
+            <div className="hidden lg:flex items-center gap-2 h-full">
               {navLinks.map((link) =>
                 link.hasMegaMenu ? (
-                  <div key={link.label} className="group">
+                  <div 
+                    key={link.label} 
+                    className="group h-full flex items-center"
+                    onMouseEnter={handleServicesEnter}
+                    onMouseLeave={handleServicesLeave}
+                  >
                     <button
-                      onMouseEnter={() => setServicesOpen(true)}
-                      onMouseLeave={() => setServicesOpen(false)}
                       className="flex items-center gap-1.5 px-5 py-2 text-[13px] font-semibold text-white/90 tracking-[0.15em] uppercase hover:text-white transition-colors"
                     >
                       {link.label}
@@ -276,8 +291,6 @@ export default function Navbar() {
 
                     {/* Mega Menu Dropdown */}
                     <div
-                      onMouseEnter={() => setServicesOpen(true)}
-                      onMouseLeave={() => setServicesOpen(false)}
                       className={`absolute top-full left-0 w-full bg-[#111111]/98 backdrop-blur-2xl border-t-2 border-[#b8960c] shadow-[0_20px_50px_rgba(0,0,0,0.5)] z-50 transition-all duration-300 transform origin-top ${
                         servicesOpen ? "opacity-100 scale-y-100 pointer-events-auto" : "opacity-0 scale-y-95 pointer-events-none"
                       }`}
