@@ -46,29 +46,58 @@ export default function Navbar() {
       description: "This sector focuses on bespoke, single-family, and multi-family living environments.",
       sections: [
         {
-          title: "Planning & Management",
+          title: "Custom Home Building",
           items: [
-            { name: "Architectural Drafting & 3D Rendering", href: "/services/architectural-drafting" },
-            { name: "Residential Project Management", href: "/services/project-management" },
-            { name: "Zoning & Permitting Acquisition", href: "/services/zoning-permitting", badge: "New" },
+            { name: "New Construction", href: "/services/new-construction" },
+            { name: "Custom Design", href: "/services/custom-design" },
+            { name: "Quality Materials", href: "/services/quality-materials" },
+            { name: "Turnkey Solutions", href: "/services/turnkey-solutions" },
           ],
         },
         {
-          title: "Core Construction & Development",
+          title: "Home Renovations",
           items: [
-            { name: "Custom Home Building", href: "/services/custom-home-building" },
-            { name: "High-End Renovations", href: "/services/high-end-renovations" },
-            { name: "Accessory Dwelling Unit (ADU) Construction", href: "/services/adu-construction", badge: "New" },
-            { name: "Sustainable & Passive Home Development", href: "/services/sustainable-homes", badge: "New" },
+            { name: "Kitchen Remodeling", href: "/services/kitchen-remodeling" },
+            { name: "Bathroom Remodeling", href: "/services/bathroom-remodeling" },
+            { name: "Room Additions", href: "/services/room-additions" },
+            { name: "Whole Home Renovations", href: "/services/whole-home-renovations" },
           ],
         },
         {
-          title: "Targeted Improvements",
+          title: "Basement Finishing",
           items: [
-            { name: "Basement Optimization & Finishing", href: "/services/basement-optimization" },
-            { name: "Residential Exterior Improvement", href: "/services/exterior-improvements" },
-            { name: "Precision Kitchen & Bath Remodeling", href: "/services/kitchen-bath-remodel", badge: "New" },
-            { name: "Smart Home Infrastructure Integration", href: "/services/smart-home-integration", badge: "New" },
+            { name: "Open Concepts", href: "/services/open-concepts" },
+            { name: "Home Theaters", href: "/services/home-theaters" },
+            { name: "Guest Suites", href: "/services/guest-suites" },
+            { name: "Recreation Rooms", href: "/services/recreation-rooms" },
+          ],
+        },
+        {
+          title: "Project Management",
+          items: [
+            { name: "Timeline Planning", href: "/services/timeline-planning" },
+            { name: "Budget Management", href: "/services/budget-management" },
+            { name: "Quality Control", href: "/services/quality-control" },
+            { name: "Vendor Coordination", href: "/services/vendor-coordination" },
+          ],
+        },
+        {
+          title: "Architectural & Design",
+          items: [
+            { name: "3D Renderings", href: "/services/3d-renderings" },
+            { name: "Floor Plans", href: "/services/floor-plans" },
+            { name: "Material Selection", href: "/services/material-selection" },
+            { name: "Design Consultation", href: "/services/design-consultation" },
+          ],
+        },
+        {
+          title: "Exterior Improvements",
+          items: [
+            { name: "Decks & Porches", href: "/services/decks-porches" },
+            { name: "Roofing", href: "/services/roofing" },
+            { name: "Siding", href: "/services/siding" },
+            { name: "Windows & Doors", href: "/services/windows-doors" },
+            { name: "Fence Installation", href: "/services/fence-installation" },
           ],
         },
       ],
@@ -297,12 +326,12 @@ export default function Navbar() {
                     >
                       <div className="mx-auto p-10 grid grid-cols-12 gap-10 xl:gap-14 bg-gradient-to-b from-white/[0.02] to-transparent">
                         {/* Column 1: Residential */}
-                        <div className="col-span-4 flex flex-col gap-6">
+                        <div className="col-span-5 flex flex-col gap-6">
                           <div>
                             <h3 className="text-white text-lg font-bold tracking-wider uppercase mb-1">{megaMenuData.residential.title}</h3>
                             <p className="text-gray-400 text-xs leading-relaxed max-w-[90%]">{megaMenuData.residential.description}</p>
                           </div>
-                          <div className="flex flex-col gap-6">
+                          <div className="grid grid-cols-2 gap-x-6 gap-y-7">
                             {megaMenuData.residential.sections.map((section, idx) => (
                               <div key={idx}>
                                 <h4 className="text-[#b8960c] text-[11px] font-bold tracking-[0.2em] uppercase mb-3">{section.title}</h4>
@@ -312,9 +341,6 @@ export default function Navbar() {
                                       <Link href={item.href} className="group/item flex items-center text-[13px] font-medium text-gray-300 hover:text-white transition-colors">
                                         <span className="w-1.5 h-1.5 rounded-full bg-gray-700 mr-2.5 group-hover/item:bg-[#F9A825] transition-colors" />
                                         {item.name}
-                                        {item.badge === "New" && (
-                                          <span className="ml-2.5 px-1.5 py-0.5 text-[9px] uppercase font-bold text-[#1a1209] bg-[#F9A825] rounded-sm tracking-widest hidden xl:inline-block">New</span>
-                                        )}
                                       </Link>
                                     </li>
                                   ))}
@@ -325,7 +351,7 @@ export default function Navbar() {
                         </div>
 
                         {/* Column 2: Commercial */}
-                        <div className="col-span-4 flex flex-col gap-6 border-l border-white/5 pl-10 xl:pl-14">
+                        <div className="col-span-4 flex flex-col gap-6 border-l border-white/5 pl-8 xl:pl-10">
                           <div>
                             <h3 className="text-white text-lg font-bold tracking-wider uppercase mb-1">{megaMenuData.commercial.title}</h3>
                             <p className="text-gray-400 text-xs leading-relaxed max-w-[90%]">{megaMenuData.commercial.description}</p>
@@ -353,7 +379,7 @@ export default function Navbar() {
                         </div>
 
                         {/* Column 3: How It Works */}
-                        <div className="col-span-4 bg-[#1a1a1a]/80 rounded-xl border border-white/10 p-8 flex flex-col h-full shadow-inner relative overflow-hidden">
+                        <div className="col-span-3 bg-[#1a1a1a]/80 rounded-xl border border-white/10 p-6 xl:p-8 flex flex-col h-full shadow-inner relative overflow-hidden">
                           {/* Accent glow */}
                           <div className="absolute top-0 right-0 w-32 h-32 bg-[#F9A825]/5 blur-[60px] rounded-full point-events-none" />
                           
@@ -493,9 +519,6 @@ export default function Navbar() {
                                 <Link key={j} onClick={() => setMenuOpen(false)} href={item.href} className="flex items-center text-[12px] text-gray-300 hover:text-white transition-colors group/item">
                                   <span className="w-1 h-1 rounded-full bg-gray-700 mr-2 group-hover/item:bg-[#F9A825]" />
                                   {item.name}
-                                  {item.badge === "New" && (
-                                    <span className="ml-2 px-1 py-0.5 text-[8px] uppercase font-bold text-[#111] bg-[#F9A825] rounded-sm tracking-widest leading-none">New</span>
-                                  )}
                                 </Link>
                               ))}
                             </div>
