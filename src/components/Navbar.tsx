@@ -90,28 +90,39 @@ export default function Navbar() {
       description: "This sector must project scalability, compliance, and ROI-driven execution to attract B2B clients.",
       sections: [
         {
-          title: "Pre-Construction & Consulting",
+          title: "Commercial Construction",
           items: [
-            { name: "Commercial Architectural Drafting", href: "/services/commercial-drafting" },
-            { name: "Commercial Project Management", href: "/services/commercial-management" },
-            { name: "Pre-Construction Feasibility Analysis", href: "/services/feasibility-analysis", badge: "New" },
+            { name: "Ground-Up Construction", href: "/services/ground-up-construction" },
+            { name: "Design-Build Services", href: "/services/design-build" },
+            { name: "Structural Material Sourcing", href: "/services/material-sourcing" },
+            { name: "Turnkey Facility Solutions", href: "/services/turnkey-solutions" },
           ],
         },
         {
-          title: "Commercial Build & Renovation",
+          title: "Commercial Remodeling",
           items: [
-            { name: "Tenant Build-Outs / Leasehold Improvements", href: "/services/tenant-build-outs", badge: "New" },
-            { name: "White Box / Vanilla Shell Construction", href: "/services/vanilla-shell", badge: "New" },
-            { name: "Corporate & Retail Remodeling", href: "/services/corporate-remodel", badge: "New" },
-            { name: "Adaptive Reuse Construction", href: "/services/adaptive-reuse", badge: "New" },
+            { name: "Tenant Build-Outs", href: "/services/tenant-build-outs" },
+            { name: "Vanilla Shell Finish", href: "/services/vanilla-shell-finish" },
+            { name: "Office Modernization", href: "/services/office-modernization" },
+            { name: "ADA Compliance Retrofitting", href: "/services/ada-compliance" },
           ],
         },
         {
-          title: "Facility Upgrades",
+          title: "Interior Optimization",
           items: [
-            { name: "Commercial Exterior & Façade Improvement", href: "/services/commercial-exteriors" },
-            { name: "Structural Retrofitting & Code Upgrades", href: "/services/structural-retrofitting", badge: "New" },
-            { name: "Commercial Preventative Maintenance Contracts", href: "/services/maintenance-contracts", badge: "New" },
+            { name: "Adaptive Reuse Conversions", href: "/services/adaptive-reuse" },
+            { name: "Executive Suite Construction", href: "/services/executive-suites" },
+            { name: "Breakroom & Cafeteria Builds", href: "/services/cafeteria-builds" },
+            { name: "Acoustic Partitioning", href: "/services/acoustic-partitioning" },
+          ],
+        },
+        {
+          title: "Exterior & Security",
+          items: [
+            { name: "Commercial Roofing Systems", href: "/services/commercial-roofing" },
+            { name: "Architectural Facade Upgrades", href: "/services/facade-upgrades" },
+            { name: "Storefront Glazing & Entry", href: "/services/storefront-glazing" },
+            { name: "Perimeter Security Fencing", href: "/services/security-fencing" },
           ],
         },
       ],
@@ -334,12 +345,12 @@ export default function Navbar() {
                         </div>
 
                         {/* Column 2: Commercial */}
-                        <div className="col-span-4 flex flex-col gap-6 border-l border-white/5 pl-8 xl:pl-10">
+                        <div className="col-span-5 flex flex-col gap-6 border-l border-white/5 pl-8 xl:pl-10">
                           <div>
                             <h3 className="text-white text-lg font-bold tracking-wider uppercase mb-1">{megaMenuData.commercial.title}</h3>
                             <p className="text-gray-400 text-xs leading-relaxed max-w-[90%]">{megaMenuData.commercial.description}</p>
                           </div>
-                          <div className="flex flex-col gap-6">
+                          <div className="grid grid-cols-2 gap-x-6 gap-y-7">
                             {megaMenuData.commercial.sections.map((section, idx) => (
                               <div key={idx}>
                                 <h4 className="text-[#b8960c] text-[11px] font-bold tracking-[0.2em] uppercase mb-3">{section.title}</h4>
@@ -349,9 +360,6 @@ export default function Navbar() {
                                       <Link href={item.href} className="group/item flex items-center text-[13px] font-medium text-gray-300 hover:text-white transition-colors">
                                         <span className="w-1.5 h-1.5 rounded-full bg-gray-700 mr-2.5 group-hover/item:bg-[#F9A825] transition-colors" />
                                         {item.name}
-                                        {item.badge === "New" && (
-                                          <span className="ml-2.5 px-1.5 py-0.5 text-[9px] uppercase font-bold text-[#1a1209] bg-[#F9A825] rounded-sm tracking-widest hidden xl:inline-block">New</span>
-                                        )}
                                       </Link>
                                     </li>
                                   ))}
@@ -362,7 +370,7 @@ export default function Navbar() {
                         </div>
 
                         {/* Column 3: How It Works */}
-                        <div className="col-span-3 bg-[#1a1a1a]/80 rounded-xl border border-white/10 p-6 xl:p-8 flex flex-col h-full shadow-inner relative overflow-hidden">
+                        <div className="col-span-2 bg-[#1a1a1a]/80 rounded-xl border border-white/10 p-6 flex flex-col h-full shadow-inner relative overflow-hidden">
                           {/* Accent glow */}
                           <div className="absolute top-0 right-0 w-32 h-32 bg-[#F9A825]/5 blur-[60px] rounded-full point-events-none" />
                           
@@ -520,9 +528,6 @@ export default function Navbar() {
                                 <Link key={j} onClick={() => setMenuOpen(false)} href={item.href} className="flex items-center text-[12px] text-gray-300 hover:text-white transition-colors group/item">
                                   <span className="w-1 h-1 rounded-full bg-gray-700 mr-2 group-hover/item:bg-[#F9A825]" />
                                   {item.name}
-                                  {item.badge === "New" && (
-                                    <span className="ml-2 px-1 py-0.5 text-[8px] uppercase font-bold text-[#111] bg-[#F9A825] rounded-sm tracking-widest leading-none">New</span>
-                                  )}
                                 </Link>
                               ))}
                             </div>
