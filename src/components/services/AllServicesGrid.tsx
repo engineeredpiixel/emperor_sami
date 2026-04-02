@@ -7,35 +7,44 @@ import Link from "next/link";
 import { residentialServicesData } from "@/lib/servicesDataResidential";
 import { commercialServicesData } from "@/lib/servicesDataCommercial";
 
-const residentialServices = Object.values(residentialServicesData).map((data) => ({
-  category: "Residential Architecture",
-  title: data.heroTitle,
-  slug: data.slug,
-  description: data.description,
-  image: data.heroImage,
-  isNew: false
-}));
-
-const commercialServices = Object.values(commercialServicesData).map((data) => ({
-  category: "Commercial Infrastructure",
-  title: data.heroTitle,
-  slug: data.slug,
-  description: data.description,
-  image: data.heroImage,
-  isNew: false
-}));
+import { megaMenuData } from "@/lib/megaMenuData";
 
 export default function AllServicesGrid() {
   const visible = true;
   const [activeSlug, setActiveSlug] = useState<string | null>(null);
 
-  const renderServiceCards = (services: any[]) => {
-    return (
-      <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 xl:gap-12 transition-all duration-[1.5s] ease-[0.16,1,0.3,1] delay-300 will-change-transform ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-24"}`}>
-        {services.map((service, i) => {
-          const isActive = activeSlug === service.slug;
+  const renderCategorizedCards = (sections: any[], dataSource: Record<string, any>) => {
+    return sections.map((section: any, secIdx: number) => {
+      const services = section.items.map((item: any) => {
+        const slug = item.href.split('/').pop();
+        const data = dataSource[slug];
+        if (!data) return null;
+        return {
+          category: section.title,
+          title: data.heroTitle,
+          slug: data.slug,
+          description: data.description,
+          image: data.heroImage,
+          isNew: false
+        };
+      }).filter(Boolean);
 
-          return (
+      if (services.length === 0) return null;
+
+      return (
+        <div key={section.title} className={secIdx > 0 ? "mt-24 sm:mt-32 pt-16 border-t border-gray-200/50" : "mt-8"}>
+          <div className="mb-12">
+            <h3 className="text-2xl sm:text-3xl font-black uppercase tracking-widest text-[#111]">
+              {section.title}
+            </h3>
+            <div className="h-1.5 w-16 bg-[#F9A825] mt-4" />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 xl:gap-12 transition-all duration-[1.5s] ease-[0.16,1,0.3,1] will-change-transform">
+            {services.map((service: any, i: number) => {
+              const isActive = activeSlug === service.slug;
+
+              return (
             <div
               key={service.slug}
               onClick={() => setActiveSlug(isActive ? null : service.slug)}
@@ -132,11 +141,13 @@ export default function AllServicesGrid() {
               {/* Hover Geometric Border */}
               <div className={`absolute inset-0 border-[2px] pointer-events-none transition-all duration-[0.8s] ease-[0.16,1,0.3,1] will-change-transform rounded-sm z-50 ${isActive ? 'border-[#F9A825]/50 scale-100' : 'border-[#F9A825]/0 scale-95 group-hover/scanner:border-[#F9A825]/50 group-hover/scanner:scale-100'}`} />
 
-            </div>
-          );
-        })}
-      </div>
-    );
+              </div>
+            );
+          })}
+          </div>
+        </div>
+      );
+    });
   };
 
   return (
@@ -163,7 +174,7 @@ export default function AllServicesGrid() {
             </div>
           </div>
           
-          {renderServiceCards(residentialServices)}
+          {renderCategorizedCards(megaMenuData.residential.sections, residentialServicesData)}
         </div>
 
         {/* COMMERCIAL MASTER SECTION */}
@@ -186,7 +197,7 @@ export default function AllServicesGrid() {
             </div>
           </div>
           
-          {renderServiceCards(commercialServices)}
+          {renderCategorizedCards(megaMenuData.commercial.sections, commercialServicesData)}
         </div>
 
       </div>
