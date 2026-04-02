@@ -83,10 +83,10 @@ export default function ServiceAreaSection({ hideButton = false }: { hideButton?
           
           {!hideButton && (
             <div className="flex items-center gap-2">
-              <Link href="/service-area" className="bg-[#D84315] hover:bg-[#BF360C] text-white font-bold px-8 py-3.5 rounded-md transition-colors text-sm shadow-lg shadow-[#D84315]/30 text-center">
+              <Link href="/service-area" className="bg-[#111] hover:bg-black text-white font-bold px-8 py-3.5 rounded-md transition-colors text-sm shadow-lg shadow-[#111]/30 text-center">
                 View All Locations
               </Link>
-              <Link href="/service-area" aria-label="View Service Areas Arrow" className="w-12 h-12 rounded-md bg-[#D84315] hover:bg-[#BF360C] text-white flex items-center justify-center transition-colors shadow-lg shadow-[#D84315]/30 shrink-0">
+              <Link href="/service-area" aria-label="View Service Areas Arrow" className="w-12 h-12 rounded-md bg-[#111] hover:bg-black text-white flex items-center justify-center transition-colors shadow-lg shadow-[#111]/30 shrink-0">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
                 </svg>
@@ -331,11 +331,11 @@ export default function ServiceAreaSection({ hideButton = false }: { hideButton?
           border-radius: 10px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: #F4511E; 
+          background: #333; 
           border-radius: 10px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: #d84315; 
+          background: #111; 
         }
       `}} />
     </section>

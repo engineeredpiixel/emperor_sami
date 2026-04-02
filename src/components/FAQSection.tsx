@@ -43,15 +43,15 @@ export default function FAQSection() {
         {/* Header */}
         <div className="text-center mb-16">
           <div className="flex items-center justify-center gap-2 mb-4">
-            <svg className="w-4 h-4 text-[#F4511E]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 text-[#111]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <span className="text-[#D84315] text-xs font-bold tracking-[0.2em] uppercase">
+            <span className="text-[#111] text-xs font-black tracking-[0.2em] uppercase">
               Common Questions
             </span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-[2.6rem] font-bold text-[#111111] leading-tight mb-4">
-            Frequently Asked <span className="text-[#D84315]">Questions</span>
+            Frequently Asked <span className="text-gray-500">Questions</span>
           </h2>
           <p className="text-gray-600 text-sm sm:text-base max-w-2xl mx-auto">
             Everything you need to know about our construction services, project processes, and timelines before we begin building your dream together.
@@ -72,10 +72,10 @@ export default function FAQSection() {
                   onClick={() => toggleFAQ(idx)}
                   className="w-full flex items-center justify-between p-6 text-left focus:outline-none group"
                 >
-                  <span className={`font-bold text-base sm:text-lg transition-colors ${isOpen ? 'text-[#D84315]' : 'text-gray-900 group-hover:text-[#D84315]'}`}>
+                  <span className={`font-bold text-base sm:text-lg transition-colors ${isOpen ? 'text-[#111]' : 'text-gray-500 group-hover:text-[#111]'}`}>
                     {faq.question}
                   </span>
-                  <div className={`ml-6 shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${isOpen ? 'bg-[#D84315] text-white rotate-180' : 'bg-gray-100 text-gray-400 group-hover:bg-[#F9A825] group-hover:text-[#111]'}`}>
+                  <div className={`ml-6 shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${isOpen ? 'bg-[#111] text-white rotate-180' : 'bg-gray-100 text-gray-400 group-hover:bg-[#111] group-hover:text-white'}`}>
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                     </svg>
