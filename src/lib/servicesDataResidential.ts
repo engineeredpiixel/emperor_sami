@@ -3,37 +3,28 @@ import { ServiceContentType } from "./servicesDataTypes";
 export const residentialServicesData: Record<string, ServiceContentType> = {};
 
 const RESIDENTIAL_SERVICES_MAP = [
-  { slug: "new-construction", title: "New Construction" },
-  { slug: "custom-design", title: "Custom Design" },
-  { slug: "quality-materials", title: "Quality Materials" },
-  { slug: "turnkey-solutions", title: "Turnkey Solutions" },
-  { slug: "kitchen-remodeling", title: "Kitchen Remodeling" },
-  { slug: "bathroom-remodeling", title: "Bathroom Remodeling" },
-  { slug: "room-additions", title: "Room Additions" },
-  { slug: "whole-home-renovations", title: "Whole Home Renovations" },
-  { slug: "open-concepts", title: "Open Concepts" },
-  { slug: "home-theaters", title: "Home Theaters" },
-  { slug: "guest-suites", title: "Guest Suites" },
-  { slug: "recreation-rooms", title: "Recreation Rooms" },
-  { slug: "decks-porches", title: "Decks & Porches" },
-  { slug: "roofing", title: "Roofing" },
-  { slug: "siding", title: "Siding" },
-  { slug: "windows-doors", title: "Windows & Doors" },
-  { slug: "fence-installation", title: "Fence Installation" }
-];
-
-const RESIDENTIAL_IMAGES = [
-  "/optimized/webp_gen_luxury_glass_mansion.webp",
-  "/optimized/webp_gen_concrete_contemporary.webp",
-  "/optimized/webp_gen_brutalist_villa.webp",
-  "/optimized/webp_gen_deck_pool.webp",
-  "/optimized/webp_gen_luxury_kitchen.webp",
-  "/optimized/webp_gen_marble_foyer.webp"
+  { slug: "new-construction", title: "New Construction", imgUrl: "/optimized_v2/hero_res_new_construction.webp" },
+  { slug: "custom-design", title: "Custom Design", imgUrl: "/optimized_v2/hero_res_custom_design.webp" },
+  { slug: "quality-materials", title: "Quality Materials", imgUrl: "/optimized_v2/hero_res_quality_materials.webp" },
+  { slug: "turnkey-solutions", title: "Turnkey Solutions", imgUrl: "/optimized_v2/hero_res_turnkey.webp" },
+  { slug: "kitchen-remodeling", title: "Kitchen Remodeling", imgUrl: "/optimized_v2/hero_res_kitchen.webp" },
+  { slug: "bathroom-remodeling", title: "Bathroom Remodeling", imgUrl: "/optimized_v2/hero_res_bathroom.webp" },
+  { slug: "room-additions", title: "Room Additions", imgUrl: "/optimized_v2/hero_res_room_additions.webp" },
+  { slug: "whole-home-renovations", title: "Whole Home Renovations", imgUrl: "/optimized_v2/hero_res_whole_home.webp" },
+  { slug: "open-concepts", title: "Open Concepts", imgUrl: "/optimized_v2/hero_res_open_concept.webp" },
+  { slug: "home-theaters", title: "Home Theaters", imgUrl: "/optimized_v2/hero_res_home_theater.webp" },
+  { slug: "guest-suites", title: "Guest Suites", imgUrl: "/optimized_v2/hero_res_guest_suite.webp" },
+  { slug: "recreation-rooms", title: "Recreation Rooms", imgUrl: "/optimized_v2/hero_res_recreation.webp" },
+  { slug: "decks-porches", title: "Decks & Porches", imgUrl: "/optimized_v2/hero_res_decks.webp" },
+  { slug: "roofing", title: "Roofing", imgUrl: "/optimized_v2/hero_res_roofing.webp" },
+  { slug: "siding", title: "Siding", imgUrl: "/optimized_v2/hero_res_siding.webp" },
+  { slug: "windows-doors", title: "Windows & Doors", imgUrl: "/optimized_v2/hero_res_windows.webp" },
+  { slug: "fence-installation", title: "Fence Installation", imgUrl: "/optimized_v2/hero_res_fence.webp" }
 ];
 
 RESIDENTIAL_SERVICES_MAP.forEach((item, i) => {
-  const { slug, title } = item;
-  const imgUrl = RESIDENTIAL_IMAGES[i % RESIDENTIAL_IMAGES.length];
+  const { slug, title, imgUrl } = item;
+  
   
   residentialServicesData[slug] = {
      id: slug,

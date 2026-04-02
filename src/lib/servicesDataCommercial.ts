@@ -3,35 +3,27 @@ import { ServiceContentType } from "./servicesDataTypes";
 export const commercialServicesData: Record<string, ServiceContentType> = {};
 
 const COMMERCIAL_SERVICES_MAP = [
-  { slug: "ground-up-construction", title: "Ground-Up Construction" },
-  { slug: "design-build", title: "Design-Build Services" },
-  { slug: "material-sourcing", title: "Structural Material Sourcing" },
-  { slug: "turnkey-solutions", title: "Turnkey Facility Solutions" },
-  { slug: "tenant-build-outs", title: "Tenant Build-Outs" },
-  { slug: "vanilla-shell-finish", title: "Vanilla Shell Finish" },
-  { slug: "office-modernization", title: "Office Space Modernization" },
-  { slug: "ada-compliance", title: "ADA Compliance Retrofitting" },
-  { slug: "adaptive-reuse", title: "Adaptive Reuse Conversions" },
-  { slug: "executive-suites", title: "Executive Suite Construction" },
-  { slug: "cafeteria-builds", title: "Breakroom & Cafeteria Builds" },
-  { slug: "acoustic-partitioning", title: "Acoustic Partitioning" },
-  { slug: "commercial-roofing", title: "Commercial Roofing Systems" },
-  { slug: "facade-upgrades", title: "Architectural Facade Upgrades" },
-  { slug: "storefront-glazing", title: "Storefront Glazing & Entry" },
-  { slug: "security-fencing", title: "Perimeter Security Fencing" }
-];
-
-const COMMERCIAL_IMAGES = [
-  "/optimized/webp_gen_commercial_skyscraper.webp",
-  "/optimized/webp_gen_corporate_lowrise.webp",
-  "/optimized/webp_gen_industrial_loft.webp",
-  "/optimized/webp_gen_boardroom.webp",
-  "/optimized/webp_gen_concrete_contemporary.webp"
+  { slug: "ground-up-construction", title: "Ground-Up Construction", imgUrl: "/optimized_v2/hero_com_ground_up.webp" },
+  { slug: "design-build", title: "Design-Build Services", imgUrl: "/optimized_v2/hero_com_design_build.webp" },
+  { slug: "material-sourcing", title: "Structural Material Sourcing", imgUrl: "/optimized_v2/hero_com_material_sourcing.webp" },
+  { slug: "turnkey-solutions", title: "Turnkey Facility Solutions", imgUrl: "/optimized_v2/hero_com_turnkey.webp" },
+  { slug: "tenant-build-outs", title: "Tenant Build-Outs", imgUrl: "/optimized_v2/hero_com_tenant_build_outs.webp" },
+  { slug: "vanilla-shell-finish", title: "Vanilla Shell Finish", imgUrl: "/optimized_v2/hero_com_vanilla_shell.webp" },
+  { slug: "office-modernization", title: "Office Space Modernization", imgUrl: "/optimized_v2/hero_com_office_modernization.webp" },
+  { slug: "ada-compliance", title: "ADA Compliance Retrofitting", imgUrl: "/optimized_v2/hero_com_ada_compliance.webp" },
+  { slug: "adaptive-reuse", title: "Adaptive Reuse Conversions", imgUrl: "/optimized_v2/hero_com_adaptive_reuse.webp" },
+  { slug: "executive-suites", title: "Executive Suite Construction", imgUrl: "/optimized_v2/hero_com_executive_suites.webp" },
+  { slug: "cafeteria-builds", title: "Breakroom & Cafeteria Builds", imgUrl: "/optimized_v2/hero_com_cafeteria.webp" },
+  { slug: "acoustic-partitioning", title: "Acoustic Partitioning", imgUrl: "/optimized_v2/hero_com_acoustic.webp" },
+  { slug: "commercial-roofing", title: "Commercial Roofing Systems", imgUrl: "/optimized_v2/hero_com_roofing.webp" },
+  { slug: "facade-upgrades", title: "Architectural Facade Upgrades", imgUrl: "/optimized_v2/hero_com_facade.webp" },
+  { slug: "storefront-glazing", title: "Storefront Glazing & Entry", imgUrl: "/optimized_v2/hero_com_storefront.webp" },
+  { slug: "security-fencing", title: "Perimeter Security Fencing", imgUrl: "/optimized_v2/hero_com_security_fencing.webp" }
 ];
 
 COMMERCIAL_SERVICES_MAP.forEach((item, i) => {
-  const { slug, title } = item;
-  const imgUrl = COMMERCIAL_IMAGES[i % COMMERCIAL_IMAGES.length];
+  const { slug, title, imgUrl } = item;
+  
   
   commercialServicesData[slug] = {
      id: slug,

@@ -44,28 +44,50 @@ const LOCATIONS = [
   { name: "Etobicoke", baseLat: 43.6205, baseLng: -79.5132 },
 ];
 
-const WEBP_GALLERY = [
-  "/optimized/webp_gen_luxury_glass_mansion.webp", 
-  "/optimized/webp_gen_marble_foyer.webp", 
-  "/optimized/webp_gen_deck_pool.webp", 
-  "/optimized/webp_gen_luxury_kitchen.webp"
-];
+const CATEGORY_GALLERIES: Record<string, string[]> = {
+  "New Construction": ["/optimized_v2/gal_res_custom_1.webp", "/optimized_v2/gal_res_custom_2.webp"],
+  "Custom Design": ["/optimized_v2/gal_res_custom_1.webp", "/optimized_v2/gal_res_custom_2.webp"],
+  "Quality Materials": ["/optimized_v2/gal_res_custom_1.webp", "/optimized_v2/gal_res_custom_2.webp"],
+  "Turnkey Solutions": ["/optimized_v2/gal_res_custom_1.webp", "/optimized_v2/gal_res_custom_2.webp"],
+  
+  "Kitchen Remodeling": ["/optimized_v2/gal_res_reno_1.webp", "/optimized_v2/gal_res_reno_2.webp"],
+  "Bathroom Remodeling": ["/optimized_v2/gal_res_reno_1.webp", "/optimized_v2/gal_res_reno_2.webp"],
+  "Room Additions": ["/optimized_v2/gal_res_reno_1.webp", "/optimized_v2/gal_res_reno_2.webp"],
+  "Whole Home Renovations": ["/optimized_v2/gal_res_reno_1.webp", "/optimized_v2/gal_res_reno_2.webp"],
+  "Open Concepts": ["/optimized_v2/gal_res_reno_1.webp", "/optimized_v2/gal_res_reno_2.webp"],
+  
+  "Home Theaters": ["/optimized_v2/gal_res_base_1.webp", "/optimized_v2/gal_res_base_2.webp"],
+  "Guest Suites": ["/optimized_v2/gal_res_base_1.webp", "/optimized_v2/gal_res_base_2.webp"],
+  "Recreation Rooms": ["/optimized_v2/gal_res_base_1.webp", "/optimized_v2/gal_res_base_2.webp"],
+  
+  "Decks & Porches": ["/optimized_v2/gal_res_ext_1.webp", "/optimized_v2/gal_res_ext_2.webp"],
+  "Roofing": ["/optimized_v2/gal_res_ext_1.webp", "/optimized_v2/gal_res_ext_2.webp"],
+  "Siding": ["/optimized_v2/gal_res_ext_1.webp", "/optimized_v2/gal_res_ext_2.webp"],
+  "Windows & Doors": ["/optimized_v2/gal_res_ext_1.webp", "/optimized_v2/gal_res_ext_2.webp"],
+  "Fence Installation": ["/optimized_v2/gal_res_ext_1.webp", "/optimized_v2/gal_res_ext_2.webp"],
 
-const WEBP_GALLERY_2 = [
-  "/optimized/webp_gen_concrete_contemporary.webp", 
-  "/optimized/webp_gen_brutalist_villa.webp", 
-  "/optimized/webp_gen_marble_foyer.webp", 
-  "/optimized/webp_gen_luxury_glass_mansion.webp"
-];
-
-const WEBP_GALLERY_3 = [
-  "/optimized/webp_gen_commercial_skyscraper.webp", 
-  "/optimized/webp_gen_industrial_loft.webp", 
-  "/optimized/webp_gen_corporate_lowrise.webp", 
-  "/optimized/webp_gen_boardroom.webp"
-];
-
-const GALLERIES = [WEBP_GALLERY, WEBP_GALLERY_2, WEBP_GALLERY_3, WEBP_GALLERY];
+  "Ground-Up Construction": ["/optimized_v2/gal_com_const_1.webp", "/optimized_v2/gal_com_const_2.webp"],
+  "Design-Build Services": ["/optimized_v2/gal_com_const_1.webp", "/optimized_v2/gal_com_const_2.webp"],
+  "Structural Material Sourcing": ["/optimized_v2/gal_com_const_1.webp", "/optimized_v2/gal_com_const_2.webp"],
+  "Turnkey Facility Solutions": ["/optimized_v2/gal_com_const_1.webp", "/optimized_v2/gal_com_const_2.webp"],
+  
+  "Tenant Build-Outs": ["/optimized_v2/gal_com_remo_1.webp", "/optimized_v2/gal_com_remo_2.webp"],
+  "Vanilla Shell Finish": ["/optimized_v2/gal_com_remo_1.webp", "/optimized_v2/gal_com_remo_2.webp"],
+  "Office Space Modernization": ["/optimized_v2/gal_com_remo_1.webp", "/optimized_v2/gal_com_remo_2.webp"],
+  "ADA Compliance Retrofitting": ["/optimized_v2/gal_com_remo_1.webp", "/optimized_v2/gal_com_remo_2.webp"],
+  "Adaptive Reuse Conversions": ["/optimized_v2/gal_com_remo_1.webp", "/optimized_v2/gal_com_remo_2.webp"],
+  
+  "Executive Suite Construction": ["/optimized_v2/gal_com_int_1.webp", "/optimized_v2/gal_com_int_2.webp"],
+  "Breakroom & Cafeteria Builds": ["/optimized_v2/gal_com_int_1.webp", "/optimized_v2/gal_com_int_2.webp"],
+  "Acoustic Partitioning": ["/optimized_v2/gal_com_int_1.webp", "/optimized_v2/gal_com_int_2.webp"],
+  
+  "Commercial Roofing Systems": ["/optimized_v2/gal_com_ext_1.webp", "/optimized_v2/gal_com_ext_2.webp"],
+  "Architectural Facade Upgrades": ["/optimized_v2/gal_com_ext_1.webp", "/optimized_v2/gal_com_ext_2.webp"],
+  "Storefront Glazing & Entry": ["/optimized_v2/gal_com_ext_1.webp", "/optimized_v2/gal_com_ext_2.webp"],
+  "Perimeter Security Fencing": ["/optimized_v2/gal_com_ext_1.webp", "/optimized_v2/gal_com_ext_2.webp"],
+  
+  "Default": ["/optimized_v2/gal_com_const_1.webp", "/optimized_v2/gal_res_custom_1.webp"]
+};
 
 // 10 Distinct High-End Residential Execution Templates
 const RESIDENTIAL_TEMPLATES = [
@@ -118,8 +140,8 @@ function generateProjectsForService(serviceKey: string, serviceTitle: string, se
     // Pick the highly detailed template based on index so it cycles flawlessly
     const template = templates[i % templates.length];
     
-    // Pick a staggered gallery based on index to ensure visual variety on the grids
-    const gallery = GALLERIES[i % GALLERIES.length];
+    // Pick the surgically precise 2-image gallery based directly on the actual Category
+    const gallery = CATEGORY_GALLERIES[serviceTitle] || CATEGORY_GALLERIES["Default"];
 
     // Add a microscopic randomization to the lat/lng so the 210 map markers don't overlap exactly
     // A 0.05 variation is roughly a few kilometers across the city
