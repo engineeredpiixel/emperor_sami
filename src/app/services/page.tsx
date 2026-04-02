@@ -1,9 +1,7 @@
 import ImageMaskDefs from "@/components/ui/image-mask";
 
 import ServicesHero from "@/components/services/ServicesHero";
-import DetailedServices from "@/components/services/DetailedServices";
-import ServiceProcess from "@/components/services/ServiceProcess";
-import SpecializedServices from "@/components/services/SpecializedServices";
+import AllServicesGrid from "@/components/services/AllServicesGrid";
 
 import CoreValuesSection from "@/components/CoreValuesSection";
 import AboutSection from "@/components/AboutSection";
@@ -25,16 +23,9 @@ export default function ServicesPage() {
       <ImageMaskDefs />
 
       <ServicesHero />
-      <DetailedServices />
-      
-      {/* Custom anchors for Navbar drop-down routing */}
-      <div id="custom-homes" />
-      <ServiceProcess />
-      
-      <div id="renovations" className="pt-24 bg-[#050505] -mt-24" />
-      <SpecializedServices />
-
-      <div id="management" className="pt-24 bg-[#FAFAFA] -mt-24" />
+      <div className="pt-12 bg-[#FAF9F6]">
+        <AllServicesGrid />
+      </div>
       <CoreValuesSection />
 
       <AboutSection />
