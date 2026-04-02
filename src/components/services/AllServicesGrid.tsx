@@ -26,20 +26,8 @@ const commercialServices = Object.values(commercialServicesData).map((data) => (
 }));
 
 export default function AllServicesGrid() {
-  const [visible, setVisible] = useState(false);
+  const visible = true;
   const [activeSlug, setActiveSlug] = useState<string | null>(null);
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setVisible(true);
-      },
-      { threshold: 0.1 }
-    );
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
 
   const renderServiceCards = (services: any[]) => {
     return (
@@ -152,7 +140,7 @@ export default function AllServicesGrid() {
   };
 
   return (
-    <section ref={sectionRef} className="bg-[#FAF9F6] py-32 sm:py-48 overflow-hidden select-none pb-48">
+    <section className="bg-[#FAF9F6] py-32 sm:py-48 overflow-hidden select-none pb-48">
       <div className="max-w-[1500px] mx-auto px-6 sm:px-10 lg:px-16">
         
         {/* RESIDENTIAL MASTER SECTION */}
