@@ -82,8 +82,8 @@ export default async function ServicePage(props: { params: Promise<{ slug: strin
       {/* ── EDGE-TO-EDGE CASE STUDY ── */}
       <ServiceCaseStudy 
         data={data.caseStudy} 
-        projectUrl={`/projects/toronto-${resolvedParams.slug}-exec-0`} 
-        projectImage={`/optimized_v2/prj_toronto_${resolvedParams.slug}_hero.webp`} 
+        projectUrl={`/projects/toronto-${params.slug}-exec-0`} 
+        projectImage={`/optimized_v2/prj_toronto_${params.slug}_hero.webp`} 
       />
 
       {/* ── THE SERVICE OBJECTION OVERCOMER ── */}
