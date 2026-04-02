@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { residentialServicesData } from "@/lib/servicesDataResidential";
+import { commercialServicesData } from "@/lib/servicesDataCommercial";
 
 export default function ContactSection() {
   const [visible, setVisible] = useState(false);
@@ -212,10 +214,16 @@ export default function ContactSection() {
                   }}
                 >
                   <option value="" disabled>Select a Service</option>
-                  <option value="custom_home">Custom Home Building</option>
-                  <option value="renovation">Home Renovations & Additions</option>
-                  <option value="basement">Basement Finishing</option>
-                  <option value="project_management">Project Management</option>
+                  <optgroup label="Residential Division">
+                    {Object.values(residentialServicesData).map(s => (
+                      <option key={s.slug} value={s.slug}>{s.heroTitle}</option>
+                    ))}
+                  </optgroup>
+                  <optgroup label="Commercial Division">
+                    {Object.values(commercialServicesData).map(s => (
+                      <option key={s.slug} value={s.slug}>{s.heroTitle}</option>
+                    ))}
+                  </optgroup>
                 </select>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

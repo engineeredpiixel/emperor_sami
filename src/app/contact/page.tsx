@@ -3,6 +3,8 @@
 import TestimonialsSection from "@/components/TestimonialsSection";
 import ContactHero from "@/components/contact/ContactHero";
 import { useState, useEffect, useRef } from "react";
+import { residentialServicesData } from "@/lib/servicesDataResidential";
+import { commercialServicesData } from "@/lib/servicesDataCommercial";
 
 export default function ContactPage() {
   const [isMounted, setIsMounted] = useState(false);
@@ -209,7 +211,7 @@ export default function ContactPage() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 gap-8 mt-8">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-8">
                     <div className="relative group">
                       <select id="budget" required defaultValue="" className="peer w-full bg-transparent border-b-2 border-black/10 px-0 py-4 text-[#111] text-lg font-medium focus:outline-none focus:border-transparent transition-colors appearance-none" disabled={isSubmitting}>
                         <option value="" disabled className="text-gray-400">Select Project Range</option>
@@ -222,6 +224,27 @@ export default function ContactPage() {
                       <div className="absolute bottom-0 left-0 w-full h-[2px] bg-[#D8A02A] origin-left scale-x-0 group-focus-within:scale-x-100 transition-transform duration-500 ease-out" />
                       <div className="absolute right-0 top-5 pointer-events-none">
                         <svg className="w-5 h-5 text-[#D8A02A]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                      </div>
+                    </div>
+
+                    <div className="relative group">
+                      <select id="service" required defaultValue="" className="peer w-full bg-transparent border-b-2 border-black/10 px-0 py-4 text-[#111] text-lg font-medium focus:outline-none focus:border-transparent transition-colors appearance-none" disabled={isSubmitting}>
+                        <option value="" disabled className="text-gray-400">Select Primary Area</option>
+                        <optgroup label="Residential Division">
+                          {Object.values(residentialServicesData).map(s => (
+                            <option key={s.slug} value={s.slug} className="bg-white text-[#111]">{s.heroTitle}</option>
+                          ))}
+                        </optgroup>
+                        <optgroup label="Commercial Division">
+                          {Object.values(commercialServicesData).map(s => (
+                            <option key={s.slug} value={s.slug} className="bg-white text-[#111]">{s.heroTitle}</option>
+                          ))}
+                        </optgroup>
+                      </select>
+                      <label className="absolute left-0 -top-4 text-[10px] text-gray-400 font-bold uppercase tracking-widest peer-focus:text-[#D8A02A] transition-colors">Service Scope</label>
+                      <div className="absolute bottom-0 left-0 w-full h-[2px] bg-[#D8A02A] origin-left scale-x-0 group-focus-within:scale-x-100 transition-transform duration-500 ease-out" />
+                      <div className="absolute right-0 top-5 pointer-events-none">
+                         <svg className="w-5 h-5 text-[#D8A02A]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
                       </div>
                     </div>
                   </div>
