@@ -282,7 +282,7 @@ export default function Navbar() {
                                Book Strategy Call
                             </Link>
                             <Link href="/services" className="w-full text-center py-3 text-[11px] uppercase tracking-widest text-gray-500 hover:text-white transition-colors font-bold group/btn">
-                              Explore Directory <span className="inline-block transition-transform group-hover/btn:translate-x-2">&rarr;</span>
+                              View All Services <span className="inline-block transition-transform group-hover/btn:translate-x-2">&rarr;</span>
                             </Link>
                           </div>
                         </div>
