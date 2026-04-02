@@ -54,6 +54,8 @@ export default function ServiceAreaSection({ hideButton = false }: { hideButton?
   const [sizeFilter, setSizeFilter] = useState("Project Size");
   const [sortBy, setSortBy] = useState("Sort By");
 
+  const allServiceTitles = Array.from(new Set(projects.map(p => p.category))).sort();
+
   const filteredProjects = projects.filter(p => {
     const matchesSearch = p.address.toLowerCase().includes(searchQuery.toLowerCase()) || p.category.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesService = serviceFilter === "Service Type" || p.category === serviceFilter;
@@ -118,12 +120,9 @@ export default function ServiceAreaSection({ hideButton = false }: { hideButton?
                 className="w-full bg-[#F5F5F5] text-gray-700 rounded-md px-4 py-3.5 appearance-none focus:outline-none focus:ring-2 focus:ring-[#F9A825] text-sm font-medium cursor-pointer"
               >
                 <option value="Service Type">Service Type</option>
-                <option value="Custom Home Building">Custom Home Building</option>
-                <option value="Home Renovations">Home Renovations</option>
-                <option value="Basement Finishing">Basement Finishing</option>
-                <option value="Project Management">Project Management</option>
-                <option value="Architectural Support">Architectural Support</option>
-                <option value="Exterior Improvements">Exterior Improvements</option>
+                {allServiceTitles.map(title => (
+                   <option key={title} value={title}>{title}</option>
+                ))}
               </select>
               <svg className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />

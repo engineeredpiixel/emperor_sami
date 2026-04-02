@@ -4,185 +4,26 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 
-const residentialServices = [
-  // Planning & Management
-  {
-    category: "Planning & Management",
-    title: "Architectural Drafting & 3D Rendering",
-    slug: "architectural-drafting",
-    description: "Collaborative CAD design services that flawlessly blend aesthetic ambition with rigorous structural integrity.",
-    image: "/blueprint_bg_1774895613394.png",
-    isNew: false
-  },
-  {
-    category: "Planning & Management",
-    title: "Residential Project Management",
-    slug: "residential-project-management",
-    description: "End-to-end oversight of residential builds, mitigating timeline and budget overruns with absolute transparency.",
-    image: "/card_project_management_1774895647508.png",
-    isNew: false
-  },
-  {
-    category: "Planning & Management",
-    title: "Zoning & Permitting Acquisition",
-    slug: "zoning-permitting",
-    description: "Navigating complex municipal codes to secure necessary residential building approvals and accelerate your timeline.",
-    image: "/card_safety_compliant_1774895701318.png",
-    isNew: true
-  },
-  // Core Construction & Development
-  {
-    category: "Core Construction & Development",
-    title: "Custom Home Building",
-    slug: "custom-home-building",
-    description: "Ground-up construction of tailored residential properties engineered for absolute structural perfection.",
-    image: "/custom_home_exterior_1774895595441.png",
-    isNew: false
-  },
-  {
-    category: "Core Construction & Development",
-    title: "High-End Renovations",
-    slug: "high-end-renovations",
-    description: "Premium material upgrades and comprehensive interior remodeling explicitly designed to maximize property value.",
-    image: "/custom_home_interior_1774895577855.png",
-    isNew: false
-  },
-  {
-    category: "Core Construction & Development",
-    title: "Accessory Dwelling Unit (ADU) Construction",
-    slug: "adu-construction",
-    description: "Building secondary housing units on existing residential lots—a highly lucrative play in current real estate climates.",
-    image: "/card_elite_quality_1774895683555.png",
-    isNew: true
-  },
-  {
-    category: "Core Construction & Development",
-    title: "Sustainable & Passive Home Development",
-    slug: "sustainable-development",
-    description: "Eco-friendly building utilizing advanced insulation, solar integration, and low-impact materials for maximum efficiency.",
-    image: "/blueprint_bg_1774895613394.png",
-    isNew: true
-  },
-  // Targeted Improvements
-  {
-    category: "Targeted Improvements",
-    title: "Basement Optimization & Finishing",
-    slug: "basement-optimization",
-    description: "Converting sub-grade concrete spaces into high-utility living areas, gyms, or sound-proof entertainment theaters.",
-    image: "/card_elite_quality_1774895683555.png",
-    isNew: false
-  },
-  {
-    category: "Targeted Improvements",
-    title: "Residential Exterior Improvement",
-    slug: "exterior-improvements",
-    description: "Roofs, siding, hardscaping, and holistic curb-appeal enhancements that completely transform estate profiles.",
-    image: "/card_safety_compliant_1774895701318.png",
-    isNew: false
-  },
-  {
-    category: "Targeted Improvements",
-    title: "Precision Kitchen & Bath Remodeling",
-    slug: "kitchen-bath-remodel",
-    description: "Specialized, high-margin renovations focusing on the two most critical and valuable rooms in every luxury residence.",
-    image: "/custom_home_interior_1774895577855.png",
-    isNew: true
-  },
-  {
-    category: "Targeted Improvements",
-    title: "Smart Home Infrastructure Integration",
-    slug: "smart-home-integration",
-    description: "Hardwiring and installing comprehensive home automation systems during the build phase for invisible mastery.",
-    image: "/card_project_management_1774895647508.png",
-    isNew: true
-  }
-];
+import { residentialServicesData } from "@/lib/servicesDataResidential";
+import { commercialServicesData } from "@/lib/servicesDataCommercial";
 
-const commercialServices = [
-  // Pre-Construction & Consulting
-  {
-    category: "Pre-Construction & Consulting",
-    title: "Commercial Architectural Drafting",
-    slug: "commercial-drafting",
-    description: "Structuring spaces for optimal workflow, maximum occupancy loads, and exacting ADA compliance.",
-    image: "/blueprint_bg_1774895613394.png",
-    isNew: false
-  },
-  {
-    category: "Pre-Construction & Consulting",
-    title: "Commercial Project Management",
-    slug: "commercial-management",
-    description: "Managing complex supply chains, multi-tiered subcontractor hierarchies, and rigorous commercial scheduling.",
-    image: "/card_project_management_1774895647508.png",
-    isNew: false
-  },
-  {
-    category: "Pre-Construction & Consulting",
-    title: "Pre-Construction Feasibility Analysis",
-    slug: "feasibility-analysis",
-    description: "Assessing site viability, engineering requirements, and cost estimations prior to commercial land acquisition.",
-    image: "/card_safety_compliant_1774895701318.png",
-    isNew: true
-  },
-  // Commercial Build & Renovation
-  {
-    category: "Commercial Build & Renovation",
-    title: "Tenant Build-Outs / Leasehold Improvements",
-    slug: "tenant-build-outs",
-    description: "Customizing commercial spaces to perfectly meet the operational and aesthetic needs of a new lessee.",
-    image: "/custom_home_interior_1774895577855.png",
-    isNew: true
-  },
-  {
-    category: "Commercial Build & Renovation",
-    title: "White Box / Vanilla Shell Construction",
-    slug: "white-box-construction",
-    description: "Prepping commercial interiors to a blank-slate standard (finished walls, concrete floors, essential electrical).",
-    image: "/card_elite_quality_1774895683555.png",
-    isNew: true
-  },
-  {
-    category: "Commercial Build & Renovation",
-    title: "Corporate & Retail Remodeling",
-    slug: "corporate-remodel",
-    description: "Updating existing office ecosystems or retail storefronts to modernize brand aesthetics and empower employees.",
-    image: "/custom_home_exterior_1774895595441.png",
-    isNew: true
-  },
-  {
-    category: "Commercial Build & Renovation",
-    title: "Adaptive Reuse Construction",
-    slug: "adaptive-reuse",
-    description: "Repurposing existing historical or industrial buildings for highly functional modern commercial utility.",
-    image: "/blueprint_bg_1774895613394.png",
-    isNew: true
-  },
-  // Facility Upgrades
-  {
-    category: "Facility Upgrades",
-    title: "Commercial Exterior & Façade Improvement",
-    slug: "commercial-exterior",
-    description: "Upgrading massive building envelopes, installing commercial glazing, and optimizing exterior branding assets.",
-    image: "/card_safety_compliant_1774895701318.png",
-    isNew: false
-  },
-  {
-    category: "Facility Upgrades",
-    title: "Structural Retrofitting & Code Upgrades",
-    slug: "structural-retrofitting",
-    description: "Reinforcing structural integrity to meet modern safety codes, including crucial seismic and fire suppression systems.",
-    image: "/card_project_management_1774895647508.png",
-    isNew: true
-  },
-  {
-    category: "Facility Upgrades",
-    title: "Commercial Preventative Maintenance",
-    slug: "preventative-maintenance",
-    description: "Ongoing structural and aesthetic upkeep contracts that protect your commercial real estate investments.",
-    image: "/card_elite_quality_1774895683555.png",
-    isNew: true
-  }
-];
+const residentialServices = Object.values(residentialServicesData).map((data) => ({
+  category: "Residential Architecture",
+  title: data.heroTitle,
+  slug: data.slug,
+  description: data.description,
+  image: data.heroImage,
+  isNew: false
+}));
+
+const commercialServices = Object.values(commercialServicesData).map((data) => ({
+  category: "Commercial Infrastructure",
+  title: data.heroTitle,
+  slug: data.slug,
+  description: data.description,
+  image: data.heroImage,
+  isNew: false
+}));
 
 export default function AllServicesGrid() {
   const [visible, setVisible] = useState(false);
