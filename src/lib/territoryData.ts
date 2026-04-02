@@ -20,7 +20,7 @@ export type TerritoryType = {
 export const territoryData: Record<string, TerritoryType> = {
   "richmond-hill": {
     slug: "richmond-hill",
-    heroImage: "/richmond_hill_aerial.png",
+    heroImage: "/optimized/webp_gen_luxury_glass_mansion.webp",
     name: "Richmond Hill",
     heroHeadline: "Commanding Architecture in Richmond Hill",
     heroSubheadline: "Dominating the northern suburban luxury market.",
@@ -31,14 +31,14 @@ export const territoryData: Record<string, TerritoryType> = {
     project: {
       title: "The Bayview Compound",
       category: "Custom Home Building",
-      image: "/portfolio_lakefront_mansion_1774904298419.png",
+      image: "/optimized/webp_gen_concrete_contemporary.webp",
       scope: "Deep structural underpinning and massive lateral expansion.",
       timeline: "14 months to keys-in-hand"
     }
   },
   "oakville": {
     slug: "oakville",
-    heroImage: "/oakville_lakefront.png",
+    heroImage: "/optimized/webp_gen_brutalist_villa.webp",
     name: "Oakville",
     heroHeadline: "Elite Lakeshore Architecture in Oakville",
     heroSubheadline: "Navigating Halton Conservation for waterfront supremacy.",
@@ -49,14 +49,14 @@ export const territoryData: Record<string, TerritoryType> = {
     project: {
       title: "The Oakville Lakeshore Glass",
       category: "Structural Engineering",
-      image: "/portfolio_structural_glass_1774904353242.png",
+      image: "/optimized/webp_gen_commercial_skyscraper.webp",
       scope: "Triple-paned floor-to-ceiling automated envelope over a helical steel staircase.",
       timeline: "18 months execution"
     }
   },
   "vaughan": {
     slug: "vaughan",
-    heroImage: "/vaughan_estates.png",
+    heroImage: "/optimized/webp_gen_corporate_lowrise.webp",
     name: "Vaughan",
     heroHeadline: "Multi-Acre Mastery in Vaughan",
     heroSubheadline: "Engineering massive square-footage estates without compromise.",
@@ -67,14 +67,14 @@ export const territoryData: Record<string, TerritoryType> = {
     project: {
       title: "The Woodbridge Estate",
       category: "New Ground Up Build",
-      image: "/custom_home_exterior_1774895595441.png",
+      image: "/optimized/webp_gen_luxury_kitchen.webp",
       scope: "Ground-up execution featuring a 10-car subterranean parking matrix.",
       timeline: "20 months construction"
     }
   },
   "king-city": {
     slug: "king-city",
-    heroImage: "/king_city_compound.png",
+    heroImage: "/optimized/webp_gen_marble_foyer.webp",
     name: "King City",
     heroHeadline: "The Apex of Suburban Luxury: King City",
     heroSubheadline: "Palatial multi-acre estates built for multi-generational wealth.",
@@ -85,14 +85,14 @@ export const territoryData: Record<string, TerritoryType> = {
     project: {
       title: "The King City Brutalist Villa",
       category: "Architectural Concrete",
-      image: "/portfolio_architectural_concrete_1774904384443.png",
+      image: "/optimized/webp_gen_boardroom.webp",
       scope: "Poured-in-place concrete architecture with 12ft interior commercial steel ceilings.",
       timeline: "16 months complete cycle"
     }
   },
   "kleinburg": {
     slug: "kleinburg",
-    heroImage: "/kleinburg_historic.png",
+    heroImage: "/optimized/webp_gen_deck_pool.webp",
     name: "Kleinburg",
     heroHeadline: "Historic Elegance in Kleinburg",
     heroSubheadline: "Blending ultra-modern luxury against a century-old backdrop.",
@@ -103,14 +103,14 @@ export const territoryData: Record<string, TerritoryType> = {
     project: {
       title: "The Kleinburg Modern Estate",
       category: "Exterior Improvements",
-      image: "/portfolio_bespoke_exterior_1774904336356.png",
+      image: "/optimized/webp_gen_industrial_loft.webp",
       scope: "Massive rear landscaping extension overriding strict ravine limits.",
       timeline: "11 weeks to hardscaping completion"
     }
   },
   "forest-hill": {
     slug: "forest-hill",
-    heroImage: "/forest_hill_streets.png",
+    heroImage: "/optimized/webp_gen_luxury_glass_mansion.webp",
     name: "Forest Hill",
     heroHeadline: "Surgical Construction in Forest Hill",
     heroSubheadline: "Zero-error execution in Toronto's most prestigious old-money enclave.",
@@ -121,14 +121,14 @@ export const territoryData: Record<string, TerritoryType> = {
     project: {
       title: "Forest Hill Foyer Redesign",
       category: "Luxury Interiors",
-      image: "/portfolio_marble_foyer_1774904369119.png",
+      image: "/optimized/webp_gen_concrete_contemporary.webp",
       scope: "Total interior skeletal demolition preserving only the exterior century-old brick shell.",
       timeline: "9 months intensive renovation"
     }
   },
   "bridle-path": {
     slug: "bridle-path",
-    heroImage: "/bridle_path_gates.png",
+    heroImage: "/optimized/webp_gen_brutalist_villa.webp",
     name: "Bridle Path",
     heroHeadline: "Billionaire's Row: The Bridle Path",
     heroSubheadline: "Unrivaled scale. Maximum security. Flawless structural supremacy.",
@@ -139,14 +139,14 @@ export const territoryData: Record<string, TerritoryType> = {
     project: {
       title: "The Bridle Path Manor",
       category: "Custom Home Building",
-      image: "/portfolio_lakefront_mansion_1774904298419.png",
+      image: "/optimized/webp_gen_commercial_skyscraper.webp",
       scope: "Completely turn-key 15,000 sqft mega-build featuring acoustic theater isolation.",
       timeline: "24 months to client handover"
     }
   },
   "rosedale": {
     slug: "rosedale",
-    heroImage: "/rosedale_heritage.png",
+    heroImage: "/optimized/webp_gen_corporate_lowrise.webp",
     name: "Rosedale",
     heroHeadline: "Heritage Restoration in Rosedale",
     heroSubheadline: "Preserving a 19th-century facade. Engineering a 21st-century masterwork inside.",
@@ -157,14 +157,14 @@ export const territoryData: Record<string, TerritoryType> = {
     project: {
       title: "Rosedale Heritage Revival",
       category: "Architectural Renovation",
-      image: "/portfolio_modern_renovation_1774904319283.png",
+      image: "/optimized/webp_gen_luxury_kitchen.webp",
       scope: "Hidden steel I-beam span installations to remove all main floor load-bearing walls.",
       timeline: "12 months surgical process"
     }
   },
   "high-park": {
     slug: "high-park",
-    heroImage: "/high_park_canopy.png",
+    heroImage: "/optimized/webp_gen_marble_foyer.webp",
     name: "High Park",
     heroHeadline: "Refined Density in High Park",
     heroSubheadline: "Vertical stacking and lateral additions in heavily restricted zones.",
@@ -175,14 +175,14 @@ export const territoryData: Record<string, TerritoryType> = {
     project: {
       title: "The High Park Overlook",
       category: "Home Renovations",
-      image: "/custom_home_interior_1774895577855.png",
+      image: "/optimized/webp_gen_boardroom.webp",
       scope: "Major 3rd-story architectural lift wrapped in imported black limestone.",
       timeline: "10 months complete cycle"
     }
   },
   "mississauga": {
     slug: "mississauga",
-    heroImage: "/mississauga_lake.png",
+    heroImage: "/optimized/webp_gen_deck_pool.webp",
     name: "Mississauga",
     heroHeadline: "Modern Progression in Mississauga",
     heroSubheadline: "From Lorne Park to the Credit River. Maximum structural footprint.",
@@ -193,14 +193,14 @@ export const territoryData: Record<string, TerritoryType> = {
     project: {
       title: "Lorne Park Modern",
       category: "Ground-Up Build",
-      image: "/card_safety_compliant_1774895701318.png",
+      image: "/optimized/webp_gen_industrial_loft.webp",
       scope: "5,500 sqft brutalist geometric build over an expansive luxury driveway.",
       timeline: "14 months to execute"
     }
   },
   "toronto": {
     slug: "toronto",
-    heroImage: "/toronto_core.png",
+    heroImage: "/optimized/webp_gen_luxury_glass_mansion.webp",
     name: "Toronto Core",
     heroHeadline: "Dominating the Toronto Core",
     heroSubheadline: "Surgical execution under the strictest urban bureaucracy in North America.",
@@ -211,14 +211,14 @@ export const territoryData: Record<string, TerritoryType> = {
     project: {
       title: "The Annex Annexation",
       category: "High-End Renovation",
-      image: "/card_project_management_1774895647508.png",
+      image: "/optimized/webp_gen_concrete_contemporary.webp",
       scope: "Complete structural gutting while wedged inches away from neighboring estates.",
       timeline: "13 months of logistics execution"
     }
   },
   "markham": {
     slug: "markham",
-    heroImage: "/markham_legacy.png",
+    heroImage: "/optimized/webp_gen_brutalist_villa.webp",
     name: "Markham",
     heroHeadline: "Legacy Expansion in Markham",
     heroSubheadline: "From Unionville to Angus Glen. Building for multi-generational wealth.",
@@ -229,14 +229,14 @@ export const territoryData: Record<string, TerritoryType> = {
     project: {
       title: "Angus Glen Custom",
       category: "Custom Home Building",
-      image: "/portfolio_lakefront_mansion_1774904298419.png",
+      image: "/optimized/webp_gen_commercial_skyscraper.webp",
       scope: "7,000 sqft new build engineered for three generations of simultaneous living.",
       timeline: "15 months full build"
     }
   },
   "etobicoke": {
     slug: "etobicoke",
-    heroImage: "/etobicoke_kingsway.png",
+    heroImage: "/optimized/webp_gen_corporate_lowrise.webp",
     name: "Etobicoke",
     heroHeadline: "Kingsway To The Lakeshore: Etobicoke",
     heroSubheadline: "Transforming aging post-war lots into stunning ultra-luxury modernism.",
@@ -247,14 +247,14 @@ export const territoryData: Record<string, TerritoryType> = {
     project: {
       title: "The Kingsway Transformation",
       category: "Structural Gutting",
-      image: "/card_elite_quality_1774895683555.png",
+      image: "/optimized/webp_gen_luxury_kitchen.webp",
       scope: "An intense 4-foot complete structural underpinning for an $800K subterranean suite.",
       timeline: "5 months to basement completion"
     }
   },
   "north-york": {
     slug: "north-york",
-    heroImage: "/north_york_willowdale.png",
+    heroImage: "/optimized/webp_gen_marble_foyer.webp",
     name: "North York",
     heroHeadline: "Uncompromised Valuations in North York",
     heroSubheadline: "Willowdale and Bayview Village's premier executive builder.",
@@ -265,14 +265,14 @@ export const territoryData: Record<string, TerritoryType> = {
     project: {
       title: "The Willowdale Twin",
       category: "Custom Build (Severance)",
-      image: "/portfolio_architectural_concrete_1774904384443.png",
+      image: "/optimized/webp_gen_boardroom.webp",
       scope: "A highly complex lot split resulting in two identical, towering luxury structures.",
       timeline: "22 months for dual execution"
     }
   },
   "aurora": {
     slug: "aurora",
-    heroImage: "/aurora_moraine.png",
+    heroImage: "/optimized/webp_gen_deck_pool.webp",
     name: "Aurora",
     heroHeadline: "Garrison Estates in Aurora",
     heroSubheadline: "Mastering the terrain to construct isolated, heavily fortified properties.",
@@ -283,7 +283,7 @@ export const territoryData: Record<string, TerritoryType> = {
     project: {
       title: "The Aurora Perimeter",
       category: "Exterior Improvements",
-      image: "/portfolio_bespoke_exterior_1774904336356.png",
+      image: "/optimized/webp_gen_industrial_loft.webp",
       scope: "Military-grade retaining walls locking a stunning multi-tier infinity pool.",
       timeline: "4 months of heavy earth moving"
     }

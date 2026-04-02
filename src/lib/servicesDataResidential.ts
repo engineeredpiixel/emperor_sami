@@ -23,14 +23,12 @@ const RESIDENTIAL_SERVICES_MAP = [
 ];
 
 const RESIDENTIAL_IMAGES = [
-  "/custom_home_exterior_1774895595441.png",
-  "/portfolio_lakefront_mansion_1774904298419.png",
-  "/portfolio_structural_glass_1774904353242.png",
-  "/portfolio_architectural_concrete_1774904384443.png",
-  "/custom_home_interior_1774895577855.png",
-  "/portfolio_bespoke_exterior_1774904336356.png",
-  "/portfolio_marble_foyer_1774904369119.png",
-  "/portfolio_modern_renovation_1774904319283.png"
+  "/optimized/webp_gen_luxury_glass_mansion.webp",
+  "/optimized/webp_gen_concrete_contemporary.webp",
+  "/optimized/webp_gen_brutalist_villa.webp",
+  "/optimized/webp_gen_deck_pool.webp",
+  "/optimized/webp_gen_luxury_kitchen.webp",
+  "/optimized/webp_gen_marble_foyer.webp"
 ];
 
 RESIDENTIAL_SERVICES_MAP.forEach((item, i) => {

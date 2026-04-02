@@ -22,12 +22,11 @@ const COMMERCIAL_SERVICES_MAP = [
 ];
 
 const COMMERCIAL_IMAGES = [
-  "/commercial_exterior_1774895696803.png",
-  "/commercial_development_1774896740632.png",
-  "/commercial_exterior_hero_1774896644265.png",
-  "/commercial_interior_hero_1774896677930.png",
-  "/commercial_medical_facility_1774896716075.png",
-  "/commercial_restaurant_renovation_1774896695270.png"
+  "/optimized/webp_gen_commercial_skyscraper.webp",
+  "/optimized/webp_gen_corporate_lowrise.webp",
+  "/optimized/webp_gen_industrial_loft.webp",
+  "/optimized/webp_gen_boardroom.webp",
+  "/optimized/webp_gen_concrete_contemporary.webp"
 ];
 
 COMMERCIAL_SERVICES_MAP.forEach((item, i) => {

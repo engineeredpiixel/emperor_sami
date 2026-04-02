@@ -44,12 +44,28 @@ const LOCATIONS = [
   { name: "Etobicoke", baseLat: 43.6205, baseLng: -79.5132 },
 ];
 
-const GALLERIES = [
-  ["/portfolio_lakefront_mansion_1774904298419.png", "/portfolio_marble_foyer_1774904369119.png", "/custom_home_interior_1774895577855.png", "/custom_home_exterior_1774895595441.png"],
-  ["/portfolio_modern_renovation_1774904319283.png", "/portfolio_structural_glass_1774904353242.png", "/portfolio_marble_foyer_1774904369119.png", "/custom_home_interior_1774895577855.png"],
-  ["/portfolio_bespoke_exterior_1774904336356.png", "/portfolio_architectural_concrete_1774904384443.png", "/portfolio_lakefront_mansion_1774904298419.png", "/custom_home_exterior_1774895595441.png"],
-  ["/portfolio_structural_glass_1774904353242.png", "/portfolio_modern_renovation_1774904319283.png", "/portfolio_bespoke_exterior_1774904336356.png", "/custom_home_interior_1774895577855.png"]
+const WEBP_GALLERY = [
+  "/optimized/webp_gen_luxury_glass_mansion.webp", 
+  "/optimized/webp_gen_marble_foyer.webp", 
+  "/optimized/webp_gen_deck_pool.webp", 
+  "/optimized/webp_gen_luxury_kitchen.webp"
 ];
+
+const WEBP_GALLERY_2 = [
+  "/optimized/webp_gen_concrete_contemporary.webp", 
+  "/optimized/webp_gen_brutalist_villa.webp", 
+  "/optimized/webp_gen_marble_foyer.webp", 
+  "/optimized/webp_gen_luxury_glass_mansion.webp"
+];
+
+const WEBP_GALLERY_3 = [
+  "/optimized/webp_gen_commercial_skyscraper.webp", 
+  "/optimized/webp_gen_industrial_loft.webp", 
+  "/optimized/webp_gen_corporate_lowrise.webp", 
+  "/optimized/webp_gen_boardroom.webp"
+];
+
+const GALLERIES = [WEBP_GALLERY, WEBP_GALLERY_2, WEBP_GALLERY_3, WEBP_GALLERY];
 
 // 10 Distinct High-End Residential Execution Templates
 const RESIDENTIAL_TEMPLATES = [
