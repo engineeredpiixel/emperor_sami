@@ -82,14 +82,14 @@ const COMMERCIAL_TEMPLATES = [
 export const masterProjects: Record<string, ProjectType> = {};
 
 // ── THE PROCEDURAL GENERATOR ENGINE ──
-// This wildly powerful loop merges 21 Services x 10 Locations to yield 210 distinct items.
+// This wildly powerful loop merges 40 Services x 3 Locations to yield 120 distinct items.
 
 let globalCounter = 0;
 
 function generateProjectsForService(serviceKey: string, serviceTitle: string, serviceImage: string, isResidential: boolean) {
   const templates = isResidential ? RESIDENTIAL_TEMPLATES : COMMERCIAL_TEMPLATES;
   
-  LOCATIONS.forEach((loc, i) => {
+  LOCATIONS.slice(0, 3).forEach((loc, i) => {
     // Generate a unique, realistic-sounding title. e.g. "Toronto Custom Home Building" or "The Oakville High-End Renovations"
     // We add slight variation to the names to make it sound premium
     const titlePrefixes = ["The", "", `${loc.name} Elite`, "Strategic", "Premium"];
@@ -135,12 +135,12 @@ function generateProjectsForService(serviceKey: string, serviceTitle: string, se
   });
 }
 
-// 1. Process 11 Residential Services
+// 1. Process 24 Residential Services
 Object.entries(residentialServicesData).forEach(([slug, data]) => {
   generateProjectsForService(slug, data.heroTitle, data.heroImage, true);
 });
 
-// 2. Process 10 Commercial Services
+// 2. Process 16 Commercial Services
 Object.entries(commercialServicesData).forEach(([slug, data]) => {
   generateProjectsForService(slug, data.heroTitle, data.heroImage, false);
 });

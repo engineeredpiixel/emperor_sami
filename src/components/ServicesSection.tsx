@@ -8,12 +8,12 @@ import { residentialServicesData } from "@/lib/servicesDataResidential";
 import { commercialServicesData } from "@/lib/servicesDataCommercial";
 
 // Define the 3 Residential and 3 Commercial featured services
-const featuredResidentialSlugs = ["custom-home-building", "high-end-renovations", "basement-optimization"];
-const featuredCommercialSlugs = ["commercial-management", "tenant-build-outs", "adaptive-reuse"];
+const featuredResidentialSlugs = ["new-construction", "whole-home-renovations", "home-theaters"];
+const featuredCommercialSlugs = ["ground-up-construction", "tenant-build-outs", "adaptive-reuse"];
 
 const residentialServices = featuredResidentialSlugs.map((slug) => ({
   title: residentialServicesData[slug].heroTitle,
-  slug: residentialServicesData[slug].slug,
+  slug: slug,
   description: residentialServicesData[slug].description,
   image: residentialServicesData[slug].heroImage,
   category: "Residential Architecture",
@@ -21,7 +21,7 @@ const residentialServices = featuredResidentialSlugs.map((slug) => ({
 
 const commercialServices = featuredCommercialSlugs.map((slug) => ({
   title: commercialServicesData[slug].heroTitle,
-  slug: commercialServicesData[slug].slug,
+  slug: slug,
   description: commercialServicesData[slug].description,
   image: commercialServicesData[slug].heroImage,
   category: "Commercial Infrastructure",
