@@ -150,7 +150,7 @@ export default function ProjectsClientGrid({ initialProjects }: { initialProject
                              <span className="bg-[#f2f2f2] text-[#111] px-2 py-0.5 rounded-sm text-[8px] font-black uppercase tracking-widest">{proj.division}</span>
                            )}
                            <span className="text-[#D8A02A] font-black text-[9px] tracking-[0.2em] uppercase line-clamp-1">
-                              {proj.category} — {proj.location}
+                              SERVICE TYPE: {proj.category} <span className="text-gray-400 font-medium">| {proj.location}</span>
                            </span>
                         </div>
                         <h2 className="text-[#111] text-2xl font-black uppercase tracking-tighter leading-tight group-hover:text-[#D8A02A] transition-colors duration-500 line-clamp-2 min-h-[52px] flex items-center justify-center">

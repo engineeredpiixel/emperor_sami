@@ -25,7 +25,7 @@ export default function ProjectHero({ data }: { data: ProjectType }) {
          <div className="flex flex-col gap-4">
             <div className="flex items-center gap-3">
                <span className="text-[#D8A02A] font-bold text-[10px] md:text-sm tracking-[0.5em] uppercase border border-[#D8A02A]/30 px-4 py-1.5 rounded-sm">
-                  {data.category}
+                  SERVICE: {data.category}
                </span>
                <span className="text-gray-300 font-bold text-[10px] md:text-sm tracking-widest uppercase">
                   — {data.location}
