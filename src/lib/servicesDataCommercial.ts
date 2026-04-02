@@ -30,7 +30,8 @@ COMMERCIAL_SERVICES_MAP.forEach((item, i) => {
      slug: slug,
      heroTitle: title,
      heroSubtitle: `Industrial-grade ${title.toLowerCase()} executing complex corporate blueprints.`,
-     heroImage: imgUrl,
+     heroImage: `/optimized_v2/srv_${slug}_hero.webp`,
+     capabilityImage: `/optimized_v2/srv_${slug}_cap.webp`,
      description: `In the commercial division, Emperor Sami enforces rigid structural protocols. Our operations are designed strictly for scalable B2B developments, ensuring extreme durability and absolute code compliance in every ${title} execution.`,
      details: [
        { title: "Corporate Feasibility", text: "Rigorous alignment with ROI constraints." },

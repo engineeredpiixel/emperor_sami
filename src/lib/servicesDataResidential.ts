@@ -31,7 +31,8 @@ RESIDENTIAL_SERVICES_MAP.forEach((item, i) => {
      slug: slug,
      heroTitle: title,
      heroSubtitle: `Master-grade execution of premium ${title.toLowerCase()} across elite neighborhoods.`,
-     heroImage: imgUrl,
+     heroImage: `/optimized_v2/srv_${slug}_hero.webp`,
+     capabilityImage: `/optimized_v2/srv_${slug}_cap.webp`,
      description: `Emperor Sami transcends standard construction protocols. Our approach to ${title} requires absolute dedication to structural supremacy. We don't just execute plans; we forge entirely bespoke architectural solutions.`,
      details: [
        { title: "Precision Mapping", text: "Every variable calculated before breaking ground." },

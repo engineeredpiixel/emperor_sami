@@ -12,8 +12,8 @@ export default function ServiceDetailContent({ data }: { data: ServiceContentTyp
         <div className="w-full lg:w-5/12 xl:w-1/2">
            <div className="sticky top-32 w-full aspect-square md:aspect-[4/3] lg:aspect-[4/5] overflow-hidden rounded-xl shadow-2xl bg-gray-100">
               <Image 
-                src={data.heroImage} 
-                alt={data.heroTitle} 
+                src={data.capabilityImage} 
+                alt={`${data.heroTitle} Capability Overview`} 
                 fill 
                 className="object-cover scale-105 hover:scale-100 transition-transform duration-[2s] ease-out" 
                 priority 

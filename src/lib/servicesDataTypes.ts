@@ -4,6 +4,7 @@ export type ServiceContentType = {
   heroTitle: string;
   heroSubtitle: string;
   heroImage: string;
+  capabilityImage: string;
   description: string;
   details: {
     title: string;
