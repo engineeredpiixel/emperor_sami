@@ -140,8 +140,13 @@ function generateProjectsForService(serviceKey: string, serviceTitle: string, se
     // Pick the highly detailed template based on index so it cycles flawlessly
     const template = templates[i % templates.length];
     
-    // Pick the surgically precise 2-image gallery based directly on the actual Category
-    const gallery = CATEGORY_GALLERIES[serviceTitle] || CATEGORY_GALLERIES["Default"];
+    // Explicit 1-to-1 WebP mapping for all 297 total unique project iterations
+    const locNameLower = loc.name.toLowerCase();
+    const uniqueHeroImage = `/optimized_v2/prj_${locNameLower}_${serviceKey}_hero.webp`;
+    const uniqueGallery = [
+      `/optimized_v2/prj_${locNameLower}_${serviceKey}_gal1.webp`,
+      `/optimized_v2/prj_${locNameLower}_${serviceKey}_gal2.webp`
+    ];
 
     // Add a microscopic randomization to the lat/lng so the 210 map markers don't overlap exactly
     // A 0.05 variation is roughly a few kilometers across the city
@@ -157,7 +162,7 @@ function generateProjectsForService(serviceKey: string, serviceTitle: string, se
       location: `${loc.name}, Greater Toronto Area`,
       lat: offsetLat,
       lng: offsetLng,
-      heroImage: serviceImage, // Uses the high-end image tied directly to the service
+      heroImage: uniqueHeroImage, // Strictly 1-to-1 unique 2K Pexels integration
       metrics: template.metrics,
       challenge: template.challenge,
       solution: template.solution,
@@ -166,7 +171,7 @@ function generateProjectsForService(serviceKey: string, serviceTitle: string, se
          // Append the city dynamically to make the testimonials feel incredibly localized
          role: `${loc.name} ${template.testimonial.role}` 
       },
-      gallery: gallery
+      gallery: uniqueGallery
     };
 
     globalCounter++;
