@@ -294,6 +294,7 @@ export default function Navbar() {
                     onMouseLeave={handleServicesLeave}
                   >
                     <button
+                      onClick={() => setServicesOpen(prev => !prev)}
                       className="flex items-center gap-1.5 px-5 py-2 text-[13px] font-semibold text-white/90 tracking-[0.15em] uppercase hover:text-white transition-colors"
                     >
                       {link.label}
