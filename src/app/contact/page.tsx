@@ -1,5 +1,5 @@
 "use client";
-
+import Image from "next/image";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import ContactHero from "@/components/contact/ContactHero";
 import { useState, useEffect, useRef } from "react";
@@ -76,14 +76,17 @@ export default function ContactPage() {
       <section id="secure-data-link" className="relative pt-24 lg:pt-32 pb-48 px-6 sm:px-12 lg:px-24 max-w-[1600px] mx-auto z-10 w-full min-h-[900px] flex items-center bg-[#FAF9F6]">
 
         {/* CAD Technical Blueprint Background */}
-        <div className="absolute inset-0 z-0 opacity-100"
-          style={{
-            backgroundImage: `url('/images/light-cad-blueprint.png')`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundAttachment: 'fixed'
-          }}
-        />
+        <div className="absolute inset-0 z-0 opacity-100 overflow-hidden">
+          <Image 
+            src="/images/light-cad-blueprint.png"
+            fill
+            sizes="100vw"
+            quality={75}
+            className="object-cover object-center"
+            alt="Technical Blueprint"
+            priority
+          />
+        </div>
         {/* Fading Mask so text remains legible over the drawing */}
         <div className="absolute inset-0 z-0 bg-white/70" />
 

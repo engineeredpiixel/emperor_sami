@@ -50,15 +50,17 @@ export default function ContactHero() {
       <div className="absolute inset-0 z-10 flex flex-col items-center justify-center pointer-events-none">
         
         {/* Architectural CAD Blueprint (Pristine Light) */}
-        <div 
-          className="absolute inset-0 opacity-100" 
-          style={{ 
-            backgroundImage: `url('/images/light-cad-blueprint.png')`, 
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundAttachment: 'fixed'
-          }} 
-        />
+        <div className="absolute inset-0 opacity-100 overflow-hidden">
+           <Image 
+             src="/images/light-cad-blueprint.png" 
+             fill 
+             className="object-cover object-center"
+             alt="Architectural Blueprint Blueprint"
+             priority
+             sizes="100vw"
+             quality={75}
+           />
+        </div>
         <div className="absolute inset-0 bg-white/70" />
         
         {/* Decorative Compass Lines */}
