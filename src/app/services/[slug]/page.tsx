@@ -80,7 +80,11 @@ export default async function ServicePage(props: { params: Promise<{ slug: strin
       <ServiceBentoBox features={data.bentoFeatures} />
 
       {/* ── EDGE-TO-EDGE CASE STUDY ── */}
-      <ServiceCaseStudy data={data.caseStudy} />
+      <ServiceCaseStudy 
+        data={data.caseStudy} 
+        projectUrl={`/projects/toronto-${resolvedParams.slug}-exec-0`} 
+        projectImage={`/optimized_v2/prj_toronto_${resolvedParams.slug}_hero.webp`} 
+      />
 
       {/* ── THE SERVICE OBJECTION OVERCOMER ── */}
       <ServiceFAQ faqs={data.faqs} />
