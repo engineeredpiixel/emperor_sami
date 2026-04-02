@@ -72,24 +72,7 @@ export default function Navbar() {
             { name: "Recreation Rooms", href: "/services/recreation-rooms" },
           ],
         },
-        {
-          title: "Project Management",
-          items: [
-            { name: "Timeline Planning", href: "/services/timeline-planning" },
-            { name: "Budget Management", href: "/services/budget-management" },
-            { name: "Quality Control", href: "/services/quality-control" },
-            { name: "Vendor Coordination", href: "/services/vendor-coordination" },
-          ],
-        },
-        {
-          title: "Architectural & Design",
-          items: [
-            { name: "3D Renderings", href: "/services/3d-renderings" },
-            { name: "Floor Plans", href: "/services/floor-plans" },
-            { name: "Material Selection", href: "/services/material-selection" },
-            { name: "Design Consultation", href: "/services/design-consultation" },
-          ],
-        },
+
         {
           title: "Exterior Improvements",
           items: [
