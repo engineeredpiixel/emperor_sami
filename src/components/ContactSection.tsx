@@ -202,29 +202,58 @@ export default function ContactSection() {
                   className="w-full bg-white border border-[#E5E5E5] px-5 py-3.5 text-[15px] text-gray-800 placeholder-gray-400 focus:outline-none focus:border-[#D19C2C] focus:ring-1 focus:ring-[#D19C2C] transition-shadow shadow-sm"
                 />
 
-                <select
-                  defaultValue=""
-                  aria-label="Select a Service"
-                  className="w-full bg-white border border-[#E5E5E5] px-5 py-3.5 text-[15px] text-gray-800 focus:outline-none focus:border-[#D19C2C] focus:ring-1 focus:ring-[#D19C2C] transition-shadow cursor-pointer shadow-sm appearance-none"
-                  style={{
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23000000'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
-                    backgroundRepeat: 'no-repeat',
-                    backgroundPosition: 'right 1.25rem center',
-                    backgroundSize: '1.2rem'
-                  }}
-                >
-                  <option value="" disabled>Select a Service</option>
-                  <optgroup label="Residential Division">
-                    {Object.values(residentialServicesData).map(s => (
-                      <option key={s.slug} value={s.slug}>{s.heroTitle}</option>
-                    ))}
-                  </optgroup>
-                  <optgroup label="Commercial Division">
-                    {Object.values(commercialServicesData).map(s => (
-                      <option key={s.slug} value={s.slug}>{s.heroTitle}</option>
-                    ))}
-                  </optgroup>
-                </select>
+                <input
+                  type="text"
+                  placeholder="Project Location *"
+                  aria-label="Project Location"
+                  required
+                  className="w-full bg-white border border-[#E5E5E5] px-5 py-3.5 text-[15px] text-gray-800 placeholder-gray-400 focus:outline-none focus:border-[#D19C2C] focus:ring-1 focus:ring-[#D19C2C] transition-shadow shadow-sm"
+                />
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <select
+                    required
+                    defaultValue=""
+                    aria-label="Select Project Range"
+                    className="w-full bg-white border border-[#E5E5E5] px-5 py-3.5 text-[15px] text-gray-800 focus:outline-none focus:border-[#D19C2C] focus:ring-1 focus:ring-[#D19C2C] transition-shadow cursor-pointer shadow-sm appearance-none"
+                    style={{
+                      backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23000000'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
+                      backgroundRepeat: 'no-repeat',
+                      backgroundPosition: 'right 1.25rem center',
+                      backgroundSize: '1.2rem'
+                    }}
+                  >
+                    <option value="" disabled className="text-gray-400">Select Project Range</option>
+                    <option value="50k" className="bg-white text-[#111]">$50,000 - $100,000</option>
+                    <option value="100k" className="bg-white text-[#111]">$100,000 - $250,000</option>
+                    <option value="250k" className="bg-white text-[#111]">$250,000 - $500,000</option>
+                    <option value="500k+" className="bg-white text-[#111]">$500,000+ (Master Build)</option>
+                  </select>
+
+                  <select
+                    defaultValue=""
+                    aria-label="Select a Service"
+                    className="w-full bg-white border border-[#E5E5E5] px-5 py-3.5 text-[15px] text-gray-800 focus:outline-none focus:border-[#D19C2C] focus:ring-1 focus:ring-[#D19C2C] transition-shadow cursor-pointer shadow-sm appearance-none"
+                    style={{
+                      backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23000000'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
+                      backgroundRepeat: 'no-repeat',
+                      backgroundPosition: 'right 1.25rem center',
+                      backgroundSize: '1.2rem'
+                    }}
+                  >
+                    <option value="" disabled>Select a Service</option>
+                    <optgroup label="Residential Division">
+                      {Object.values(residentialServicesData).map(s => (
+                        <option key={s.slug} value={s.slug}>{s.heroTitle}</option>
+                      ))}
+                    </optgroup>
+                    <optgroup label="Commercial Division">
+                      {Object.values(commercialServicesData).map(s => (
+                        <option key={s.slug} value={s.slug}>{s.heroTitle}</option>
+                      ))}
+                    </optgroup>
+                  </select>
+                </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <input
