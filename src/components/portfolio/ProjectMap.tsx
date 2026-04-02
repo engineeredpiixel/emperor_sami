@@ -1,8 +1,11 @@
 "use client";
 
 import { ProjectType } from "@/lib/projectsData";
-import { useEffect, useRef, useState } from "react";
-import { Map, Overlay } from "pigeon-maps";
+import { useEffect, useRef, useState, ComponentType } from "react";
+import dynamic from "next/dynamic";
+
+const Map = dynamic(() => import("pigeon-maps").then((m) => m.Map as ComponentType<any>), { ssr: false });
+const Overlay = dynamic(() => import("pigeon-maps").then((m) => m.Overlay as ComponentType<any>), { ssr: false });
 
 export default function ProjectMap({ data }: { data: ProjectType }) {
   const containerRef = useRef<HTMLElement>(null);
@@ -57,7 +60,7 @@ export default function ProjectMap({ data }: { data: ProjectType }) {
                   defaultZoom={13}
                   minZoom={10}
                   maxZoom={15}
-                  provider={(x, y, z) => {
+                  provider={(x: number, y: number, z: number) => {
                      // Using CartoDB Positron for a hyper-clean architectural look
                      return `https://cartodb-basemaps-a.global.ssl.fastly.net/light_all/${z}/${x}/${y}.png`;
                   }}

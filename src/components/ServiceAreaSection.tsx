@@ -1,8 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, ComponentType } from "react";
 import Image from "next/image";
-import { Map, Overlay } from "pigeon-maps";
+import dynamic from "next/dynamic";
+
+const Map = dynamic(() => import("pigeon-maps").then((m) => m.Map as ComponentType<any>), { ssr: false });
+const Overlay = dynamic(() => import("pigeon-maps").then((m) => m.Overlay as ComponentType<any>), { ssr: false });
 
 import Link from "next/link";
 
@@ -194,7 +197,7 @@ export default function ServiceAreaSection({ hideButton = false }: { hideButton?
                   defaultZoom={11}
                   minZoom={9}
                   maxZoom={15}
-                  provider={(x, y, z) => {
+                  provider={(x: number, y: number, z: number) => {
                     return `https://cartodb-basemaps-a.global.ssl.fastly.net/light_all/${z}/${x}/${y}.png`;
                   }}
                 >
