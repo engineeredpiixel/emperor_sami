@@ -318,7 +318,7 @@ export default function Navbar() {
                         servicesOpen ? "opacity-100 scale-y-100 pointer-events-auto" : "opacity-0 scale-y-95 pointer-events-none"
                       }`}
                     >
-                      <div className="mx-auto p-10 grid grid-cols-12 gap-10 xl:gap-14 bg-gradient-to-b from-white/[0.02] to-transparent">
+                      <div className="mx-auto max-w-[1450px] p-10 grid grid-cols-14 gap-8 xl:gap-12 bg-gradient-to-b from-white/[0.02] to-transparent">
                         {/* Column 1: Residential */}
                         <div className="col-span-5 flex flex-col gap-6">
                           <div>
@@ -370,30 +370,38 @@ export default function Navbar() {
                         </div>
 
                         {/* Column 3: How It Works */}
-                        <div className="col-span-2 bg-[#1a1a1a]/80 rounded-xl border border-white/10 p-6 flex flex-col h-full shadow-inner relative overflow-hidden">
-                          {/* Accent glow */}
-                          <div className="absolute top-0 right-0 w-32 h-32 bg-[#F9A825]/5 blur-[60px] rounded-full point-events-none" />
+                        <div className="col-span-4 bg-[url('/grid-pattern.svg')] bg-[length:24px_24px] bg-center bg-[#111]/80 rounded-xl border border-white/10 p-8 flex flex-col h-full relative overflow-hidden backdrop-blur-xl group/hw">
+                          {/* Premium Accent Glows */}
+                          <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-[#F9A825]/20 to-transparent blur-[80px] rounded-full pointer-events-none opacity-50 group-hover/hw:opacity-100 transition-opacity duration-700" />
+                          <div className="absolute bottom-0 left-0 w-40 h-40 bg-gradient-to-tr from-[#D8A02A]/10 to-transparent blur-[60px] rounded-full pointer-events-none" />
                           
-                          <h3 className="text-white text-[13px] font-bold tracking-[0.2em] uppercase mb-8 relative z-10">{megaMenuData.howItWorks.title}</h3>
-                          <div className="flex flex-col gap-6 xl:gap-8 flex-1 relative z-10">
+                          <div className="flex items-center justify-between mb-8 relative z-10 border-b border-white/10 pb-4">
+                            <h3 className="text-white text-[12px] font-black tracking-[0.3em] uppercase">{megaMenuData.howItWorks.title}</h3>
+                            <div className="w-8 h-px bg-gradient-to-r from-[#F9A825] to-transparent" />
+                          </div>
+                          
+                          <div className="flex flex-col gap-8 flex-1 relative z-10">
                             {megaMenuData.howItWorks.steps.map((step, idx) => (
-                              <div key={idx} className="flex items-start gap-4">
-                                <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-[#b8960c]/10 border border-[#b8960c]/30 flex items-center justify-center">
+                              <div key={idx} className="flex items-start gap-5 group/step">
+                                <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-black/50 border border-white/5 flex items-center justify-center transform group-hover/step:rotate-3 transition-all duration-300 shadow-xl relative overflow-hidden">
+                                  <div className="absolute inset-0 bg-gradient-to-b from-[#F9A825]/20 to-transparent opacity-0 group-hover/step:opacity-100 transition-opacity duration-500" />
                                   {step.icon}
                                 </div>
-                                <div>
-                                  <h4 className="text-white font-semibold text-[14px]">{step.title}</h4>
-                                  <p className="text-gray-400 text-xs mt-1 leading-relaxed xl:leading-normal">{step.desc}</p>
+                                <div className="flex flex-col pt-0.5">
+                                  <h4 className="text-white font-bold text-[14px] group-hover/step:text-[#F9A825] transition-colors duration-300">{step.title}</h4>
+                                  <p className="text-gray-400 text-xs mt-1.5 leading-relaxed">{step.desc}</p>
                                 </div>
                               </div>
                             ))}
                           </div>
-                          <div className="mt-8 flex flex-col gap-3 relative z-10">
-                            <Link href="/contact#secure-data-link" className="w-full text-center bg-gradient-to-r from-[#F9A825] to-[#b8960c] hover:from-[#F4511E] hover:to-[#e65100] text-[#1a1209] hover:text-white text-[12px] font-bold uppercase tracking-[0.2em] py-4 rounded transition-all duration-300 transform hover:-translate-y-0.5 shadow-lg">
-                              Book A Free Strategy Call
+                          
+                          <div className="mt-10 flex flex-col gap-3 relative z-10">
+                            <Link href="/contact#secure-data-link" className="w-full text-center bg-[#F9A825] hover:bg-[#F4511E] text-[#111] font-black uppercase tracking-[0.2em] py-4 rounded-sm transition-all duration-500 transform hover:-translate-y-1 shadow-[0_10px_30px_rgba(249,168,37,0.2)] hover:shadow-[0_15px_40px_rgba(244,81,30,0.4)] relative overflow-hidden group/cta">
+                               <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover/cta:translate-x-[100%] transition-transform duration-700 ease-in-out skew-x-[-20deg]" />
+                               Book Strategy Call
                             </Link>
-                            <Link href="/all-services" className="w-full text-center py-2.5 text-[13px] text-gray-400 hover:text-white transition-colors font-semibold group/btn">
-                              View All Services <span className="inline-block transition-transform group-hover/btn:translate-x-1">&rarr;</span>
+                            <Link href="/all-services" className="w-full text-center py-3 text-[11px] uppercase tracking-widest text-gray-500 hover:text-white transition-colors font-bold group/btn">
+                              Explore Directory <span className="inline-block transition-transform group-hover/btn:translate-x-2">&rarr;</span>
                             </Link>
                           </div>
                         </div>
