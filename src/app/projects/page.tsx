@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { masterProjects } from "@/lib/projectsData";
+import { masterProjects, getSortedProjects } from "@/lib/projectsData";
 import ProjectsClientGrid from "@/components/portfolio/ProjectsClientGrid";
 import AboutSection from "@/components/AboutSection";
 import CommitmentSection from "@/components/CommitmentSection";
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 };
 
 export default function ProjectsMasterPage() {
-  const allProjects = Object.values(masterProjects);
+  const allProjects = getSortedProjects();
 
   return (
     <main className="flex-1 bg-[#FAF9F6] min-h-screen -mt-[130px]">

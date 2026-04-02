@@ -188,4 +188,36 @@ Object.entries(commercialServicesData).forEach(([slug, data]) => {
   generateProjectsForService(slug, data.heroTitle, data.heroImage, false);
 });
 
+// Priority Core Filter
+const PRIORITY_FOCUS = [
+  "Home Renovations",
+  "Kitchen Remodeling",
+  "Bathroom Remodeling",
+  "Room Additions",
+  "Whole Home Renovations",
+  "Basement Finishing",
+  "Open Concepts",
+  "Home Theaters",
+  "Guest Suites",
+  "Recreation Rooms",
+  "Exterior Improvements",
+  "Decks & Porches",
+  "Roofing",
+  "Siding",
+  "Windows & Doors",
+  "Fence Installation"
+];
+
+export const getSortedProjects = () => {
+    return Object.values(masterProjects).sort((a, b) => {
+        const indexA = PRIORITY_FOCUS.indexOf(a.category);
+        const indexB = PRIORITY_FOCUS.indexOf(b.category);
+        
+        if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+        if (indexA !== -1) return -1;
+        if (indexB !== -1) return 1;
+        return 0;
+    });
+};
+
 // Total generated items exported at runtime: Exactly 210.

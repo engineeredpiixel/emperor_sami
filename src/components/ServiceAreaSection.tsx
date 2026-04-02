@@ -24,9 +24,9 @@ const locationsData = [
   { name: "High Park, ON", slug: "high-park", lat: 43.6465, lng: -79.4637 }
 ];
 
-import { masterProjects } from "@/lib/projectsData";
+import { masterProjects, getSortedProjects } from "@/lib/projectsData";
 
-const projects = Object.values(masterProjects).map((p, i) => ({
+const projects = getSortedProjects().map((p, i) => ({
   id: i,
   category: p.category,
   title: p.title,
