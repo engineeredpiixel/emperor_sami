@@ -46,13 +46,6 @@ export default function CoreValuesSection() {
     return () => observer.disconnect();
   }, []);
 
-  // Preload Images for immediate vault-door expansion response
-  useEffect(() => {
-    commitments.forEach(c => {
-      const img = new window.Image();
-      img.src = c.image;
-    });
-  }, []);
 
   return (
     <section ref={sectionRef} className="bg-[#FAFAFA] py-24 sm:py-32 overflow-hidden w-full select-none selection:bg-[#F9A825]/30">

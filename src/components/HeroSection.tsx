@@ -160,7 +160,7 @@ export default function HeroSection() {
           alt="Revealed Luxury Masterpiece"
           fill
           sizes="(max-width: 768px) 100vw, 100vw"
-          quality={50}
+          quality={35}
           className="object-cover object-center brightness-[0.8] contrast-[1.1] saturate-[1.1]"
           priority
           fetchPriority="high"
