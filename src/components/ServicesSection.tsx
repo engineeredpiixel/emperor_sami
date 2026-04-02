@@ -178,8 +178,15 @@ export default function ServicesSection() {
            <div className="flex-1 h-[1px] bg-gray-200" />
         </div>
 
-        <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 xl:gap-12 transition-all duration-[1.5s] ease-[0.16,1,0.3,1] delay-300 will-change-transform mb-24 lg:mb-32 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-24"}`}>
+        <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 xl:gap-12 transition-all duration-[1.5s] ease-[0.16,1,0.3,1] delay-300 will-change-transform ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-24"}`}>
           {residentialServices.map((service, i) => renderCard(service, i))}
+        </div>
+
+        <div className={`mt-16 flex justify-center w-full mb-24 lg:mb-32 transition-all duration-1000 delay-500 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}>
+           <Link href="/all-services#residential" className="group flex items-center gap-3 bg-[#111] hover:bg-[#F9A825] text-white hover:text-[#111] font-black uppercase tracking-widest text-xs px-10 py-4 lg:py-5 rounded-sm transition-colors duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.1)] hover:shadow-[0_10px_30px_rgba(249,168,37,0.3)] cursor-pointer">
+             View All Residential Services 
+             <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3"><path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+           </Link>
         </div>
 
         {/* ── COMMERCIAL DIVISION ── */}
@@ -190,6 +197,13 @@ export default function ServicesSection() {
 
         <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 xl:gap-12 transition-all duration-[1.5s] ease-[0.16,1,0.3,1] delay-500 will-change-transform ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-24"}`}>
           {commercialServices.map((service, i) => renderCard(service, i))}
+        </div>
+
+        <div className={`mt-16 flex justify-center w-full transition-all duration-1000 delay-[700ms] ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}>
+           <Link href="/all-services#commercial" className="group flex items-center gap-3 bg-[#111] hover:bg-[#F9A825] text-white hover:text-[#111] font-black uppercase tracking-widest text-xs px-10 py-4 lg:py-5 rounded-sm transition-colors duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.1)] hover:shadow-[0_10px_30px_rgba(249,168,37,0.3)] cursor-pointer">
+             View All Commercial Services
+             <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3"><path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+           </Link>
         </div>
 
       </div>

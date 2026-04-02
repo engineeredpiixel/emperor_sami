@@ -156,7 +156,7 @@ export default function AllServicesGrid() {
       <div className="max-w-[1500px] mx-auto px-6 sm:px-10 lg:px-16">
         
         {/* RESIDENTIAL MASTER SECTION */}
-        <div className="mb-24 md:mb-32">
+        <div id="residential" className="mb-24 md:mb-32 scroll-mt-32">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-10 mb-20">
             <div className={`transition-all duration-1000 will-change-transform ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}>
               <div className="flex items-center gap-3 mb-6">
@@ -179,7 +179,7 @@ export default function AllServicesGrid() {
         </div>
 
         {/* COMMERCIAL MASTER SECTION */}
-        <div className="mt-48 pt-32 border-t border-gray-200/60">
+        <div id="commercial" className="mt-48 pt-32 border-t border-gray-200/60 scroll-mt-12">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-10 mb-20">
             <div>
               <div className="flex items-center gap-3 mb-6">
