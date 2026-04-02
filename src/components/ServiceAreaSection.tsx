@@ -51,7 +51,6 @@ export default function ServiceAreaSection({ hideButton = false }: { hideButton?
   }, []);
   const [searchQuery, setSearchQuery] = useState("");
   const [serviceFilter, setServiceFilter] = useState("Service Type");
-  const [sizeFilter, setSizeFilter] = useState("Project Size");
   const [sortBy, setSortBy] = useState("Sort By");
 
   const allServiceTitles = Array.from(new Set(projects.map(p => p.category))).sort();
@@ -59,8 +58,7 @@ export default function ServiceAreaSection({ hideButton = false }: { hideButton?
   const filteredProjects = projects.filter(p => {
     const matchesSearch = p.address.toLowerCase().includes(searchQuery.toLowerCase()) || p.category.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesService = serviceFilter === "Service Type" || p.category === serviceFilter;
-    const matchesSize = sizeFilter === "Project Size" || p.size === sizeFilter;
-    return matchesSearch && matchesService && matchesSize;
+    return matchesSearch && matchesService;
   });
 
   if (sortBy === "Distance") {
@@ -98,7 +96,7 @@ export default function ServiceAreaSection({ hideButton = false }: { hideButton?
         <div className="w-full bg-white rounded-md p-4 sm:p-6 lg:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-gray-100 flex flex-col gap-6 lg:gap-8">
           
           {/* Filters Bar */}
-          <div className="hidden md:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="hidden md:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <div className="relative">
               <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -123,22 +121,6 @@ export default function ServiceAreaSection({ hideButton = false }: { hideButton?
                 {allServiceTitles.map(title => (
                    <option key={title} value={title}>{title}</option>
                 ))}
-              </select>
-              <svg className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-              </svg>
-            </div>
-
-            <div className="relative">
-              <select 
-                value={sizeFilter}
-                onChange={(e) => setSizeFilter(e.target.value)}
-                aria-label="Filter by Project Size"
-                className="w-full bg-[#F5F5F5] text-gray-700 rounded-md px-4 py-3.5 appearance-none focus:outline-none focus:ring-2 focus:ring-[#F9A825] text-sm font-medium cursor-pointer"
-              >
-                <option value="Project Size">Project Size</option>
-                <option value="Estate">Estate</option>
-                <option value="Villa">Villa</option>
               </select>
               <svg className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
