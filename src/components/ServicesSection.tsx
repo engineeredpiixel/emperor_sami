@@ -7,8 +7,15 @@ import Link from "next/link";
 import { residentialServicesData } from "@/lib/servicesDataResidential";
 import { commercialServicesData } from "@/lib/servicesDataCommercial";
 
-// Define the 3 Residential and 3 Commercial featured services
-const featuredResidentialSlugs = ["new-construction", "whole-home-renovations", "home-theaters"];
+// Define the 6 Residential and 3 Commercial featured services
+const featuredResidentialSlugs = [
+  "kitchen-remodeling", 
+  "bathroom-remodeling", 
+  "decks-porches", 
+  "fence-installation", 
+  "home-theaters", 
+  "recreation-rooms"
+];
 const featuredCommercialSlugs = ["ground-up-construction", "tenant-build-outs", "adaptive-reuse"];
 
 const residentialServices = featuredResidentialSlugs.map((slug) => ({
