@@ -218,6 +218,48 @@ export default function ContactSection() {
                   <option value="project_management">Project Management</option>
                 </select>
 
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <input
+                    type="date"
+                    required
+                    aria-label="Select Consultation Date"
+                    min={new Date().toISOString().split("T")[0]}
+                    className="w-full bg-white border border-[#E5E5E5] px-5 py-3.5 text-[15px] text-gray-800 focus:outline-none focus:border-[#D19C2C] focus:ring-1 focus:ring-[#D19C2C] transition-shadow shadow-sm uppercase tracking-wide text-sm"
+                  />
+                  <select
+                    required
+                    defaultValue=""
+                    aria-label="Select a Time"
+                    className="w-full bg-white border border-[#E5E5E5] px-5 py-3.5 text-[15px] text-gray-800 focus:outline-none focus:border-[#D19C2C] focus:ring-1 focus:ring-[#D19C2C] transition-shadow cursor-pointer shadow-sm appearance-none"
+                    style={{
+                      backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23000000'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'%3E%3C/path%3E%3C/svg%3E")`,
+                      backgroundRepeat: 'no-repeat',
+                      backgroundPosition: 'right 1.25rem center',
+                      backgroundSize: '1.2rem'
+                    }}
+                  >
+                    <option value="" disabled>Toronto Time (EST)</option>
+                    <optgroup label="Morning">
+                      <option value="9:00 AM">9:00 AM</option>
+                      <option value="10:00 AM">10:00 AM</option>
+                      <option value="11:00 AM">11:00 AM</option>
+                    </optgroup>
+                    <optgroup label="Afternoon">
+                      <option value="12:00 PM">12:00 PM</option>
+                      <option value="1:00 PM">1:00 PM</option>
+                      <option value="2:00 PM">2:00 PM</option>
+                      <option value="3:00 PM">3:00 PM</option>
+                      <option value="4:00 PM">4:00 PM</option>
+                      <option value="5:00 PM">5:00 PM</option>
+                    </optgroup>
+                    <optgroup label="Evening & Weekend">
+                      <option value="6:00 PM">6:00 PM</option>
+                      <option value="7:00 PM">7:00 PM</option>
+                      <option value="8:00 PM">8:00 PM</option>
+                    </optgroup>
+                  </select>
+                </div>
+
                 <textarea
                   placeholder="Tell us about your construction needs... *"
                   aria-label="Message details"

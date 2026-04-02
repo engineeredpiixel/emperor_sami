@@ -226,6 +226,43 @@ export default function ContactPage() {
                     </div>
                   </div>
 
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-8">
+                    <div className="relative group">
+                      <input type="date" id="date" required min={new Date().toISOString().split("T")[0]} className="peer w-full bg-transparent border-b-2 border-black/10 px-0 py-4 text-[#111] text-lg font-medium focus:outline-none focus:border-transparent transition-colors uppercase tracking-widest text-sm" disabled={isSubmitting} />
+                      <label className="absolute left-0 -top-4 text-[10px] text-gray-400 font-bold uppercase tracking-widest peer-focus:text-[#D8A02A] transition-colors">Consultation Date</label>
+                      <div className="absolute bottom-0 left-0 w-full h-[2px] bg-[#D8A02A] origin-left scale-x-0 group-focus-within:scale-x-100 transition-transform duration-500 ease-out" />
+                    </div>
+
+                    <div className="relative group">
+                      <select id="time" required defaultValue="" className="peer w-full bg-transparent border-b-2 border-black/10 px-0 py-4 text-[#111] text-lg font-medium focus:outline-none focus:border-transparent transition-colors appearance-none cursor-pointer" disabled={isSubmitting}>
+                        <option value="" disabled className="text-gray-400">Toronto Time (EST)</option>
+                        <optgroup label="Morning">
+                          <option value="9:00 AM" className="bg-white text-[#111]">9:00 AM</option>
+                          <option value="10:00 AM" className="bg-white text-[#111]">10:00 AM</option>
+                          <option value="11:00 AM" className="bg-white text-[#111]">11:00 AM</option>
+                        </optgroup>
+                        <optgroup label="Afternoon">
+                          <option value="12:00 PM" className="bg-white text-[#111]">12:00 PM</option>
+                          <option value="1:00 PM" className="bg-white text-[#111]">1:00 PM</option>
+                          <option value="2:00 PM" className="bg-white text-[#111]">2:00 PM</option>
+                          <option value="3:00 PM" className="bg-white text-[#111]">3:00 PM</option>
+                          <option value="4:00 PM" className="bg-white text-[#111]">4:00 PM</option>
+                          <option value="5:00 PM" className="bg-white text-[#111]">5:00 PM</option>
+                        </optgroup>
+                        <optgroup label="Evening & Weekend">
+                          <option value="6:00 PM" className="bg-white text-[#111]">6:00 PM</option>
+                          <option value="7:00 PM" className="bg-white text-[#111]">7:00 PM</option>
+                          <option value="8:00 PM" className="bg-white text-[#111]">8:00 PM</option>
+                        </optgroup>
+                      </select>
+                      <label className="absolute left-0 -top-4 text-[10px] text-gray-400 font-bold uppercase tracking-widest peer-focus:text-[#D8A02A] transition-colors">Preferred Time</label>
+                      <div className="absolute bottom-0 left-0 w-full h-[2px] bg-[#D8A02A] origin-left scale-x-0 group-focus-within:scale-x-100 transition-transform duration-500 ease-out" />
+                      <div className="absolute right-0 top-5 pointer-events-none">
+                        <svg className="w-5 h-5 text-[#D8A02A]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                      </div>
+                    </div>
+                  </div>
+
                   <div className="relative group mt-4">
                     <textarea id="scope" required rows={4} className="peer w-full bg-transparent border-b-2 border-black/10 px-0 py-4 text-[#111] text-lg font-medium placeholder-transparent focus:outline-none focus:border-transparent transition-colors resize-none" placeholder="Scope" disabled={isSubmitting} />
                     <label className="absolute left-0 top-4 text-gray-400 text-sm font-bold uppercase tracking-widest transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 peer-focus:-top-4 peer-focus:text-[10px] peer-focus:text-[#D8A02A] peer-valid:-top-4 peer-valid:text-[10px] peer-valid:text-[#D8A02A]">Project Specifications</label>
