@@ -175,7 +175,7 @@ export default function ContactSection() {
               {/* THE ACTUAL FORM (The Payload) */}
               <form 
                  onSubmit={(e) => { e.preventDefault(); console.log('Form Captured!'); }}
-                 className={`bg-[#F1F1F1] p-8 sm:p-10 w-full relative z-10 flex flex-col gap-4 border-2 border-white shadow-[inset_0_0_40px_rgba(0,0,0,0.05)] transition-all duration-[1.5s] delay-[400ms] ease-[0.25,1,0.5,1]
+                 className={`bg-[#F1F1F1] p-8 sm:p-10 pb-32 sm:pb-10 w-full relative z-10 flex flex-col gap-4 border-2 border-white shadow-[inset_0_0_40px_rgba(0,0,0,0.05)] transition-all duration-[1.5s] delay-[400ms] ease-[0.25,1,0.5,1]
                    ${isOpened ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-[0.96] translate-y-8 pointer-events-none"}`}
               >
 

@@ -183,7 +183,7 @@ export default function ContactPage() {
                   </span>
                 </div>
 
-                <form ref={formRef} className="flex flex-col gap-8 relative z-10" onSubmit={handleDeploy}>
+                <form ref={formRef} className="flex flex-col gap-8 relative z-10 pb-32 sm:pb-8" onSubmit={handleDeploy}>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                     <div className="relative group">
                       <input type="text" id="name" required className="peer w-full bg-transparent border-b-2 border-black/10 px-0 py-4 text-[#111] text-lg font-medium placeholder-transparent focus:outline-none focus:border-transparent transition-colors" placeholder="Name" disabled={isSubmitting} />
@@ -229,7 +229,7 @@ export default function ContactPage() {
 
                     <div className="relative group">
                       <select id="service" required defaultValue="" className="peer w-full bg-transparent border-b-2 border-black/10 px-0 py-4 text-[#111] text-lg font-medium focus:outline-none focus:border-transparent transition-colors appearance-none" disabled={isSubmitting}>
-                        <option value="" disabled className="text-gray-400">Select Primary Area</option>
+                        <option value="" disabled className="text-gray-400">Select Service</option>
                         <optgroup label="Residential Division">
                           {Object.values(residentialServicesData).map(s => (
                             <option key={s.slug} value={s.slug} className="bg-white text-[#111]">{s.heroTitle}</option>
