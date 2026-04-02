@@ -401,7 +401,7 @@ export default function Navbar() {
                                <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover/cta:translate-x-[100%] transition-transform duration-700 ease-in-out skew-x-[-20deg]" />
                                Book Strategy Call
                             </Link>
-                            <Link href="/all-services" className="w-full text-center py-3 text-[11px] uppercase tracking-widest text-gray-500 hover:text-white transition-colors font-bold group/btn">
+                            <Link href="/services" className="w-full text-center py-3 text-[11px] uppercase tracking-widest text-gray-500 hover:text-white transition-colors font-bold group/btn">
                               Explore Directory <span className="inline-block transition-transform group-hover/btn:translate-x-2">&rarr;</span>
                             </Link>
                           </div>
@@ -546,7 +546,7 @@ export default function Navbar() {
 
                       {/* Mobile How It Works brief */}
                       <div className="mt-4 pt-4 border-t border-white/5">
-                        <Link onClick={() => setMenuOpen(false)} href="/all-services" className="inline-flex items-center justify-center w-full bg-[#1a1a1a] text-white/90 text-xs font-bold uppercase tracking-widest py-3 rounded border border-white/10 hover:bg-[#F9A825] hover:text-[#111] transition-all">
+                        <Link onClick={() => setMenuOpen(false)} href="/services" className="inline-flex items-center justify-center w-full bg-[#1a1a1a] text-white/90 text-xs font-bold uppercase tracking-widest py-3 rounded border border-white/10 hover:bg-[#F9A825] hover:text-[#111] transition-all">
                           View All Services &rarr;
                         </Link>
                       </div>
