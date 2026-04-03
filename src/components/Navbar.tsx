@@ -96,7 +96,7 @@ export default function Navbar() {
 
           <div className="hidden sm:flex items-center gap-5">
             <a
-              href="mailto:info@emperorsamigroup.com"
+              href={`mailto:${t("navbar.top_bar_email") || t("contact.email")}`}
               className="flex items-center gap-2 text-sm text-gray-600 hover:text-[#F9A825] transition-colors"
             >
               <svg
@@ -109,11 +109,11 @@ export default function Navbar() {
                 <rect x="2" y="4" width="20" height="16" rx="2" />
                 <path d="M2 7l10 7 10-7" />
               </svg>
-              {t("contact.email")}
+              {t("navbar.top_bar_email") || t("contact.email")}
             </a>
 
             <a
-              href={`tel:${t("contact.phone").replace(/[^0-9]/g, "")}`}
+              href={`tel:${(t("navbar.top_bar_phone") || t("contact.phone")).replace(/[^0-9]/g, "")}`}
               className="flex items-center gap-2 bg-[#F9A825] hover:bg-[#F4511E] text-[#1a1209] hover:text-white text-sm font-semibold px-5 py-1.5 rounded transition-colors"
             >
               <svg
@@ -129,7 +129,7 @@ export default function Navbar() {
                 d="M3 5.5A1.5 1.5 0 014.5 4h1.379a1 1 0 01.949.684l1.05 3.15a1 1 0 01-.23 1.02L6.5 10a11.042 11.042 0 005.5 5.5l1.146-1.148a1 1 0 011.02-.23l3.15 1.05A1 1 0 0118 16.121V17.5A1.5 1.5 0 0116.5 19C9.044 19 3 12.956 3 5.5z"
               />
             </svg>
-            {t("contact.phone")}
+            {t("navbar.top_bar_phone") || t("contact.phone")}
           </a>
           </div>
         </div>

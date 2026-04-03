@@ -8,6 +8,8 @@ INSERT INTO public.site_content (section, key, type, label, value) VALUES
 -- TOP BAR
 ('navbar', 'navbar.top_bar_text', 'text', 'Top Bar Announcement', 'Need a Reliable Contractor in the Toronto Area?'),
 ('navbar', 'navbar.top_bar_link_text', 'text', 'Top Bar Link Text', 'Contact Us'),
+('navbar', 'navbar.top_bar_email', 'text', 'Top Bar Email', 'info@emperorsamigroup.com'),
+('navbar', 'navbar.top_bar_phone', 'text', 'Top Bar Phone', '+1 (647) 901 1626'),
 
 -- MAIN NAV BAR
 ('navbar', 'navbar.mega_menu_json', 'textarea', 'Mega Menu JSON Data', '{
