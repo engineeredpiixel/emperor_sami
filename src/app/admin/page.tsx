@@ -315,9 +315,9 @@ export default function AdminDashboard() {
                   saving={saving[item.key]}
                   saved={saved[item.key]}
                   uploading={uploadingKey === item.key}
-                  onChange={(val) => setEdits((prev) => ({ ...prev, [item.key]: val }))}
+                  onChange={(val: string) => setEdits((prev) => ({ ...prev, [item.key]: val }))}
                   onSave={() => handleSave(item.key)}
-                  onImageUpload={(file) => handleImageUpload(item.key, file)}
+                  onImageUpload={(file: File) => handleImageUpload(item.key, file)}
                 />
               ))}
             </div>
