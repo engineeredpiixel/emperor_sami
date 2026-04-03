@@ -5,7 +5,11 @@
 
 INSERT INTO public.site_content (section, key, type, label, value) VALUES
 
--- MEGA MENU
+-- TOP BAR
+('navbar', 'navbar.top_bar_text', 'text', 'Top Bar Announcement', 'Need a Reliable Contractor in the Toronto Area?'),
+('navbar', 'navbar.top_bar_link_text', 'text', 'Top Bar Link Text', 'Contact Us'),
+
+-- MAIN NAV BAR
 ('navbar', 'navbar.mega_menu_json', 'textarea', 'Mega Menu JSON Data', '{
   "residential": {
     "title": "Residential Services Division",

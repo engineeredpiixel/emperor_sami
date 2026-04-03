@@ -242,20 +242,43 @@ export default function AdminDashboard() {
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 max-w-6xl">
-              {filteredContent.map((item) => (
-                <ContentField
-                  key={item.key}
-                  item={item}
-                  value={edits[item.key] ?? ""}
-                  saving={saving[item.key]}
-                  saved={saved[item.key]}
-                  uploading={uploadingKey === item.key}
-                  onChange={(val) => setEdits((prev) => ({ ...prev, [item.key]: val }))}
-                  onSave={() => handleSave(item.key)}
-                  onImageUpload={(file) => handleImageUpload(item.key, file)}
-                />
-              ))}
+            <div className="flex flex-col gap-6 max-w-6xl">
+              {activeSection === "navbar" ? (
+                <>
+                  <div className="bg-[#111] p-5 rounded-xl border border-white/10">
+                    <h2 className="text-lg font-bold text-[#F9A825] mb-4 flex items-center gap-2"><span className="text-xl">👆</span> Top Bar Settings</h2>
+                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+                      {filteredContent.filter(i => i.key.includes("top_bar")).map((item) => (
+                        <ContentField key={item.key} item={item} value={edits[item.key] ?? ""} saving={saving[item.key]} saved={saved[item.key]} uploading={uploadingKey === item.key} onChange={(val) => setEdits((prev) => ({ ...prev, [item.key]: val }))} onSave={() => handleSave(item.key)} onImageUpload={(file) => handleImageUpload(item.key, file)} />
+                      ))}
+                    </div>
+                  </div>
+                  <div className="bg-[#111] p-5 rounded-xl border border-white/10">
+                    <h2 className="text-lg font-bold text-[#F9A825] mb-4 flex items-center gap-2"><span className="text-xl">🧭</span> Main Nav Bar Settings</h2>
+                    <div className="grid grid-cols-1 gap-4">
+                      {filteredContent.filter(i => !i.key.includes("top_bar")).map((item) => (
+                        <ContentField key={item.key} item={item} value={edits[item.key] ?? ""} saving={saving[item.key]} saved={saved[item.key]} uploading={uploadingKey === item.key} onChange={(val) => setEdits((prev) => ({ ...prev, [item.key]: val }))} onSave={() => handleSave(item.key)} onImageUpload={(file) => handleImageUpload(item.key, file)} />
+                      ))}
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+                  {filteredContent.map((item) => (
+                    <ContentField
+                      key={item.key}
+                      item={item}
+                      value={edits[item.key] ?? ""}
+                      saving={saving[item.key]}
+                      saved={saved[item.key]}
+                      uploading={uploadingKey === item.key}
+                      onChange={(val) => setEdits((prev) => ({ ...prev, [item.key]: val }))}
+                      onSave={() => handleSave(item.key)}
+                      onImageUpload={(file) => handleImageUpload(item.key, file)}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           )}
         </div>

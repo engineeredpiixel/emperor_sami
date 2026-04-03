@@ -85,12 +85,12 @@ export default function Navbar() {
           <span className="w-1 mr-4 flex-shrink-0" />
 
           <p className="text-sm text-gray-600 font-normal flex-1">
-            Need a Reliable Contractor in the Toronto Area?{" "}
+            {t("navbar.top_bar_text") || "Need a Reliable Contractor in the Toronto Area?"}{" "}
             <Link
               href="/contact#secure-data-link"
               className="text-gray-800 font-medium underline underline-offset-2 hover:text-[#F9A825] transition-colors"
             >
-              Contact Us
+              {t("navbar.top_bar_link_text") || "Contact Us"}
             </Link>
           </p>
 
