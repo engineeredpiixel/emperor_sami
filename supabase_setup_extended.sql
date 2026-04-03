@@ -12,6 +12,14 @@ INSERT INTO public.site_content (section, key, type, label, value) VALUES
 ('navbar', 'navbar.top_bar_phone', 'text', 'Top Bar Phone', '+1 (647) 901 1626'),
 
 -- MAIN NAV BAR
+('navbar', 'navbar.logo_image', 'image', 'Website Logo', ''),
+('navbar', 'navbar.link_service_area', 'text', 'Link: Service Area', 'Service Area'),
+('navbar', 'navbar.link_projects', 'text', 'Link: Projects', 'Projects'),
+('navbar', 'navbar.link_about', 'text', 'Link: About Us', 'About Us'),
+('navbar', 'navbar.link_contact', 'text', 'Link: Contact Us', 'Contact Us'),
+('navbar', 'navbar.btn_book_strategy', 'text', 'Button: Book Strategy', 'Book Strategy Call'),
+('navbar', 'navbar.btn_view_services', 'text', 'Button: View Services', 'View All Services →'),
+('navbar', 'navbar.btn_get_quote', 'text', 'Button: Get Quote', 'Get a Quote'),
 ('navbar', 'navbar.mega_menu_json', 'textarea', 'Mega Menu JSON Data', '{
   "residential": {
     "title": "Residential Services Division",

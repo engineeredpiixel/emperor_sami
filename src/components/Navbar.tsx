@@ -53,10 +53,10 @@ export default function Navbar() {
       href: "/services",
       hasMegaMenu: true,
     },
-    { label: "Service Area", href: "/service-area" },
-    { label: "Projects", href: "/projects" },
-    { label: "About Us", href: "/about" },
-    { label: "Contact Us", href: "/contact#secure-data-link" },
+    { label: t("navbar.link_service_area") || "Service Area", href: "/service-area" },
+    { label: t("navbar.link_projects") || "Projects", href: "/projects" },
+    { label: t("navbar.link_about") || "About Us", href: "/about" },
+    { label: t("navbar.link_contact") || "Contact Us", href: "/contact#secure-data-link" },
   ];
 
   /* ── Shared cubic-bezier transition ── */
@@ -163,15 +163,19 @@ export default function Navbar() {
             {/* Logo */}
             <div className="flex items-center">
               <Link href="/" className="flex items-center gap-3 group">
-                <svg
-                  className="w-10 h-10 text-[#b8960c] flex-shrink-0"
-                  viewBox="0 0 40 40"
-                  fill="currentColor"
-                >
-                  <path d="M20 2l2 6h6l-5 4 2 6-5-4-5 4 2-6-5-4h6z" />
-                  <path d="M10 18c-2 2-3 5-3 8 0 4 3 7 6 9l7 3 7-3c3-2 6-5 6-9 0-3-1-6-3-8" opacity="0.6" />
-                  <path d="M14 20c0 0-2 3 0 6s6 4 6 4 4-1 6-4 0-6 0-6" opacity="0.4" />
-                </svg>
+                {t("navbar.logo_image") ? (
+                  <img src={t("navbar.logo_image")} alt="Emperor Sami Logo" className="h-10 w-auto object-contain flex-shrink-0" />
+                ) : (
+                  <svg
+                    className="w-10 h-10 text-[#b8960c] flex-shrink-0"
+                    viewBox="0 0 40 40"
+                    fill="currentColor"
+                  >
+                    <path d="M20 2l2 6h6l-5 4 2 6-5-4-5 4 2-6-5-4h6z" />
+                    <path d="M10 18c-2 2-3 5-3 8 0 4 3 7 6 9l7 3 7-3c3-2 6-5 6-9 0-3-1-6-3-8" opacity="0.6" />
+                    <path d="M14 20c0 0-2 3 0 6s6 4 6 4 4-1 6-4 0-6 0-6" opacity="0.4" />
+                  </svg>
+                )}
                 <div className="flex flex-col leading-none">
                   <span className="text-white font-bold text-[17px] tracking-[0.1em] uppercase">
                     {t("navbar.brand_name")}
@@ -296,7 +300,7 @@ export default function Navbar() {
                           <div className="mt-10 flex flex-col gap-3 relative z-10">
                             <Link href="/contact#secure-data-link" className="w-full text-center bg-[#F9A825] hover:bg-[#F4511E] text-[#111] font-black uppercase tracking-[0.2em] py-4 rounded-sm transition-all duration-500 transform hover:-translate-y-1 shadow-[0_10px_30px_rgba(249,168,37,0.2)] hover:shadow-[0_15px_40px_rgba(244,81,30,0.4)] relative overflow-hidden group/cta">
                                <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover/cta:translate-x-[100%] transition-transform duration-700 ease-in-out skew-x-[-20deg]" />
-                               Book Strategy Call
+                               {t("navbar.btn_book_strategy") || "Book Strategy Call"}
                             </Link>
                             <Link href="/services" className="w-full text-center py-3 text-[11px] uppercase tracking-widest text-gray-500 hover:text-white transition-colors font-bold group/btn">
                               View All Services <span className="inline-block transition-transform group-hover/btn:translate-x-2">&rarr;</span>
@@ -339,7 +343,7 @@ export default function Navbar() {
                 className="group flex items-center gap-0 rounded-full transition-all duration-300 hover:scale-105"
               >
                 <span className="flex items-center bg-[#F9A825] group-hover:bg-[#F4511E] text-[#1a1209] group-hover:text-white font-bold text-sm pl-7 pr-5 py-3.5 rounded-l-full transition-all duration-300 whitespace-nowrap">
-                  {t("navbar.cta_button")}
+                  {t("navbar.btn_get_quote") || t("navbar.cta_button") || "Get a Quote"}
                 </span>
                 <span className="flex items-center justify-center w-12 h-12 bg-[#F9A825] group-hover:bg-[#F4511E] rounded-r-full border-l border-[#e6960c]/30 transition-all duration-300">
                   <svg className="w-4 h-4 text-[#1a1209] group-hover:text-white group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all duration-300" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
@@ -444,7 +448,7 @@ export default function Navbar() {
                       {/* Mobile How It Works brief */}
                       <div className="mt-4 pt-4 border-t border-white/5">
                         <Link onClick={() => setMenuOpen(false)} href="/services" className="inline-flex items-center justify-center w-full bg-[#1a1a1a] text-white/90 text-xs font-bold uppercase tracking-widest py-3 rounded border border-white/10 hover:bg-[#F9A825] hover:text-[#111] transition-all">
-                          View All Services &rarr;
+                          {t("navbar.btn_view_services") || "View All Services →"}
                         </Link>
                       </div>
                     </div>
