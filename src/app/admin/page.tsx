@@ -60,7 +60,6 @@ export default function AdminDashboard() {
 
   // ── Fetch content for active section ──
   const fetchContent = useCallback(async () => {
-    // Prevent fetching if it's a structural parent without content, or mega menu
     if (activeSection === 'megamenu') {
       setContent([]);
       setLoading(false);
@@ -166,7 +165,6 @@ export default function AdminDashboard() {
       <aside
         className={`${sidebarOpen ? "w-72" : "w-16"} flex-shrink-0 border-r border-slate-200 bg-white flex flex-col transition-all duration-300 ease-in-out shadow-[4px_0_24px_rgba(0,0,0,0.02)] z-10`}
       >
-        {/* Logo Area */}
         <div className="flex items-center gap-3 px-5 py-6 border-b border-slate-100 min-h-[80px]">
           <div className="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center flex-shrink-0 shadow-md shadow-indigo-200">
             <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
@@ -181,7 +179,6 @@ export default function AdminDashboard() {
           )}
         </div>
 
-        {/* Dynamic Nested Nav */}
         <nav className="flex-1 overflow-y-auto py-5 px-3 custom-scrollbar">
           {rootSections.map((rootItem) => {
             const children = childSections.filter(c => c.parent_id === rootItem.id);
@@ -191,7 +188,6 @@ export default function AdminDashboard() {
 
             return (
               <div key={rootItem.id} className="mb-1">
-                {/* Root Button */}
                 <button
                   onClick={() => isParent ? toggleParent(rootItem.id) : setActiveSection(rootItem.id)}
                   className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-left transition-all duration-200 group
@@ -207,7 +203,6 @@ export default function AdminDashboard() {
                   )}
                 </button>
 
-                {/* Submenu Drawer */}
                 {isParent && sidebarOpen && (
                   <div className={`overflow-hidden transition-all duration-300 flex flex-col ${isExpanded ? "max-h-[500px] mt-1 mb-2 opacity-100" : "max-h-0 opacity-0"}`}>
                     {children.map(child => (
@@ -229,7 +224,6 @@ export default function AdminDashboard() {
           })}
         </nav>
 
-        {/* User Block */}
         <div className="p-4 border-t border-slate-100">
           <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 flex flex-col gap-3">
             {sidebarOpen && (
@@ -298,13 +292,24 @@ export default function AdminDashboard() {
           ) : filteredContent.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full min-h-[300px] text-center max-w-md mx-auto">
               <div className="w-16 h-16 bg-slate-100 rounded-2xl flex items-center justify-center mb-4">
-                <svg className="w-8 h-8 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" /></svg>
+                <svg className="w-8 h-8 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2-2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" /></svg>
               </div>
               <p className="text-slate-700 font-bold text-lg mb-1">No content fields found</p>
               <p className="text-slate-500 text-sm">
                 This section currently has no editable CMS mapping. You may need to run the SQL injection script for <b>{activeSection}</b>.
               </p>
             </div>
+          ) : activeSection === "homepage_shield" ? (
+            <ShieldBadgesTabbedEditor 
+              content={filteredContent}
+              edits={edits}
+              saving={saving}
+              saved={saved}
+              uploadingKey={uploadingKey}
+              setEdits={setEdits}
+              handleSave={handleSave}
+              handleImageUpload={handleImageUpload}
+            />
           ) : (
             <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 max-w-7xl mx-auto">
               {filteredContent.map((item) => (
@@ -324,6 +329,62 @@ export default function AdminDashboard() {
           )}
         </div>
       </main>
+    </div>
+  );
+}
+
+// ─── Tab Bar Shield Badges Extension ─────────────────────────────────────────
+function ShieldBadgesTabbedEditor({ content, edits, saving, saved, uploadingKey, setEdits, handleSave, handleImageUpload }: any) {
+  const [activeTab, setActiveTab] = useState("headers");
+  
+  const tabs = [
+    { id: 'headers', label: 'Global Headers', filter: (key: string) => !key.includes('badge1') && !key.includes('badge2') && !key.includes('badge3') },
+    { id: 'badge1', label: 'Badge 1', filter: (key: string) => key.includes('badge1') },
+    { id: 'badge2', label: 'Badge 2', filter: (key: string) => key.includes('badge2') },
+    { id: 'badge3', label: 'Badge 3', filter: (key: string) => key.includes('badge3') },
+  ];
+
+  const currentFilter = tabs.find(t => t.id === activeTab)?.filter || (() => true);
+  const tabContent = content.filter((item: any) => currentFilter(item.key));
+
+  return (
+    <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm max-w-7xl mx-auto">
+      {/* Tab Row */}
+      <div className="flex flex-col sm:flex-row border-b border-slate-200 bg-slate-50/50">
+        {tabs.map(tab => (
+          <button
+            key={tab.id}
+            type="button"
+            onClick={() => setActiveTab(tab.id)}
+            className={`flex-1 py-4 px-2 text-[12px] sm:text-[13px] font-bold uppercase tracking-wider transition-all border-b-2 whitespace-nowrap ${
+              activeTab === tab.id 
+                ? "bg-white text-indigo-600 border-indigo-600 shadow-[0_4px_10px_rgba(0,0,0,0.02)] z-10" 
+                : "text-slate-500 hover:text-slate-800 hover:bg-slate-50 border-transparent"
+            }`}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+      
+      {/* Content for Active Tab */}
+      <div className="p-6 sm:p-10 bg-[#FBFBFB]">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+          {tabContent.map((item: any) => (
+            <ContentField
+              key={item.key}
+              item={item}
+              value={edits[item.key] ?? ""}
+              saving={saving[item.key]}
+              saved={saved[item.key]}
+              uploading={uploadingKey === item.key}
+              onChange={(val: string) => setEdits((prev: any) => ({ ...prev, [item.key]: val }))}
+              onSave={() => handleSave(item.key)}
+              onImageUpload={(file: File) => handleImageUpload(item.key, file)}
+            />
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
