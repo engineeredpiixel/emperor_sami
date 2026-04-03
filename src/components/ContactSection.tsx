@@ -314,7 +314,7 @@ export default function ContactSection() {
                   type="submit"
                   className="w-full flex items-center justify-center bg-[#D8A02A] hover:bg-[#C28C22] text-white font-bold text-[17px] py-[18px] transition-all hover:shadow-[0_10px_20px_rgba(216,160,42,0.4)] mt-2 hover:-translate-y-1"
                 >
-                  Send Message
+                  {t("contact.button_text") || "Send Message"}
                 </button>
 
               </form>
