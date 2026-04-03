@@ -3,33 +3,6 @@
 import { useState } from "react";
 import { useCMS } from "@/components/CMSProvider";
 
-const faqs = [
-  {
-    question: "What types of construction services do you specialize in?",
-    answer: "At Emperor Sami Group, we specialize in luxury custom home building, comprehensive home renovations, high-end basement finishing, and complete exterior improvements. Our team handles every phase of the project from initial design to final walkthrough."
-  },
-  {
-    question: "Do you provide services in my specific area?",
-    answer: "We proudly serve homeowners across Toronto, Ontario, and the surrounding Greater Toronto Area (GTA). If your project is located slightly outside these bounds, please reach out to us to confirm availability."
-  },
-  {
-    question: "How long does a typical custom home build or renovation take?",
-    answer: "Project timelines depend heavily on the scope and complexity of the work. Minor interior renovations can take a few weeks, while large-scale additions or custom home builds may require several months. We always provide a clear, detailed schedule before breaking ground."
-  },
-  {
-    question: "Are you fully licensed and insured as a General Contractor?",
-    answer: "Absolutely. Emperor Sami Group is a fully licensed and insured general contracting firm in Ontario. Safety, compliance with local Toronto building codes, and protecting your property are our top priorities on every single job site."
-  },
-  {
-    question: "Can you help with the architectural and interior design phases?",
-    answer: "Yes! Our integrated project management approach means we can support you with architectural planning, secure necessary city permits, and guide you through interior design choices to ensure your vision is executed flawlessly."
-  },
-  {
-    question: "Do you provide free estimates or on-site project consultations?",
-    answer: "Yes, we offer complimentary on-site evaluations. Our construction experts will visit your property, discuss your vision, explain the necessary steps, and provide a detailed, highly transparent budget estimate."
-  }
-];
-
 export default function FAQSection() {
   const { t } = useCMS();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -37,6 +10,40 @@ export default function FAQSection() {
   const toggleFAQ = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
+
+  const dynamicFaqs = [1, 2, 3, 4, 5, 6].map(num => ({
+    question: t(`faq.q${num}`),
+    answer: t(`faq.a${num}`)
+  })).filter(f => f.question && !f.question.includes("[Missing"));
+
+  const defaultFaqs = [
+    {
+      question: "What types of construction services do you specialize in?",
+      answer: "At Emperor Sami Group, we specialize in luxury custom home building, comprehensive home renovations, high-end basement finishing, and complete exterior improvements. Our team handles every phase of the project from initial design to final walkthrough."
+    },
+    {
+      question: "Do you provide services in my specific area?",
+      answer: "We proudly serve homeowners across Toronto, Ontario, and the surrounding Greater Toronto Area (GTA). If your project is located slightly outside these bounds, please reach out to us to confirm availability."
+    },
+    {
+      question: "How long does a typical custom home build or renovation take?",
+      answer: "Project timelines depend heavily on the scope and complexity of the work. Minor interior renovations can take a few weeks, while large-scale additions or custom home builds may require several months. We always provide a clear, detailed schedule before breaking ground."
+    },
+    {
+      question: "Are you fully licensed and insured as a General Contractor?",
+      answer: "Absolutely. Emperor Sami Group is a fully licensed and insured general contracting firm in Ontario. Safety, compliance with local Toronto building codes, and protecting your property are our top priorities on every single job site."
+    },
+    {
+      question: "Can you help with the architectural and interior design phases?",
+      answer: "Yes! Our integrated project management approach means we can support you with architectural planning, secure necessary city permits, and guide you through interior design choices to ensure your vision is executed flawlessly."
+    },
+    {
+      question: "Do you provide free estimates or on-site project consultations?",
+      answer: "Yes, we offer complimentary on-site evaluations. Our construction experts will visit your property, discuss your vision, explain the necessary steps, and provide a detailed, highly transparent budget estimate."
+    }
+  ];
+
+  const faqs = dynamicFaqs.length > 0 ? dynamicFaqs : defaultFaqs;
 
   return (
     <section className="bg-[#FAF9F6] py-24 sm:py-32 overflow-hidden border-t border-gray-200">
