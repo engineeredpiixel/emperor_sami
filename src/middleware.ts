@@ -6,7 +6,7 @@ const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY!;
 
 export async function middleware(request: NextRequest) {
   // Generate a cryptographically secure nonce using edge runtime primitives
-  const nonce = Buffer.from(crypto.randomUUID()).toString('base64');
+  const nonce = btoa(crypto.randomUUID());
   
   const cspHeader = `
     default-src 'self';
@@ -46,11 +46,11 @@ export async function middleware(request: NextRequest) {
 
   // Protect /admin routes
   const isAdminPath = request.nextUrl.pathname.startsWith('/admin');
-  const isLoginPath = request.nextUrl.pathname === '/admin/login';
+  const isLoginPath = request.nextUrl.pathname === '/login';
 
-  if (isAdminPath && !isLoginPath && !user) {
+  if (isAdminPath && !user) {
     const url = request.nextUrl.clone();
-    url.pathname = '/admin/login';
+    url.pathname = '/login';
     return NextResponse.redirect(url);
   }
 
