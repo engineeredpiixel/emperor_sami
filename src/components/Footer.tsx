@@ -6,7 +6,7 @@ import { useCMS } from "@/components/CMSProvider";
 import { usePathname } from "next/navigation";
 
 export default function Footer() {
-  const { t } = useCMS();
+  const { t, getImage } = useCMS();
   const scrollToTop = () => {
     if (typeof window !== "undefined") {
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -40,8 +40,8 @@ export default function Footer() {
           {/* Left: Image Block */}
           <Link href="/about#team" className="block w-full md:w-1/2 relative min-h-[160px] sm:min-h-[180px] group flex items-end rounded-md overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.4)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_25px_60px_rgba(0,0,0,0.5)] cursor-pointer">
             <Image 
-              src="/luxury_architect_team.png" 
-              alt="Emperor Sami Group Expert Team" 
+              src={getImage("footer.banner_img") || "/luxury_architect_team.png"} 
+              alt="Emperor Sami Group Expert" 
               fill 
               sizes="(max-width: 768px) 100vw, 50vw"
               className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
@@ -50,7 +50,7 @@ export default function Footer() {
             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
             <div className="relative z-10 p-5 sm:p-6 w-full text-center">
               <h3 className="text-white text-xl sm:text-2xl font-black tracking-wide shadow-black drop-shadow-md">
-                Meet Our Expert Team
+                {t("footer.banner_title") || "Meet Our Expert Team"}
               </h3>
             </div>
           </Link>
@@ -58,17 +58,17 @@ export default function Footer() {
           {/* Right: Yellow Subscription Box */}
           <div className="w-full md:w-1/2 bg-[#D8A02A] p-6 sm:p-8 hidden md:flex md:flex-col justify-center rounded-md overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.4)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_25px_60px_rgba(0,0,0,0.5)]">
             <h3 className="text-[#111111] text-[1.3rem] sm:text-[1.5rem] font-black leading-tight mb-2 drop-shadow-sm">
-              Get in Touch with Our Construction Experts Today
+              {t("footer.cta_headline") || "Get in Touch with Our Construction Experts Today"}
             </h3>
             <p className="text-[#2a1a09] text-[13px] font-medium leading-relaxed mb-4 max-w-[480px]">
-              Ready to protect your home with a new build or renovation? One call or email and we&apos;ll take it from there!
+              {t("footer.cta_desc") || "Ready to protect your home with a new build or renovation? One call or email and we'll take it from there!"}
             </p>
             
             {/* Input Form */}
             <form className="flex flex-col lg:flex-row gap-0 w-full" onSubmit={(e) => e.preventDefault()}>
               <input
                 type="email"
-                placeholder="Your Email Address.."
+                placeholder={t("footer.cta_placeholder") || "Your Email Address.."}
                 aria-label="Your Email Address"
                 required
                 className="flex-1 bg-black/10 border-none text-[#111111] placeholder-[#4a3512] px-5 py-4 focus:outline-none focus:bg-black/15 transition-all font-medium text-[15px] outline-none"
@@ -77,7 +77,7 @@ export default function Footer() {
                 type="submit"
                 className="bg-white text-[#111] hover:bg-gray-100 font-bold uppercase tracking-widest text-[14px] px-8 py-4 whitespace-nowrap transition-colors flex items-center justify-center"
               >
-                SUBSCRIBE
+                {t("footer.cta_button") || "SUBSCRIBE"}
                 <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
@@ -118,16 +118,16 @@ export default function Footer() {
 
               {/* Social Icons matching exactly */}
               <div className="flex items-center gap-3">
-                <a href="#" aria-label="Facebook Profile" className="w-10 h-10 rounded-full bg-[#D8A02A] text-white flex items-center justify-center hover:bg-[#C28C22] transition-colors shadow-lg shadow-[#D8A02A]/20">
+                <a href={t("footer.social_facebook") || "#"} aria-label="Facebook Profile" className="w-10 h-10 rounded-full bg-[#D8A02A] text-white flex items-center justify-center hover:bg-[#C28C22] transition-colors shadow-lg shadow-[#D8A02A]/20">
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path></svg>
                 </a>
-                <a href="#" aria-label="Instagram Profile" className="w-10 h-10 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20 transition-colors">
+                <a href={t("footer.social_instagram") || "#"} aria-label="Instagram Profile" className="w-10 h-10 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20 transition-colors">
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path><circle cx="4" cy="4" r="2"></circle></svg>
                 </a>
-                <a href="#" aria-label="Twitter Profile" className="w-10 h-10 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20 transition-colors">
+                <a href={t("footer.social_twitter") || "#"} aria-label="Twitter Profile" className="w-10 h-10 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20 transition-colors">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
                 </a>
-                <a href="#" aria-label="Houzz Profile" className="w-10 h-10 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20 transition-colors">
+                <a href={t("footer.social_houzz") || "#"} aria-label="Houzz Profile" className="w-10 h-10 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20 transition-colors">
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z" />
                   </svg>
@@ -137,7 +137,7 @@ export default function Footer() {
 
             {/* Column 2: Top Links */}
             <div className="flex flex-col pt-2">
-              <h4 className="text-white text-[18px] font-bold mb-8">Top Links</h4>
+              <h4 className="text-white text-[18px] font-bold mb-8">{t("footer.links1_header") || "Top Links"}</h4>
               <ul className="flex flex-col gap-4">
                 <li><Link href="/about" className="text-[#899197] text-[15px] hover:text-white transition-colors">About Us</Link></li>
                 <li><Link href="/#services" className="text-[#899197] text-[15px] hover:text-white transition-colors">Our Services</Link></li>
@@ -149,7 +149,7 @@ export default function Footer() {
 
             {/* Column 3: Our Services */}
             <div className="flex flex-col pt-2">
-              <h4 className="text-white text-[18px] font-bold mb-8">Our Services</h4>
+              <h4 className="text-white text-[18px] font-bold mb-8">{t("footer.links2_header") || "Our Services"}</h4>
               <ul className="flex flex-col gap-4">
                 <li><Link href="/services/custom-home-building" className="text-[#899197] text-[15px] hover:text-white transition-colors">Custom Home Building</Link></li>
                 <li><Link href="/services/high-end-renovations" className="text-[#899197] text-[15px] hover:text-white transition-colors">High-End Renovations</Link></li>
@@ -162,7 +162,7 @@ export default function Footer() {
 
             {/* Column 4: Contact Us */}
             <div className="col-span-2 lg:col-span-1 flex flex-col pt-2">
-              <h4 className="text-white text-[18px] font-bold mb-8">Contact Us</h4>
+              <h4 className="text-white text-[18px] font-bold mb-8">{t("footer.links3_header") || "Contact Us"}</h4>
               <ul className="flex flex-col gap-5">
                 <li className="flex items-center gap-4 group">
                   <svg className="w-[18px] h-[18px] text-[#D8A02A] shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -200,13 +200,13 @@ export default function Footer() {
             <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-3 text-[#777E85] text-[13px] text-center sm:text-left">
               <span>{t("footer.copyright") || "Copyright ©2026 Emperor Sami Group. All Rights Reserved"}</span>
               <span className="hidden sm:inline">|</span>
-              <span>Custom Home Building & Renovations in Toronto</span>
+              <span>{t("footer.bottom_text") || "Custom Home Building & Renovations in Toronto"}</span>
             </div>
 
             <div className="flex items-center gap-4 sm:gap-6 text-[#777E85] text-[13px]">
-              <Link href="#" className="hover:text-white transition-colors">Terms & Conditions</Link>
+              <Link href="#" className="hover:text-white transition-colors">{t("footer.terms_text") || "Terms & Conditions"}</Link>
               <span>|</span>
-              <Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link>
+              <Link href="#" className="hover:text-white transition-colors">{t("footer.privacy_text") || "Privacy Policy"}</Link>
             </div>
 
           </div>
