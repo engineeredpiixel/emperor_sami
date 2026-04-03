@@ -186,7 +186,7 @@ export default function ContactSection() {
 
                 <input
                   type="text"
-                  placeholder="Your Name *"
+                  placeholder={t("contact.placeholder_name") || "Your Name *"}
                   aria-label="Your Name"
                   required
                   className="w-full bg-white border border-[#E5E5E5] px-5 py-3.5 text-[15px] text-gray-800 placeholder-gray-400 focus:outline-none focus:border-[#D19C2C] focus:ring-1 focus:ring-[#D19C2C] transition-shadow shadow-sm"
@@ -194,7 +194,7 @@ export default function ContactSection() {
 
                 <input
                   type="email"
-                  placeholder="Your Email *"
+                  placeholder={t("contact.placeholder_email") || "Your Email *"}
                   aria-label="Your Email"
                   required
                   className="w-full bg-white border border-[#E5E5E5] px-5 py-3.5 text-[15px] text-gray-800 placeholder-gray-400 focus:outline-none focus:border-[#D19C2C] focus:ring-1 focus:ring-[#D19C2C] transition-shadow shadow-sm"
@@ -202,14 +202,14 @@ export default function ContactSection() {
 
                 <input
                   type="tel"
-                  placeholder="Your Phone"
+                  placeholder={t("contact.placeholder_phone") || "Your Phone"}
                   aria-label="Your Phone"
                   className="w-full bg-white border border-[#E5E5E5] px-5 py-3.5 text-[15px] text-gray-800 placeholder-gray-400 focus:outline-none focus:border-[#D19C2C] focus:ring-1 focus:ring-[#D19C2C] transition-shadow shadow-sm"
                 />
 
                 <input
                   type="text"
-                  placeholder="Project Location *"
+                  placeholder={t("contact.placeholder_location") || "Project Location *"}
                   aria-label="Project Location"
                   required
                   className="w-full bg-white border border-[#E5E5E5] px-5 py-3.5 text-[15px] text-gray-800 placeholder-gray-400 focus:outline-none focus:border-[#D19C2C] focus:ring-1 focus:ring-[#D19C2C] transition-shadow shadow-sm"
@@ -303,7 +303,7 @@ export default function ContactSection() {
                 </div>
 
                 <textarea
-                  placeholder="Tell us about your construction needs... *"
+                  placeholder={t("contact.placeholder_message") || "Tell us about your construction needs... *"}
                   aria-label="Message details"
                   required
                   rows={5}
