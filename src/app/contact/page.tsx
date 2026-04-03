@@ -5,10 +5,12 @@ import ContactHero from "@/components/contact/ContactHero";
 import { useState, useEffect, useRef } from "react";
 import { residentialServicesData } from "@/lib/servicesDataResidential";
 import { commercialServicesData } from "@/lib/servicesDataCommercial";
+import { useCMS } from "@/components/CMSProvider";
 
 export default function ContactPage() {
   const [isMounted, setIsMounted] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
+  const { t } = useCMS();
 
   // 3D Architectural Envelope Sealing States
   const [isSubmitting, setIsSubmitting] = useState(false);   // Letter slides down inside
@@ -97,17 +99,17 @@ export default function ContactPage() {
             <div className={`flex items-center gap-4 mb-6 transition-all duration-1000 ${isMounted ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'}`}>
               <div className="w-12 h-[1px] bg-[#D8A02A]" />
               <span className="text-[#D8A02A] text-[11px] font-black tracking-[0.4em] uppercase">
-                Initiate Protocol
+                {t("contactpage.sec2_eyebrow") || "Initiate Protocol"}
               </span>
             </div>
 
             <h1 className={`text-[#111] text-5xl sm:text-7xl font-black uppercase tracking-tighter leading-[0.85] mb-8 transition-all duration-[1.5s] ease-[0.19,1,0.22,1] delay-200 ${isMounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-24'}`}>
-              Let's <br />
-              <span className="text-transparent" style={{ WebkitTextStroke: '2px #D8A02A' }}>Build.</span>
+              {t("contactpage.sec2_title1") || "Let's"} <br />
+              <span className="text-transparent" style={{ WebkitTextStroke: '2px #D8A02A' }}>{t("contactpage.sec2_title2") || "Build."}</span>
             </h1>
 
             <p className={`text-gray-600 text-sm sm:text-base font-bold uppercase tracking-widest leading-relaxed max-w-sm mb-16 transition-all duration-1000 delay-500 ${isMounted ? 'opacity-100' : 'opacity-0 translate-y-12'}`}>
-              Send the coordinates. We deploy the architecture. From flagship estates to subterranean integrations, our structurals are standing by.
+              {t("contactpage.sec2_desc") || "Send the coordinates. We deploy the architecture. From flagship estates to subterranean integrations, our structurals are standing by."}
             </p>
 
             {/* Radar Contact Blocks */}
@@ -123,8 +125,8 @@ export default function ContactPage() {
                   </svg>
                 </div>
                 <div className="flex flex-col relative z-10">
-                  <span className="text-gray-400 text-[10px] font-black uppercase tracking-[0.3em] mb-1">Direct Line</span>
-                  <a href="tel:6479011626" className="text-[#111] text-lg font-bold tracking-widest hover:text-[#D8A02A] transition-colors">+1 (647) 901-1626</a>
+                  <span className="text-gray-400 text-[10px] font-black uppercase tracking-[0.3em] mb-1">{t("contactpage.sec2_box1_label") || "Direct Line"}</span>
+                  <a href={`tel:${(t("footer.contact_phone") || "+16479011626").replace(/[^0-9+]/g, '')}`} className="text-[#111] text-lg font-bold tracking-widest hover:text-[#D8A02A] transition-colors">{t("footer.contact_phone") || "+1 (647) 901-1626"}</a>
                 </div>
               </div>
 
@@ -137,8 +139,8 @@ export default function ContactPage() {
                   </svg>
                 </div>
                 <div className="flex flex-col relative z-10 w-full overflow-hidden">
-                  <span className="text-gray-400 text-[10px] font-black uppercase tracking-[0.3em] mb-1">Master Inbox</span>
-                  <a href="mailto:info@emperorsamigroup.com" className="text-[#111] flex-1 text-sm sm:text-[13px] font-bold tracking-wider hover:text-[#D8A02A] transition-colors truncate">info@emperorsamigroup.com</a>
+                  <span className="text-gray-400 text-[10px] font-black uppercase tracking-[0.3em] mb-1">{t("contactpage.sec2_box2_label") || "Master Inbox"}</span>
+                  <a href={`mailto:${t("footer.contact_email") || "info@emperorsamigroup.com"}`} className="text-[#111] flex-1 text-sm sm:text-[13px] font-bold tracking-wider hover:text-[#D8A02A] transition-colors truncate">{t("footer.contact_email") || "info@emperorsamigroup.com"}</a>
                 </div>
               </div>
 
@@ -179,10 +181,10 @@ export default function ContactPage() {
               >
                 <div className="flex items-center justify-between mb-8 border-b border-black/10 pb-6 relative z-10">
                   <span className="text-[#111] text-xl md:text-2xl font-black uppercase tracking-widest">
-                    Secure Data Link
+                    {t("contactpage.form_header") || "Secure Data Link"}
                   </span>
                   <span className="text-[#D8A02A] text-[10px] uppercase tracking-[0.4em] font-black animate-pulse">
-                    Unsealed
+                    {t("contactpage.form_subheader") || "Unsealed"}
                   </span>
                 </div>
 
@@ -190,12 +192,12 @@ export default function ContactPage() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                     <div className="relative group">
                       <input type="text" id="name" required className="peer w-full bg-transparent border-b-2 border-black/10 px-0 py-4 text-[#111] text-lg font-medium placeholder-transparent focus:outline-none focus:border-transparent transition-colors" placeholder="Name" disabled={isSubmitting} />
-                      <label className="absolute left-0 top-4 text-gray-400 text-sm font-bold uppercase tracking-widest transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 peer-focus:-top-4 peer-focus:text-[10px] peer-focus:text-[#D8A02A] peer-valid:-top-4 peer-valid:text-[10px] peer-valid:text-[#D8A02A]">Full Name</label>
+                      <label className="absolute left-0 top-4 text-gray-400 text-sm font-bold uppercase tracking-widest transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 peer-focus:-top-4 peer-focus:text-[10px] peer-focus:text-[#D8A02A] peer-valid:-top-4 peer-valid:text-[10px] peer-valid:text-[#D8A02A]">{t("contactpage.placeholder_name") || "Full Name"}</label>
                       <div className="absolute bottom-0 left-0 w-full h-[2px] bg-[#D8A02A] origin-left scale-x-0 group-focus-within:scale-x-100 transition-transform duration-500 ease-out" />
                     </div>
                     <div className="relative group">
                       <input type="email" id="email" required className="peer w-full bg-transparent border-b-2 border-black/10 px-0 py-4 text-[#111] text-lg font-medium placeholder-transparent focus:outline-none focus:border-transparent transition-colors" placeholder="Email" disabled={isSubmitting} />
-                      <label className="absolute left-0 top-4 text-gray-400 text-sm font-bold uppercase tracking-widest transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 peer-focus:-top-4 peer-focus:text-[10px] peer-focus:text-[#D8A02A] peer-valid:-top-4 peer-valid:text-[10px] peer-valid:text-[#D8A02A]">Email Address</label>
+                      <label className="absolute left-0 top-4 text-gray-400 text-sm font-bold uppercase tracking-widest transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 peer-focus:-top-4 peer-focus:text-[10px] peer-focus:text-[#D8A02A] peer-valid:-top-4 peer-valid:text-[10px] peer-valid:text-[#D8A02A]">{t("contactpage.placeholder_email") || "Email Address"}</label>
                       <div className="absolute bottom-0 left-0 w-full h-[2px] bg-[#D8A02A] origin-left scale-x-0 group-focus-within:scale-x-100 transition-transform duration-500 ease-out" />
                     </div>
                   </div>
@@ -203,13 +205,13 @@ export default function ContactPage() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-8">
                     <div className="relative group">
                       <input type="tel" id="phone" required className="peer w-full bg-transparent border-b-2 border-black/10 px-0 py-4 text-[#111] text-lg font-medium placeholder-transparent focus:outline-none focus:border-transparent transition-colors" placeholder="Phone Number" disabled={isSubmitting} />
-                      <label className="absolute left-0 top-4 text-gray-400 text-sm font-bold uppercase tracking-widest transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 peer-focus:-top-4 peer-focus:text-[10px] peer-focus:text-[#D8A02A] peer-valid:-top-4 peer-valid:text-[10px] peer-valid:text-[#D8A02A]">Phone Number</label>
+                      <label className="absolute left-0 top-4 text-gray-400 text-sm font-bold uppercase tracking-widest transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 peer-focus:-top-4 peer-focus:text-[10px] peer-focus:text-[#D8A02A] peer-valid:-top-4 peer-valid:text-[10px] peer-valid:text-[#D8A02A]">{t("contactpage.placeholder_phone") || "Phone Number"}</label>
                       <div className="absolute bottom-0 left-0 w-full h-[2px] bg-[#D8A02A] origin-left scale-x-0 group-focus-within:scale-x-100 transition-transform duration-500 ease-out" />
                     </div>
 
                     <div className="relative group">
                       <input type="text" id="location" required className="peer w-full bg-transparent border-b-2 border-black/10 px-0 py-4 text-[#111] text-lg font-medium placeholder-transparent focus:outline-none focus:border-transparent transition-colors" placeholder="Project Location" disabled={isSubmitting} />
-                      <label className="absolute left-0 top-4 text-gray-400 text-sm font-bold uppercase tracking-widest transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 peer-focus:-top-4 peer-focus:text-[10px] peer-focus:text-[#D8A02A] peer-valid:-top-4 peer-valid:text-[10px] peer-valid:text-[#D8A02A]">Project Location</label>
+                      <label className="absolute left-0 top-4 text-gray-400 text-sm font-bold uppercase tracking-widest transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 peer-focus:-top-4 peer-focus:text-[10px] peer-focus:text-[#D8A02A] peer-valid:-top-4 peer-valid:text-[10px] peer-valid:text-[#D8A02A]">{t("contactpage.placeholder_location") || "Project Location"}</label>
                       <div className="absolute bottom-0 left-0 w-full h-[2px] bg-[#D8A02A] origin-left scale-x-0 group-focus-within:scale-x-100 transition-transform duration-500 ease-out" />
                     </div>
                   </div>
@@ -223,7 +225,7 @@ export default function ContactPage() {
                         <option value="250k" className="bg-white text-[#111]">$250,000 - $500,000</option>
                         <option value="500k+" className="bg-white text-[#111]">$500,000+ (Master Build)</option>
                       </select>
-                      <label className="absolute left-0 -top-4 text-[10px] text-gray-400 font-bold uppercase tracking-widest peer-focus:text-[#D8A02A] transition-colors">Allocation Range</label>
+                      <label className="absolute left-0 -top-4 text-[10px] text-gray-400 font-bold uppercase tracking-widest peer-focus:text-[#D8A02A] transition-colors">{t("contactpage.placeholder_budget") || "Allocation Range"}</label>
                       <div className="absolute bottom-0 left-0 w-full h-[2px] bg-[#D8A02A] origin-left scale-x-0 group-focus-within:scale-x-100 transition-transform duration-500 ease-out" />
                       <div className="absolute right-0 top-5 pointer-events-none">
                         <svg className="w-5 h-5 text-[#D8A02A]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
@@ -244,7 +246,7 @@ export default function ContactPage() {
                           ))}
                         </optgroup>
                       </select>
-                      <label className="absolute left-0 -top-4 text-[10px] text-gray-400 font-bold uppercase tracking-widest peer-focus:text-[#D8A02A] transition-colors">Service Scope</label>
+                      <label className="absolute left-0 -top-4 text-[10px] text-gray-400 font-bold uppercase tracking-widest peer-focus:text-[#D8A02A] transition-colors">{t("contactpage.placeholder_service") || "Service Scope"}</label>
                       <div className="absolute bottom-0 left-0 w-full h-[2px] bg-[#D8A02A] origin-left scale-x-0 group-focus-within:scale-x-100 transition-transform duration-500 ease-out" />
                       <div className="absolute right-0 top-5 pointer-events-none">
                          <svg className="w-5 h-5 text-[#D8A02A]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
@@ -255,7 +257,7 @@ export default function ContactPage() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-8">
                     <div className="relative group">
                       <input type="date" id="date" required min={new Date().toISOString().split("T")[0]} className="peer w-full bg-transparent border-b-2 border-black/10 px-0 py-4 text-[#111] text-lg font-medium focus:outline-none focus:border-transparent transition-colors uppercase tracking-widest text-sm" disabled={isSubmitting} />
-                      <label className="absolute left-0 -top-4 text-[10px] text-gray-400 font-bold uppercase tracking-widest peer-focus:text-[#D8A02A] transition-colors">Consultation Date</label>
+                      <label className="absolute left-0 -top-4 text-[10px] text-gray-400 font-bold uppercase tracking-widest peer-focus:text-[#D8A02A] transition-colors">{t("contactpage.placeholder_date") || "Consultation Date"}</label>
                       <div className="absolute bottom-0 left-0 w-full h-[2px] bg-[#D8A02A] origin-left scale-x-0 group-focus-within:scale-x-100 transition-transform duration-500 ease-out" />
                     </div>
 
@@ -281,7 +283,7 @@ export default function ContactPage() {
                           <option value="8:00 PM" className="bg-white text-[#111]">8:00 PM</option>
                         </optgroup>
                       </select>
-                      <label className="absolute left-0 -top-4 text-[10px] text-gray-400 font-bold uppercase tracking-widest peer-focus:text-[#D8A02A] transition-colors">Preferred Time</label>
+                      <label className="absolute left-0 -top-4 text-[10px] text-gray-400 font-bold uppercase tracking-widest peer-focus:text-[#D8A02A] transition-colors">{t("contactpage.placeholder_time") || "Preferred Time"}</label>
                       <div className="absolute bottom-0 left-0 w-full h-[2px] bg-[#D8A02A] origin-left scale-x-0 group-focus-within:scale-x-100 transition-transform duration-500 ease-out" />
                       <div className="absolute right-0 top-5 pointer-events-none">
                         <svg className="w-5 h-5 text-[#D8A02A]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
@@ -291,13 +293,13 @@ export default function ContactPage() {
 
                   <div className="relative group mt-4">
                     <textarea id="scope" required rows={4} className="peer w-full bg-transparent border-b-2 border-black/10 px-0 py-4 text-[#111] text-lg font-medium placeholder-transparent focus:outline-none focus:border-transparent transition-colors resize-none" placeholder="Scope" disabled={isSubmitting} />
-                    <label className="absolute left-0 top-4 text-gray-400 text-sm font-bold uppercase tracking-widest transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 peer-focus:-top-4 peer-focus:text-[10px] peer-focus:text-[#D8A02A] peer-valid:-top-4 peer-valid:text-[10px] peer-valid:text-[#D8A02A]">Project Specifications</label>
+                    <label className="absolute left-0 top-4 text-gray-400 text-sm font-bold uppercase tracking-widest transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 peer-focus:-top-4 peer-focus:text-[10px] peer-focus:text-[#D8A02A] peer-valid:-top-4 peer-valid:text-[10px] peer-valid:text-[#D8A02A]">{t("contactpage.placeholder_specs") || "Project Specifications"}</label>
                     <div className="absolute bottom-1 left-0 w-full h-[2px] bg-[#D8A02A] origin-left scale-x-0 group-focus-within:scale-x-100 transition-transform duration-500 ease-out" />
                   </div>
 
                   <button type="submit" disabled={isSubmitting} className="group relative w-full h-[64px] inline-flex items-center justify-center overflow-hidden mt-4 transition-colors duration-500 bg-[#111] hover:bg-[#D8A02A]">
                     <span className="relative z-10 text-white text-sm font-black uppercase tracking-[0.3em] transition-colors duration-500">
-                      Deploy Specifications
+                      {t("contactpage.form_submit") || "Deploy Specifications"}
                     </span>
                   </button>
                 </form>

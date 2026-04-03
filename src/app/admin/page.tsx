@@ -321,6 +321,17 @@ export default function AdminDashboard() {
               handleSave={handleSave}
               handleImageUpload={handleImageUpload}
             />
+          ) : activeSection === "page_contact" ? (
+            <ContactPageEditor
+              content={filteredContent}
+              edits={edits}
+              saving={saving}
+              saved={saved}
+              uploadingKey={uploadingKey}
+              setEdits={setEdits}
+              handleSave={handleSave}
+              handleImageUpload={handleImageUpload}
+            />
           ) : activeSection === "global_footer" ? (
             <FooterEditor
               content={filteredContent}
@@ -696,6 +707,93 @@ function FooterEditor({ content, edits, saving, saved, uploadingKey, setEdits, h
             </div>
           ) : (
             <p className="text-slate-500">No fields found for this category.</p>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Contact Us Page Editor ───────────────────────────────────────────
+function ContactPageEditor({ content, edits, saving, saved, uploadingKey, setEdits, handleSave, handleImageUpload }: any) {
+  const [activeTab, setActiveTab] = useState("hero");
+
+  const groupFilter = (keys: string[]) => content.filter((c: any) => keys.includes(c.key));
+
+  const tabs = [
+    {
+      id: 'hero',
+      label: 'Hero Section',
+      fields: groupFilter(['contactpage.hero_img', 'contactpage.hero_label', 'contactpage.hero_title1', 'contactpage.hero_title2', 'contactpage.hero_button'])
+    },
+    {
+      id: 'protocol',
+      label: 'Initiate Protocol',
+      fields: groupFilter(['contactpage.sec2_eyebrow', 'contactpage.sec2_title1', 'contactpage.sec2_title2', 'contactpage.sec2_desc', 'contactpage.sec2_box1_label', 'contactpage.sec2_box2_label'])
+    },
+    {
+      id: 'form',
+      label: 'Message Box (Form)',
+      fields: groupFilter(['contactpage.form_header', 'contactpage.form_subheader', 'contactpage.placeholder_name', 'contactpage.placeholder_email', 'contactpage.placeholder_phone', 'contactpage.placeholder_location', 'contactpage.placeholder_budget', 'contactpage.placeholder_service', 'contactpage.placeholder_date', 'contactpage.placeholder_time', 'contactpage.placeholder_specs', 'contactpage.form_submit'])
+    }
+  ];
+
+  const activeFields = tabs.find(t => t.id === activeTab)?.fields || [];
+
+  return (
+    <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm max-w-7xl mx-auto flex flex-col sm:flex-row">
+      {/* Side Tabs */}
+      <div className="w-full sm:w-64 border-b sm:border-b-0 sm:border-r border-slate-200 bg-slate-50/50 flex flex-row sm:flex-col shrink-0 overflow-x-auto sm:overflow-visible">
+        <div className="p-4 sm:p-5 border-b border-slate-200 hidden sm:block">
+           <p className="text-slate-800 font-extrabold text-sm uppercase tracking-widest">Navigation</p>
+        </div>
+        {tabs.map(tab => (
+          <button
+            key={tab.id}
+            onClick={() => setActiveTab(tab.id)}
+            className={`flex items-center justify-between py-4 sm:py-5 px-6 font-bold uppercase tracking-wider transition-all text-left whitespace-nowrap
+              ${activeTab === tab.id 
+                ? "bg-white text-indigo-600 sm:border-r-[3px] border-indigo-600 shadow-[-4px_0_15px_rgba(0,0,0,0.02)] z-10" 
+                : "text-slate-500 hover:text-slate-800 hover:bg-slate-100 border-transparent text-[11px] sm:text-xs"}
+            `}
+          >
+            <span>{tab.label}</span>
+            {tab.fields.length > 0 && (
+              <span className={`hidden sm:flex text-[10px] items-center justify-center w-5 h-5 rounded-full ${activeTab === tab.id ? 'bg-indigo-100 text-indigo-600' : 'bg-slate-200 text-slate-500'}`}>
+                {tab.fields.length}
+              </span>
+            )}
+          </button>
+        ))}
+      </div>
+
+      {/* Active Area */}
+      <div className="flex-1 p-6 sm:p-10 bg-[#FBFBFB]">
+        <div className="space-y-6 max-w-4xl">
+           <h3 className="text-slate-800 font-extrabold text-xl mb-6 flex items-center gap-2">
+              <svg className="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                 <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16m-7 6h7"/>
+              </svg>
+              {tabs.find(t => t.id === activeTab)?.label}
+           </h3>
+          {activeFields.length > 0 ? (
+            <div className="grid grid-cols-1 gap-6">
+              {activeFields.map((item: any) => (
+                <ContentField
+                  key={item.key}
+                  item={item}
+                  value={edits[item.key] ?? ""}
+                  saving={saving[item.key]}
+                  saved={saved[item.key]}
+                  uploading={uploadingKey === item.key}
+                  onChange={(val: string) => setEdits((prev: any) => ({ ...prev, [item.key]: val }))}
+                  onSave={() => handleSave(item.key)}
+                  onImageUpload={(file: File) => handleImageUpload(item.key, file)}
+                />
+              ))}
+            </div>
+          ) : (
+             <p className="text-slate-500">No fields found for this category.</p>
           )}
         </div>
       </div>

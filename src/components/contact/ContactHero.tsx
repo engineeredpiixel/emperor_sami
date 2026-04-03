@@ -2,12 +2,14 @@
 
 import Image from "next/image";
 import { useState, MouseEvent, useEffect } from "react";
+import { useCMS } from "@/components/CMSProvider";
 
 export default function ContactHero() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
   const [windowWidth, setWindowWidth] = useState(1000);
   const [isMounted, setIsMounted] = useState(false);
+  const { t, getImage } = useCMS();
 
   useEffect(() => {
     setIsMounted(true);
@@ -72,14 +74,14 @@ export default function ContactHero() {
         <div className="absolute top-12 md:top-32 left-8 md:left-[20%] -translate-x-1/2 flex items-center gap-4 origin-left -rotate-90">
            <div className="w-12 h-[2px] bg-black" />
            <span className="text-black text-[10px] font-black tracking-[0.4em] uppercase whitespace-nowrap">
-             OOW Surveyor Matrix
+             {t("contactpage.hero_label") || "OOW Surveyor Matrix"}
            </span>
         </div>
         
         <h1 className="text-[12vw] sm:text-[10vw] font-black text-[#111] uppercase tracking-tighter leading-[0.8] text-center mix-blend-multiply drop-shadow-sm px-4 relative z-20">
-          Initiate <br/> 
+          {t("contactpage.hero_title1") || "Initiate"} <br/> 
           <span className="text-transparent relative" style={{ WebkitTextStroke: '2px #111' }}>
-            The Build.
+            {t("contactpage.hero_title2") || "The Build."}
             <div className="absolute bottom-4 right-[-30px] w-4 h-4 bg-[#D8A02A] rounded-full animate-ping hidden sm:block" />
           </span>
         </h1>
@@ -96,7 +98,7 @@ export default function ContactHero() {
       >
         {/* The 100% Color Architectural Reality */}
         <Image 
-          src="/contact-dynamic-hero.png" 
+          src={getImage("contactpage.hero_img") || "/contact-dynamic-hero.png"} 
           alt="Architectural Reality" 
           fill 
           className="object-cover pointer-events-none brightness-105 contrast-125"
@@ -109,8 +111,8 @@ export default function ContactHero() {
         {/* The X-Ray Inverted Typography */}
         <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
           <h1 className="text-[12vw] sm:text-[10vw] font-black text-white/90 uppercase tracking-tighter leading-[0.8] text-center drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)] px-4">
-            Initiate <br/> 
-            <span className="text-transparent" style={{ WebkitTextStroke: '2px #D8A02A' }}>The Build.</span>
+            {t("contactpage.hero_title1") || "Initiate"} <br/> 
+            <span className="text-transparent" style={{ WebkitTextStroke: '2px #D8A02A' }}>{t("contactpage.hero_title2") || "The Build."}</span>
           </h1>
         </div>
         
@@ -146,7 +148,7 @@ export default function ContactHero() {
           </svg>
         </div>
         <span className="text-[9px] md:text-[11px] font-black tracking-[0.4em] uppercase text-black mt-6 group-hover:text-[#D8A02A] transition-colors duration-500 shadow-white drop-shadow-md">
-           Deploy Coordinates
+           {t("contactpage.hero_button") || "Deploy Coordinates"}
         </span>
       </div>
       
