@@ -19,7 +19,7 @@ INSERT INTO public.site_content (section, key, type, label, value) VALUES
 ('navbar', 'navbar.link_contact', 'text', 'Link: Contact Us', 'Contact Us'),
 ('navbar', 'navbar.btn_book_strategy', 'text', 'Button: Book Strategy', 'Book Strategy Call'),
 ('navbar', 'navbar.btn_view_services', 'text', 'Button: View Services', 'View All Services →'),
-('navbar', 'navbar.btn_get_quote', 'text', 'Button: Get Quote', 'Get a Quote'),
+('navbar', 'navbar.link_services', 'text', 'Link: Services', 'Services'),
 ('navbar', 'navbar.mega_menu_json', 'textarea', 'Mega Menu JSON Data', '{
   "residential": {
     "title": "Residential Services Division",

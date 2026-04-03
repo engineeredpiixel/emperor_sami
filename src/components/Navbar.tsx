@@ -49,7 +49,7 @@ export default function Navbar() {
 
   const navLinks = [
     {
-      label: "Services",
+      label: t("navbar.link_services") || "Services",
       href: "/services",
       hasMegaMenu: true,
     },
@@ -343,7 +343,7 @@ export default function Navbar() {
                 className="group flex items-center gap-0 rounded-full transition-all duration-300 hover:scale-105"
               >
                 <span className="flex items-center bg-[#F9A825] group-hover:bg-[#F4511E] text-[#1a1209] group-hover:text-white font-bold text-sm pl-7 pr-5 py-3.5 rounded-l-full transition-all duration-300 whitespace-nowrap">
-                  {t("navbar.btn_get_quote") || t("navbar.cta_button") || "Get a Quote"}
+                  {t("navbar.cta_button") || "Get a Quote"}
                 </span>
                 <span className="flex items-center justify-center w-12 h-12 bg-[#F9A825] group-hover:bg-[#F4511E] rounded-r-full border-l border-[#e6960c]/30 transition-all duration-300">
                   <svg className="w-4 h-4 text-[#1a1209] group-hover:text-white group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all duration-300" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
