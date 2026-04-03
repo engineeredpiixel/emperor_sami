@@ -4,8 +4,35 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { headers } from "next/headers";
-import { createClient } from "@/utils/supabase/server";
 import { CMSProvider } from "@/components/CMSProvider";
+import { unstable_cache } from "next/cache";
+import { createClient } from "@supabase/supabase-js";
+
+// Create a static client for global read-only CMS fetches
+const getStaticSupabase = () => createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY!
+);
+
+// Cache the CMS queries to edge memory with a 60-second revalidation loop
+const getGlobalContent = unstable_cache(
+  async () => {
+    const { data } = await getStaticSupabase().from("site_content").select("*");
+    return data || [];
+  },
+  ['global-site-content'],
+  { tags: ['cms'], revalidate: 60 }
+);
+
+const getSeoContent = unstable_cache(
+  async () => {
+    const { data } = await getStaticSupabase().from("site_content").select("*").eq('section', 'seo_settings');
+    return data || [];
+  },
+  ['seo-settings'],
+  { tags: ['cms-seo'], revalidate: 60 }
+);
+
 
 
 const geistSans = Geist({
@@ -19,10 +46,8 @@ const geistMono = Geist_Mono({
 });
 
 export async function generateMetadata(): Promise<Metadata> {
-  const supabase = await createClient();
-  const { data: contentData } = await supabase.from("site_content").select("*").eq('section', 'seo_settings');
-  const siteContent = contentData || [];
-  const getValue = (key: string) => siteContent.find((c) => c.key === key)?.value;
+  const siteContent = await getSeoContent();
+  const getValue = (key: string) => siteContent.find((c: any) => c.key === key)?.value;
 
   const title = getValue("seo.title") || "Emperor Sami Group | Custom Home Building & Renovations";
   const description = getValue("seo.description") || "Emperor Sami Group provides expert residential construction services including custom home building, home renovations, and basement finishing in the Toronto area.";
@@ -64,10 +89,8 @@ export default async function RootLayout({
   const headersList = await headers();
   const nonce = headersList.get("x-nonce") || undefined;
 
-  // Fetch global CMS content
-  const supabase = await createClient();
-  const { data: contentData } = await supabase.from("site_content").select("*");
-  const siteContent = contentData || [];
+  // Fetch global CMS content (instantly from cache)
+  const siteContent = await getGlobalContent();
 
   return (
     <html
