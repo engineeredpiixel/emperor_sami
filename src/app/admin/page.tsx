@@ -17,20 +17,6 @@ interface ContentItem {
 // ─── Sidebar Sections ─────────────────────────────────────────────────────────
 const SECTIONS = [
   { id: "hero", label: "Hero Section", icon: "🏠" },
-  { id: "about", label: "About Section", icon: "👤" },
-  { id: "services", label: "Services", icon: "⚙️" },
-  { id: "projects", label: "Projects", icon: "📁" },
-  { id: "testimonials", label: "Testimonials", icon: "💬" },
-  { id: "shieldbadges", label: "Shield Badges", icon: "🛡️" },
-  { id: "servicearea", label: "Service Area", icon: "📍" },
-  { id: "corevalues", label: "Core Values", icon: "💎" },
-  { id: "scrolling", label: "Scrolling Text", icon: "📜" },
-  { id: "cta", label: "CTA Section", icon: "🎯" },
-  { id: "commitment", label: "Commitment", icon: "🏆" },
-  { id: "faq", label: "FAQ", icon: "❓" },
-  { id: "contact", label: "Contact", icon: "📞" },
-  { id: "footer", label: "Footer", icon: "📄" },
-  { id: "navbar", label: "Navigation", icon: "🧭" },
 ];
 
 // ─── Main Dashboard ───────────────────────────────────────────────────────────
