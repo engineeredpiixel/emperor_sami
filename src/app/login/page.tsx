@@ -110,7 +110,7 @@ export default function LoginPage() {
         </form>
 
         <div className="mt-5 text-right w-full">
-          <Link href="/login" onClick={(e) => { e.preventDefault(); alert("Please reset your password in the Supabase Dashboard under Authentication -> Users.") }} className="text-[#888] text-xs hover:text-[#D8A02A] transition-colors">
+          <Link href="/forgot-password" className="text-[#888] text-xs hover:text-[#D8A02A] transition-colors">
             Forgot Password?
           </Link>
         </div>

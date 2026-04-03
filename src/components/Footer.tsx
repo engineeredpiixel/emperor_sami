@@ -15,7 +15,7 @@ export default function Footer() {
 
   const pathname = usePathname();
 
-  if (pathname === '/login' || pathname?.startsWith('/admin')) return null;
+  if (['/login', '/forgot-password', '/reset-password'].includes(pathname) || pathname?.startsWith('/admin')) return null;
 
   return (
     <div className="w-full bg-[#FAF9F6] pt-[6rem] sm:pt-[8rem]">
