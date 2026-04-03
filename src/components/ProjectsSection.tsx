@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { CardCarousel } from "@/components/ui/card-carousel";
+import { useCMS } from "@/components/CMSProvider";
 
 import { masterProjects } from "@/lib/projectsData";
 
@@ -16,6 +17,7 @@ const projectImages = Object.values(masterProjects).slice(0, 20).map(p => ({
 }));
 
 export default function ProjectsSection() {
+  const { t } = useCMS();
   const [visible, setVisible] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -54,17 +56,20 @@ export default function ProjectsSection() {
           {mounted && (
             <CardCarousel
               images={isMobile ? projectImages.slice(0, 12) : [...projectImages, ...projectImages]}
-            autoplayDelay={3000}
-            showPagination={true}
-            showNavigation={false}
-            actionButton={
-              <a
-                href="/projects"
-                className="group inline-flex items-center gap-4 bg-[#111] border border-[#111] text-white px-8 py-4 sm:px-10 sm:py-5 hover:bg-[#F9A825] hover:border-[#F9A825] hover:text-[#111] transition-all duration-[0.7s] ease-[0.16,1,0.3,1] shadow-[0_15px_30px_rgba(0,0,0,0.1)] hover:shadow-[0_20px_40px_rgba(249,168,37,0.3)] rounded-sm"
-              >
-                <span className="font-black uppercase text-[11px] sm:text-[13px] tracking-[0.3em] group-hover:-translate-x-1 transition-transform duration-500">
-                  View Masterpieces
-                </span>
+              autoplayDelay={3000}
+              showPagination={true}
+              showNavigation={false}
+              badgeText={t("projects.badge_text")}
+              headline={t("projects.headline")}
+              description={t("projects.description")}
+              actionButton={
+                <a
+                  href="/projects"
+                  className="group inline-flex items-center gap-4 bg-[#111] border border-[#111] text-white px-8 py-4 sm:px-10 sm:py-5 hover:bg-[#F9A825] hover:border-[#F9A825] hover:text-[#111] transition-all duration-[0.7s] ease-[0.16,1,0.3,1] shadow-[0_15px_30px_rgba(0,0,0,0.1)] hover:shadow-[0_20px_40px_rgba(249,168,37,0.3)] rounded-sm"
+                >
+                  <span className="font-black uppercase text-[11px] sm:text-[13px] tracking-[0.3em] group-hover:-translate-x-1 transition-transform duration-500">
+                    {t("projects.cta")}
+                  </span>
                 <svg className="w-4 h-4 sm:w-5 sm:h-5 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-[0.5s] ease-[0.16,1,0.3,1]" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>

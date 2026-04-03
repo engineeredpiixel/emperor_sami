@@ -3,8 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 import { residentialServicesData } from "@/lib/servicesDataResidential";
 import { commercialServicesData } from "@/lib/servicesDataCommercial";
+import { useCMS } from "@/components/CMSProvider";
 
 export default function ContactSection() {
+  const { t } = useCMS();
   const [visible, setVisible] = useState(false);
   const [isOpened, setIsOpened] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
@@ -42,18 +44,21 @@ export default function ContactSection() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
               </svg>
               <span className="text-[#D19C2C] text-sm font-bold tracking-[0.15em] uppercase">
-                CONTACT US
+                {t("contact.badge_text")}
               </span>
             </div>
 
             {/* Heading */}
-            <h2 className={`text-[2.5rem] sm:text-5xl lg:text-[3.2rem] leading-[1.1] font-black text-white mb-6 tracking-tight transition-all duration-700 delay-100 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-              Ready To Restore<br /> Your Property?
-            </h2>
+            <h2 
+              className={`text-[2.5rem] sm:text-5xl lg:text-[3.2rem] leading-[1.1] font-black text-white mb-6 tracking-tight transition-all duration-700 delay-100 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+              dangerouslySetInnerHTML={{
+                __html: t("contact.headline").replace("Your Property?", `<br /> Your Property?`)
+              }}
+            />
 
             {/* Description */}
             <p className={`text-gray-300 text-base sm:text-[1.05rem] leading-relaxed mb-12 max-w-[500px] font-medium transition-all duration-700 delay-200 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-              Get in touch with Emperor Sami Group for a free survey and quotation. We&apos;ll assess your project and provide expert guidance with transparent pricing.
+              {t("contact.description")}
             </p>
 
             {/* Contact Details List */}
@@ -68,7 +73,7 @@ export default function ContactSection() {
                 </div>
                 <div className="flex flex-col pt-0.5">
                   <span className="text-white font-bold text-[1.05rem] mb-1">Phone</span>
-                  <a href="tel:6479011626" className="text-gray-400 text-[15px] font-medium hover:text-[#D19C2C] transition-colors">+1 (647) 901 1626</a>
+                  <a href={`tel:${t("contact.phone").replace(/[^0-9]/g, '')}`} className="text-gray-400 text-[15px] font-medium hover:text-[#D19C2C] transition-colors">{t("contact.phone")}</a>
                 </div>
               </div>
 
@@ -81,7 +86,7 @@ export default function ContactSection() {
                 </div>
                 <div className="flex flex-col pt-0.5">
                   <span className="text-white font-bold text-[1.05rem] mb-1">Email</span>
-                  <a href="mailto:info@emperorsamigroup.com" className="text-gray-400 text-[15px] font-medium hover:text-[#D19C2C] transition-colors">info@emperorsamigroup.com</a>
+                  <a href={`mailto:${t("contact.email")}`} className="text-gray-400 text-[15px] font-medium hover:text-[#D19C2C] transition-colors">{t("contact.email")}</a>
                 </div>
               </div>
 
@@ -95,7 +100,7 @@ export default function ContactSection() {
                 </div>
                 <div className="flex flex-col pt-0.5">
                   <span className="text-white font-bold text-[1.05rem] mb-1">Location</span>
-                  <span className="text-gray-400 text-[15px] font-medium">Toronto, Ontario</span>
+                  <span className="text-gray-400 text-[15px] font-medium">{t("contact.location")}</span>
                 </div>
               </div>
 

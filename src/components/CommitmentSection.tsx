@@ -3,8 +3,10 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { useCMS } from "@/components/CMSProvider";
 
 export default function CommitmentSection({ hideButton = false }: { hideButton?: boolean }) {
+  const { t } = useCMS();
   const [visible, setVisible] = useState(false);
   const [isScrolledOpen, setIsScrolledOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -77,7 +79,7 @@ export default function CommitmentSection({ hideButton = false }: { hideButton?:
               <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
             </svg>
             <span className="text-[#F4511E] text-xs font-bold tracking-[0.2em] uppercase">
-              WHY CHOOSE US
+              {t("commitment.badge_text")}
             </span>
           </div>
 
@@ -86,9 +88,7 @@ export default function CommitmentSection({ hideButton = false }: { hideButton?:
             className={`text-[2rem] sm:text-4xl lg:text-[2.6rem] leading-[1.2] text-[#111111] mb-6 transition-all duration-700 delay-100 will-change-transform ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}
           >
-            <span className="font-light">Experienced </span>
-            <span className="font-black">Builders Committed To Quality and Customer </span>
-            <span className="font-light">Satisfaction Always</span>
+            <span className="font-black">{t("commitment.headline")}</span>
           </h2>
 
           {/* Description */}
@@ -96,7 +96,7 @@ export default function CommitmentSection({ hideButton = false }: { hideButton?:
             className={`text-gray-500 text-sm sm:text-base leading-relaxed mb-10 max-w-[480px] transition-all duration-700 delay-200 will-change-transform ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}
           >
-            Emperor Sami Group means partnering with a team that values customer satisfaction above all else. We bring years of experience and a proven
+            {t("commitment.description")}
           </p>
 
           {/* Features 2x2 grid */}

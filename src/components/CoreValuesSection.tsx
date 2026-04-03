@@ -1,9 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
+import { useCMS } from "@/components/CMSProvider";
 
-const commitments = [
+const defaultCommitments = [
   {
     id: "01",
     title: "Project Management",
@@ -31,9 +32,39 @@ const commitments = [
 ];
 
 export default function CoreValuesSection() {
+  const { t } = useCMS();
   const [visible, setVisible] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null); 
   const sectionRef = useRef<HTMLElement>(null);
+
+  const commitments = useMemo(() => {
+    const list = [];
+    const defaultImages = [
+      "/card_project_management_1774895647508.png",
+      "/card_budget_guarantee_1774895665774.png",
+      "/card_elite_quality_1774895683555.png",
+      "/card_safety_compliant_1774895701318.png"
+    ];
+
+    for (let i = 1; i <= 4; i++) {
+       const titleKey = `corevalues.value${i}_title`;
+       const descKey = `corevalues.value${i}_desc`;
+       const title = t(titleKey);
+       if (title && !title.startsWith("[Missing") && title.trim() !== "") {
+          list.push({
+             id: `0${i}`,
+             title: title,
+             description: t(descKey),
+             image: defaultImages[i - 1] || defaultImages[0]
+          });
+       }
+    }
+    
+    if (list.length === 0) {
+      return defaultCommitments;
+    }
+    return list;
+  }, [t]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -55,10 +86,10 @@ export default function CoreValuesSection() {
           <div className="w-full">
              <div className="flex items-center gap-3 mb-6">
                 <div className="h-[2px] w-8 bg-black" />
-                <span className="text-black text-[10px] md:text-xs font-black tracking-[0.4em] uppercase">Our Commitment</span>
+                <span className="text-black text-[10px] md:text-xs font-black tracking-[0.4em] uppercase">{t("corevalues.badge_text")}</span>
              </div>
              <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] font-black text-[#111] tracking-tighter leading-[1.05] uppercase max-w-5xl">
-                Committed To Quality Craftsmanship, <span className="block text-gray-300">Integrity, And Lasting</span> Client Satisfaction.
+                {t("corevalues.headline")}
              </h2>
           </div>
        </div>

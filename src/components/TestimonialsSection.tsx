@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState, useCallback } from "react";
+import { useCMS } from "@/components/CMSProvider";
 
 import Link from "next/link";
 import { masterProjects } from "@/lib/projectsData";
@@ -18,6 +19,7 @@ const testimonials = Object.values(masterProjects).slice(0, 10).map(p => ({
 const NUM_PILLARS = 4;
 
 export default function TestimonialsSection() {
+  const { t } = useCMS();
   const [visible, setVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -93,7 +95,7 @@ export default function TestimonialsSection() {
              <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 mb-6">
                 <div className="flex items-center gap-3">
                   <div className="h-[2px] w-8 bg-[#F9A825]" />
-                  <span className="text-[#F9A825] text-xs font-black tracking-[0.4em] uppercase">Client Testimonials</span>
+                  <span className="text-[#F9A825] text-xs font-black tracking-[0.4em] uppercase">{t("testimonials.badge_text")}</span>
                 </div>
                 {/* Overall Google Review Badge */}
                 <div className="flex items-center gap-2.5 bg-white/5 px-3 py-1.5 rounded border border-white/10 w-fit backdrop-blur-sm">
@@ -113,8 +115,7 @@ export default function TestimonialsSection() {
                 </div>
              </div>
              <h2 className="text-4xl sm:text-5xl lg:text-7xl font-black text-white leading-[1.05] tracking-tighter">
-                Engineering <span className="text-gray-500 line-through decoration-[#F9A825]/50 decoration-4">Expectations.</span><br/>
-                <span className="text-gray-200 block sm:inline">Delivering Reality.</span>
+                {t("testimonials.headline")}
              </h2>
           </div>
           

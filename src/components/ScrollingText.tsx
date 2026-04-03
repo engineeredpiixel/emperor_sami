@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useCMS } from "@/components/CMSProvider";
 
 export default function ScrollingText({ theme = "light" }: { theme?: "light" | "dark" }) {
+  const { getRaw } = useCMS();
   const trackRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -27,7 +29,11 @@ export default function ScrollingText({ theme = "light" }: { theme?: "light" | "
     return () => cancelAnimationFrame(raf);
   }, []);
 
-  const words = ["ARCHITECTURE", "LUXURY", "CRAFTSMANSHIP", "ESTATES", "DESIGN"];
+  const rawItems = getRaw("scrolling.items");
+  const words = rawItems && !rawItems.startsWith("[Missing") 
+    ? rawItems.split(",").map(w => w.trim().toUpperCase()) 
+    : ["ARCHITECTURE", "LUXURY", "CRAFTSMANSHIP", "ESTATES", "DESIGN"];
+  
   // Double for seamless loop
   const repeated = [...words, ...words, ...words, ...words, ...words, ...words, ...words, ...words];
 

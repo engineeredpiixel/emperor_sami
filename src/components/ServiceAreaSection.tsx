@@ -3,6 +3,7 @@
 import { useState, useEffect, ComponentType } from "react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import { useCMS } from "@/components/CMSProvider";
 
 const Map = dynamic(() => import("pigeon-maps").then((m) => m.Map as ComponentType<any>), { ssr: false });
 const Overlay = dynamic(() => import("pigeon-maps").then((m) => m.Overlay as ComponentType<any>), { ssr: false });
@@ -45,6 +46,7 @@ const projects = getSortedProjects().map((p, i) => ({
 
 
 export default function ServiceAreaSection({ hideButton = false }: { hideButton?: boolean }) {
+  const { t } = useCMS();
   const [activeProject, setActiveProject] = useState(projects[0]);
   const [showPopup, setShowPopup] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
@@ -76,17 +78,21 @@ export default function ServiceAreaSection({ hideButton = false }: { hideButton?
         
         {/* Header Area */}
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-12 gap-8">
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl text-gray-900 tracking-tight leading-[1.1]">
-            Trusted <span className="font-extrabold text-[#1a1a1a]">Construction Experts In<br />
-            Your Neighborhood</span> And Beyond
-          </h2>
+          <div className="max-w-2xl">
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl text-gray-900 tracking-tight leading-[1.1] font-extrabold mb-4">
+              {t("servicearea.headline")}
+            </h2>
+            <p className="text-gray-500 text-lg">
+              {t("servicearea.description")}
+            </p>
+          </div>
           
           {!hideButton && (
             <div className="flex items-center gap-2">
-              <Link href="/service-area" className="bg-[#111] hover:bg-black text-white font-bold px-8 py-3.5 rounded-md transition-colors text-sm shadow-lg shadow-[#111]/30 text-center">
+              <Link href="/service-area" className="bg-[#D84315] hover:bg-[#BF360C] text-white font-bold px-8 py-3.5 rounded-md transition-colors text-sm shadow-lg shadow-[#D84315]/30 text-center">
                 View All Locations
               </Link>
-              <Link href="/service-area" aria-label="View Service Areas Arrow" className="w-12 h-12 rounded-md bg-[#111] hover:bg-black text-white flex items-center justify-center transition-colors shadow-lg shadow-[#111]/30 shrink-0">
+              <Link href="/service-area" aria-label="View Service Areas Arrow" className="w-12 h-12 rounded-md bg-[#D84315] hover:bg-[#BF360C] text-white flex items-center justify-center transition-colors shadow-lg shadow-[#D84315]/30 shrink-0">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
                 </svg>
@@ -295,7 +301,7 @@ export default function ServiceAreaSection({ hideButton = false }: { hideButton?
           <div className="mt-8 pt-8 border-t border-gray-100 w-full">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
                <h3 className="text-xl sm:text-2xl font-black uppercase text-[#111] tracking-tighter">
-                  Operating Territories
+                  {t("servicearea.badge_text")}
                </h3>
                <span className="bg-[#111] text-[#D8A02A] px-4 py-1.5 rounded-sm text-[10px] sm:text-xs font-black tracking-[0.2em] uppercase w-fit">
                   Greater Toronto Area
@@ -331,11 +337,11 @@ export default function ServiceAreaSection({ hideButton = false }: { hideButton?
           border-radius: 10px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: #333; 
+          background: #F4511E; 
           border-radius: 10px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: #111; 
+          background: #d84315; 
         }
       `}} />
     </section>

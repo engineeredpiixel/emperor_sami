@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { useCMS } from "@/components/CMSProvider";
 
 import { residentialServicesData } from "@/lib/servicesDataResidential";
 import { commercialServicesData } from "@/lib/servicesDataCommercial";
@@ -35,6 +36,7 @@ const commercialServices = featuredCommercialSlugs.map((slug) => ({
 }));
 
 export default function ServicesSection() {
+  const { t } = useCMS();
   const [visible, setVisible] = useState(false);
   const [activeSlug, setActiveSlug] = useState<string | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
@@ -163,19 +165,18 @@ export default function ServicesSection() {
             <div className={`flex items-center gap-3 mb-6 transition-all duration-1000 will-change-transform ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
               <div className="h-[2px] w-8 bg-[#F9A825]" />
               <span className="text-[#F9A825] text-xs font-black tracking-[0.4em] uppercase">
-                Core Capabilities
+                {t("services.badge_text")}
               </span>
             </div>
 
             <h2 className={`text-5xl sm:text-6xl lg:text-7xl leading-[1.05] font-black tracking-tighter transition-all duration-1000 delay-100 will-change-transform uppercase ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}>
-              <span className="text-[#111] drop-shadow-sm">Blueprint</span>
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-gray-300 mt-2">To Reality.</span>
+              <span className="text-[#111] drop-shadow-sm">{t("services.headline")}</span>
             </h2>
 
           </div>
 
           <p className={`hidden lg:block text-gray-400 font-mono text-[10px] uppercase tracking-[0.3em] max-w-sm leading-relaxed pb-4 transition-all duration-1000 delay-200 will-change-transform ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            Project Visualization // Transforming preliminary architectural blueprints into master-crafted luxury real estate. Hover over drafts to reveal the completed build.
+            {t("services.description")}
           </p>
         </div>
 

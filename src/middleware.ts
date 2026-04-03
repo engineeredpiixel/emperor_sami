@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { createServerClient } from '@supabase/ssr';
 
-export function middleware(request: NextRequest) {
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY!;
+
+export async function middleware(request: NextRequest) {
   // Generate a cryptographically secure nonce using edge runtime primitives
   const nonce = Buffer.from(crypto.randomUUID()).toString('base64');
   
-  // Build a hyper-strict Content Security Policy
-  // 'strict-dynamic' tells modern browsers to trust scripts that are loaded by scripts with the provided nonce
   const cspHeader = `
     default-src 'self';
     script-src 'self' 'nonce-${nonce}' 'strict-dynamic' ${process.env.NODE_ENV === 'development' ? "'unsafe-eval'" : ""};
@@ -20,29 +22,54 @@ export function middleware(request: NextRequest) {
     require-trusted-types-for 'script';
   `.replace(/\s{2,}/g, ' ').trim();
 
-  // Attach the nonce to downstream request headers (so React/Next.js Layouts can read it)
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set('x-nonce', nonce);
   requestHeaders.set('Content-Security-Policy', cspHeader);
 
-  // Initialize the NextResponse with the modified request headers
-  const response = NextResponse.next({
-    request: {
-      headers: requestHeaders,
+  let supabaseResponse = NextResponse.next({ request: { headers: requestHeaders } });
+
+  // Supabase SSR session refresh
+  const supabase = createServerClient(supabaseUrl, supabaseKey, {
+    cookies: {
+      getAll() { return request.cookies.getAll(); },
+      setAll(cookiesToSet) {
+        cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value));
+        supabaseResponse = NextResponse.next({ request: { headers: requestHeaders } });
+        cookiesToSet.forEach(({ name, value, options }) =>
+          supabaseResponse.cookies.set(name, value, options)
+        );
+      },
     },
   });
-  
-  // Attach the final security policies to the outbound HTTP response
-  response.headers.set('Content-Security-Policy', cspHeader);
-  response.headers.set('X-Frame-Options', 'DENY');
-  response.headers.set('X-Content-Type-Options', 'nosniff');
-  response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
-  response.headers.set('Cross-Origin-Opener-Policy', 'same-origin');
 
-  return response;
+  const { data: { user } } = await supabase.auth.getUser();
+
+  // Protect /admin routes
+  const isAdminPath = request.nextUrl.pathname.startsWith('/admin');
+  const isLoginPath = request.nextUrl.pathname === '/admin/login';
+
+  if (isAdminPath && !isLoginPath && !user) {
+    const url = request.nextUrl.clone();
+    url.pathname = '/admin/login';
+    return NextResponse.redirect(url);
+  }
+
+  if (isLoginPath && user) {
+    const url = request.nextUrl.clone();
+    url.pathname = '/admin';
+    return NextResponse.redirect(url);
+  }
+
+  // Attach security headers to response
+  supabaseResponse.headers.set('Content-Security-Policy', cspHeader);
+  supabaseResponse.headers.set('X-Frame-Options', 'DENY');
+  supabaseResponse.headers.set('X-Content-Type-Options', 'nosniff');
+  supabaseResponse.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+  supabaseResponse.headers.set('Cross-Origin-Opener-Policy', 'same-origin');
+
+  return supabaseResponse;
 }
 
-// NextJS Middleware Matcher to avoid intercepting native internal assets
 export const config = {
   matcher: [
     {

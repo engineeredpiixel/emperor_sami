@@ -1,39 +1,33 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-
-const badges = [
-  {
-    category: "Master Builder",
-    title: "CHBA Member",
-    subtitle: "Canadian Home Builders' Association",
-    description: "Proudly recognized among the elite tier of Canadian builders for maintaining uncompromising excellence in residential custom architecture and engineering.",
-    image: "/custom_home_interior_1774895577855.png",
-    color: "#D4A017"
-  },
-  {
-    category: "General Contractor",
-    title: "CGC Certified",
-    subtitle: "Licensed. Insured. Compliant.",
-    description: "Our structural foundation is built on absolute safety. We maintain rigorous compliance with all strict Toronto building codes and premier quality regulations.",
-    image: "/card_safety_compliant_1774895701318.png",
-    color: "#E5AD0E"
-  },
-  {
-    category: "Safety Protocol",
-    title: "WSIB Certified",
-    subtitle: "Workplace Safety & Insurance Board",
-    description: "Every single jobsite is actively managed with advanced safety protocols, protecting our expert craftsmen, engineers, and your most valuable investment.",
-    image: "/card_project_management_1774895647508.png",
-    color: "#F9A825"
-  }
-];
+import { useEffect, useRef, useState, useMemo } from "react";
+import { useCMS } from "@/components/CMSProvider";
 
 export default function ShieldBadges() {
+  const { t, getImage } = useCMS();
   const [visible, setVisible] = useState(false);
   const [activeId, setActiveId] = useState<number>(0);
   const sectionRef = useRef<HTMLDivElement>(null);
+
+  const fallbackColors = ["#D4A017", "#E5AD0E", "#F9A825"];
+
+  const badges = useMemo(() => {
+    return [1, 2, 3].map((num, i) => {
+      const category = t(`shieldbadges.badge${num}_category`);
+      const title = t(`shieldbadges.badge${num}_title`);
+      const subtitle = t(`shieldbadges.badge${num}_subtitle`);
+      const description = t(`shieldbadges.badge${num}_description`);
+      const imageStr = getImage(`shieldbadges.badge${num}_image`);
+      const colorRaw = t(`shieldbadges.badge${num}_color`);
+      
+      // Fallback if missing image or values
+      const image = imageStr && !imageStr.startsWith("[Missing") ? imageStr : "";
+      const color = colorRaw && !colorRaw.startsWith("[Missing") ? colorRaw : fallbackColors[i];
+
+      return { category, title, subtitle, description, image, color };
+    });
+  }, [t, getImage]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -58,11 +52,11 @@ export default function ShieldBadges() {
         <div className={`flex flex-col items-center mb-10 md:mb-14 transition-all duration-[1s] ease-[0.16,1,0.3,1] ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
           <div className="flex items-center gap-3 mb-4">
             <div className="h-[1.5px] w-8 bg-[#F9A825]" />
-            <span className="text-[#F9A825] text-[10px] md:text-xs font-black tracking-[0.4em] uppercase">Architectural Trust</span>
+            <span className="text-[#F9A825] text-[10px] md:text-xs font-black tracking-[0.4em] uppercase">{t("shieldbadges.badge_text")}</span>
             <div className="h-[1.5px] w-8 bg-[#F9A825]" />
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#111] tracking-tighter text-center leading-[1.1]">
-            Our Certified <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-gray-700">Foundations.</span>
+            {t("shieldbadges.headline_intro")} <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-gray-700">{t("shieldbadges.headline_highlight")}</span>
           </h2>
         </div>
 
@@ -84,16 +78,18 @@ export default function ShieldBadges() {
             >
               
               {/* Massive Parallax Image Core */}
-              <Image 
-                src={badge.image}
-                alt={badge.title}
-                fill
-                sizes="(max-width: 768px) 100vw, 33vw"
-                quality={50}
-                className={`object-cover transition-all duration-[1.5s] ease-[0.16,1,0.3,1] ${
-                  isActive ? "scale-[1.05] opacity-100 grayscale-0" : "scale-[1.3] opacity-40 grayscale-[80%]"
-                }`}
-              />
+              {badge.image && (
+                <Image 
+                  src={badge.image}
+                  alt={badge.title}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  quality={50}
+                  className={`object-cover transition-all duration-[1.5s] ease-[0.16,1,0.3,1] ${
+                    isActive ? "scale-[1.05] opacity-100 grayscale-0" : "scale-[1.3] opacity-40 grayscale-[80%]"
+                  }`}
+                />
+              )}
 
               {/* Advanced Volumetric Gradients */}
               <div className={`absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent transition-opacity duration-[1.2s] ease-out pointer-events-none ${isActive ? 'opacity-90' : 'opacity-80'}`} />

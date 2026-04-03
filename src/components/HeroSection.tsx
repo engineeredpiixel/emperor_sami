@@ -3,8 +3,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { useCMS } from "@/components/CMSProvider";
 
 export default function HeroSection() {
+  const { t, getImage } = useCMS();
   const [visible, setVisible] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
 
@@ -132,7 +134,7 @@ export default function HeroSection() {
       {/* ── LAYER 1: The Ambient Blueprint Architecture (Base Layer) ── */}
       <div className="absolute inset-0 z-0 bg-[#020202]">
         <Image
-          src="/blueprint_bg_1774895613394.png"
+          src={getImage("hero.bg_image") || "/blueprint_bg_1774895613394.png"}
           alt="Emperor Sami Group architectural blueprint"
           fill
           sizes="(max-width: 768px) 100vw, 100vw"
@@ -156,7 +158,7 @@ export default function HeroSection() {
         }}
       >
         <Image
-          src="/custom_home_exterior_1774895595441.png"
+          src={getImage("hero.reveal_image") || "/custom_home_exterior_1774895595441.png"}
           alt="Revealed Luxury Masterpiece"
           fill
           sizes="(max-width: 768px) 100vw, 100vw"
@@ -175,7 +177,7 @@ export default function HeroSection() {
         <div className={`flex items-center gap-4 mb-4 sm:mb-8 transition-transform duration-[1.2s] ease-[0.16,1,0.3,1] delay-300 ${visible ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}>
           <div className="h-[1px] w-12 sm:w-16 bg-gradient-to-r from-white to-transparent opacity-60" />
           <span className="text-white/80 text-[9px] sm:text-[11px] font-bold tracking-[0.4em] uppercase">
-            From Blueprint to Reality
+            {t("hero.badge_text")}
           </span>
         </div>
 
@@ -183,19 +185,19 @@ export default function HeroSection() {
         <h1 className="text-white text-[3rem] sm:text-6xl md:text-[5rem] lg:text-[6.5rem] leading-[1.0] sm:leading-[0.95] font-black tracking-tighter sm:tracking-[-0.04em] mb-10 mix-blend-difference drop-shadow-2xl max-w-[900px]">
           <div className="overflow-hidden pb-1 sm:pb-2">
             <div className={`transition-transform duration-[1.2s] ease-[0.16,1,0.3,1] delay-[400ms] ${visible ? "translate-y-0" : "translate-y-[120%]"}`}>
-              Masterful Design.
+              {t("hero.headline_line1")}
             </div>
           </div>
           <div className="overflow-hidden pb-1 sm:pb-4">
             <div className={`transition-transform duration-[1.2s] ease-[0.16,1,0.3,1] delay-[550ms] ${visible ? "translate-y-0" : "translate-y-[120%]"}`}>
-              Built to Last.
+              {t("hero.headline_line2")}
             </div>
           </div>
         </h1>
 
         {/* Engineering Philosophy */}
         <p className={`text-gray-300/80 text-[14px] sm:text-[16px] lg:text-lg leading-[1.8] font-light max-w-[500px] mb-12 lg:mb-14 drop-shadow-lg transition-all duration-[1.2s] ease-[0.16,1,0.3,1] delay-[700ms] will-change-transform ${visible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}>
-          Experience a new paradigm in luxury residential construction. Point around the canvas to reveal the masterpiece, or click below to transform your vision.
+          {t("hero.description")}
         </p>
 
         {/* Magnetic Interactions */}
@@ -213,7 +215,7 @@ export default function HeroSection() {
               style={{ transform: `translate3d(var(--mag-x, 0px), var(--mag-y, 0px), 0)` } as React.CSSProperties}
               className="flex items-center justify-center gap-4 bg-white text-[#050505] font-black text-[11px] sm:text-sm uppercase tracking-[0.2em] px-8 sm:px-10 py-5 sm:py-6 overflow-hidden transition-all duration-[0.5s] ease-[0.16,1,0.3,1] hover:shadow-[0_20px_50px_rgba(255,255,255,0.15)]"
             >
-              <span className="relative z-10 transition-transform duration-500 group-hover:-translate-x-2 mix-blend-difference text-white">View Latest Work</span>
+              <span className="relative z-10 transition-transform duration-500 group-hover:-translate-x-2 mix-blend-difference text-white">{t("hero.cta_primary")}</span>
               <span className="absolute right-8 opacity-0 translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 z-10">
                 <svg className="w-4 h-4 text-white mix-blend-difference" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
               </span>
@@ -230,7 +232,7 @@ export default function HeroSection() {
               href="/contact#secure-data-link"
               className="flex items-center justify-center gap-3 bg-transparent border border-white/20 hover:border-[#F9A825] text-white font-black text-[11px] sm:text-sm uppercase tracking-[0.2em] px-8 sm:px-10 py-[18px] sm:py-[22px] overflow-hidden transition-all duration-[0.5s] ease-[0.16,1,0.3,1] hover:bg-[#F9A825]/10 hover:shadow-[0_0_30px_rgba(249,168,37,0.15)] group/btn"
             >
-              <span className="relative z-10 transition-transform duration-500 group-hover/btn:-translate-x-1">Get Estimation</span>
+              <span className="relative z-10 transition-transform duration-500 group-hover/btn:-translate-x-1">{t("hero.cta_secondary")}</span>
               <svg className="w-4 h-4 text-[#F9A825] opacity-0 -translate-x-4 group-hover/btn:opacity-100 group-hover/btn:translate-x-0 transition-all duration-[0.5s] ease-[0.16,1,0.3,1]" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
             </Link>
           </div>

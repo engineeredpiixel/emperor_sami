@@ -1,32 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-
-const stats = [
-  {
-    label: "EXPERIENCE",
-    number: "25+",
-    description: "Years Core Capability",
-  },
-  {
-    label: "PROJECTS",
-    number: "500+",
-    description: "Custom Homes Engineered",
-  },
-  {
-    label: "RELIABILITY",
-    number: "100%",
-    description: "Safety & Code Compliant",
-  },
-  {
-    label: "COVERAGE",
-    number: "3",
-    description: "Toronto Regional Area",
-  },
-];
+import { useEffect, useRef, useState, useMemo } from "react";
+import { useCMS } from "@/components/CMSProvider";
 
 export default function AboutSection() {
+  const { t, getImage } = useCMS();
   const [visible, setVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -141,6 +120,25 @@ export default function AboutSection() {
     targetProgress.current = computeScrollProgress(); // Revert back to scroll bounds
   };
 
+  const dynamicStats = useMemo(() => {
+    return [1, 2, 3].map((num) => ({
+      label: "STAT",
+      number: t(`about.stat${num}_value`),
+      description: t(`about.stat${num}_label`),
+    })).filter(s => s.number && !s.number.startsWith("[Missing"));
+  }, [t]);
+
+  const defaultStats = [
+    { label: "EXPERIENCE", number: "25+", description: "Years Core Capability" },
+    { label: "PROJECTS", number: "500+", description: "Custom Homes Engineered" },
+    { label: "RELIABILITY", number: "100%", description: "Safety & Code Compliant" },
+    { label: "COVERAGE", number: "3", description: "Toronto Regional Area" },
+  ];
+
+  const finalStats = dynamicStats.length > 0 ? dynamicStats : defaultStats;
+
+  const aboutImage = getImage("about.image") || "/custom_home_interior_1774895577855.png";
+
   return (
     <section
       ref={sectionRef}
@@ -168,7 +166,7 @@ export default function AboutSection() {
                 ref={shard1Ref}
                 className="absolute inset-0 overflow-hidden z-10 [clip-path:polygon(0_0,100%_0,50%_50%)]"
               >
-                <Image src="/custom_home_interior_1774895577855.png" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" alt="Custom Home Architecture" />
+                <Image src={aboutImage} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" alt="Custom Home Architecture" />
                 <div ref={shadow1Ref} className="absolute inset-x-0 bottom-[50%] h-[40px] bg-gradient-to-t from-black/90 via-black/40 to-transparent pointer-events-none" />
               </div>
 
@@ -177,7 +175,7 @@ export default function AboutSection() {
                 ref={shard2Ref}
                 className="absolute inset-0 overflow-hidden z-20 [clip-path:polygon(100%_0,100%_100%,50%_50%)]"
               >
-                <Image src="/custom_home_interior_1774895577855.png" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" alt="Custom Home Construction" />
+                <Image src={aboutImage} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" alt="Custom Home Construction" />
                 <div ref={shadow2Ref} className="absolute inset-y-0 left-[50%] w-[40px] bg-gradient-to-r from-black/90 via-black/40 to-transparent pointer-events-none" />
               </div>
 
@@ -186,7 +184,7 @@ export default function AboutSection() {
                 ref={shard3Ref}
                 className="absolute inset-0 overflow-hidden z-10 [clip-path:polygon(100%_100%,0_100%,50%_50%)]"
               >
-                <Image src="/custom_home_interior_1774895577855.png" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" alt="Luxury Foundation Design" />
+                <Image src={aboutImage} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" alt="Luxury Foundation Design" />
                 <div ref={shadow3Ref} className="absolute inset-x-0 top-[50%] h-[40px] bg-gradient-to-b from-black/90 via-black/40 to-transparent pointer-events-none" />
               </div>
 
@@ -195,7 +193,7 @@ export default function AboutSection() {
                 ref={shard4Ref}
                 className="absolute inset-0 overflow-hidden z-20 [clip-path:polygon(0_100%,0_0,50%_50%)]"
               >
-                <Image src="/custom_home_interior_1774895577855.png" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" alt="Architectural Blueprint Overlay" />
+                <Image src={aboutImage} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" alt="Architectural Blueprint Overlay" />
                 <div ref={shadow4Ref} className="absolute inset-y-0 right-[50%] w-[40px] bg-gradient-to-l from-black/90 via-black/40 to-transparent pointer-events-none" />
               </div>
 
@@ -213,31 +211,31 @@ export default function AboutSection() {
             <div className={`flex items-center gap-3 mb-6 transition-all duration-700 delay-200 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
               <div className="h-[2px] w-12 bg-[#F9A825]" />
               <span className="text-[#F9A825] text-[10px] md:text-xs font-black tracking-[0.4em] uppercase drop-shadow-[0_0_10px_rgba(249,168,37,0.8)]">
-                The Emperor Standard
+                {t("about.badge_text")}
               </span>
             </div>
 
             {/* Typography */}
             <h2 className={`text-4xl sm:text-5xl lg:text-5xl xl:text-6xl font-black text-white leading-[1.05] mb-8 tracking-tighter transition-all duration-700 delay-300 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-              Building Perfect Vision Into
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-gray-500 to-gray-700 mt-2">Absolute Reality.</span>
+              {t("about.headline")}
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-gray-500 to-gray-700 mt-2">{t("about.subheadline")}</span>
             </h2>
 
             {/* Content Description */}
             <div className={`text-gray-400 text-sm sm:text-base leading-[1.8] mb-12 max-w-[540px] font-medium transition-all duration-700 delay-400 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
               <p className="mb-4">
-                With over 25 years of master craftsmanship, Emperor Sami Group specializes in high-end residential engineering and breathtaking full-scale luxury renovations.
+                {t("about.description1")}
               </p>
               <p>
-                We shatter the old standard. From executing the initial CAD geometry to the pristine final walkthrough, our elite team of tradespeople guarantee supreme architectural precision, impenetrable structural integrity, and flawless luxury.
+                {t("about.description2")}
               </p>
             </div>
 
             {/* The Floating Glass HUD Metrics */}
             <div className={`flex flex-col gap-4 sm:gap-6 lg:gap-8 mt-4 transition-all duration-1000 delay-500 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}>
-              {stats.map((stat) => (
+              {finalStats.map((stat, i) => (
                 <div
-                  key={stat.label}
+                  key={i}
                   className="group/stat relative flex flex-row items-end justify-between border-b border-white/5 pb-3 transition-colors duration-500 hover:border-[#F9A825]/50 pr-4 sm:pr-8"
                 >
                   <div className="flex flex-col gap-1 flex-1">

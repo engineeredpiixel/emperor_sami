@@ -4,6 +4,8 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { headers } from "next/headers";
+import { createClient } from "@/utils/supabase/server";
+import { CMSProvider } from "@/components/CMSProvider";
 
 
 const geistSans = Geist({
@@ -31,6 +33,11 @@ export default async function RootLayout({
   const headersList = await headers();
   const nonce = headersList.get("x-nonce") || undefined;
 
+  // Fetch global CMS content
+  const supabase = await createClient();
+  const { data: contentData } = await supabase.from("site_content").select("*");
+  const siteContent = contentData || [];
+
   return (
     <html
       lang="en"
@@ -53,11 +60,13 @@ export default async function RootLayout({
             `,
           }}
         />
-        <Navbar />
-        <main className="flex-1 w-full flex flex-col">
-          {children}
-        </main>
-        <Footer />
+        <CMSProvider content={siteContent}>
+          <Navbar />
+          <main className="flex-1 w-full flex flex-col">
+            {children}
+          </main>
+          <Footer />
+        </CMSProvider>
       </body>
     </html>
   );

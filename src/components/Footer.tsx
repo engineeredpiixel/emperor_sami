@@ -2,8 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useCMS } from "@/components/CMSProvider";
 
 export default function Footer() {
+  const { t } = useCMS();
   const scrollToTop = () => {
     if (typeof window !== "undefined") {
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -106,7 +108,7 @@ export default function Footer() {
               </Link>
 
               <p className="text-[#899197] text-[15px] leading-relaxed mb-8">
-                With over 25 years of experience in residential construction, we have built our reputation on delivering exceptional craftsmanship, honest communication, and unwavering commitment to our clients&apos; vision.
+                {t("footer.description") || "With over 25 years of experience in residential construction, we have built our reputation on delivering exceptional craftsmanship, honest communication, and unwavering commitment to our clients' vision."}
               </p>
 
               {/* Social Icons matching exactly */}
@@ -161,8 +163,8 @@ export default function Footer() {
                   <svg className="w-[18px] h-[18px] text-[#D8A02A] shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   </svg>
-                  <a href="tel:6479011626" className="text-[#899197] text-[15px] group-hover:text-white transition-colors">
-                    +1 647 901 1626
+                  <a href={`tel:${(t("contact.phone") || "+16479011626").replace(/[^0-9+]/g, '')}`} className="text-[#899197] text-[15px] group-hover:text-white transition-colors">
+                    {t("contact.phone") || "+1 647 901 1626"}
                   </a>
                 </li>
                 <li className="flex items-start gap-4 group">
@@ -171,15 +173,15 @@ export default function Footer() {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                   <span className="text-[#899197] text-[15px] leading-relaxed">
-                    Toronto, Ontario
+                    {t("contact.location") || "Toronto, Ontario"}
                   </span>
                 </li>
                 <li className="flex items-center gap-4 group">
                   <svg className="w-[18px] h-[18px] text-[#D8A02A] shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
-                  <a href="mailto:info@emperorsamigroup.com" className="text-[#899197] text-[15px] group-hover:text-white transition-colors">
-                    info@emperorsamigroup.com
+                  <a href={`mailto:${t("contact.email") || "info@emperorsamigroup.com"}`} className="text-[#899197] text-[15px] group-hover:text-white transition-colors">
+                    {t("contact.email") || "info@emperorsamigroup.com"}
                   </a>
                 </li>
               </ul>
@@ -191,7 +193,7 @@ export default function Footer() {
           <div className="flex flex-col lg:flex-row items-center justify-between gap-4 font-medium pr-12 lg:pr-10 relative">
 
             <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-3 text-[#777E85] text-[13px] text-center sm:text-left">
-              <span>Copyright ©2026 Emperor Sami Group. All Rights Reserved</span>
+              <span>{t("footer.copyright") || "Copyright ©2026 Emperor Sami Group. All Rights Reserved"}</span>
               <span className="hidden sm:inline">|</span>
               <span>Custom Home Building & Renovations in Toronto</span>
             </div>
@@ -200,6 +202,8 @@ export default function Footer() {
               <Link href="#" className="hover:text-white transition-colors">Terms & Conditions</Link>
               <span>|</span>
               <Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link>
+              <span>|</span>
+              <Link href="/login" className="hover:text-[#D8A02A] transition-colors">Admin Access</Link>
             </div>
 
           </div>

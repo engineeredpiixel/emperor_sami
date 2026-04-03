@@ -1,8 +1,10 @@
 "use client";
 
 import Image from "next/image";
+import { useCMS } from "@/components/CMSProvider";
 
 export default function CTASection() {
+  const { t } = useCMS();
   return (
     <section className="relative w-full h-[420px] sm:h-[460px] lg:h-[260px] overflow-hidden group cursor-pointer z-10">
       {/* Background Image */}
@@ -23,13 +25,12 @@ export default function CTASection() {
 
         {/* Left: Typography */}
         <div className="text-center lg:text-left flex-1 max-w-3xl w-full mb-3 lg:mb-0 mt-4 lg:mt-0">
-          <h2 className="text-[2rem] sm:text-5xl lg:text-[3.15rem] leading-[1.2] text-white tracking-wide">
-            <span className="font-light text-white/95">Let&apos;s Build Your </span>
-            <span className="font-black text-white drop-shadow-md">Dream<br />
-              Home Today</span>
-            <span className="font-light text-white/95"> – Contact Us<br />
-              For A Consultation!</span>
+          <h2 className="text-[2rem] sm:text-5xl lg:text-[3.15rem] leading-[1.2] text-white tracking-wide font-black drop-shadow-md mb-2">
+            {t("cta.headline")}
           </h2>
+          <p className="text-lg text-white/80 font-light mt-2 max-w-xl mx-auto lg:mx-0">
+            {t("cta.description")}  
+          </p>
         </div>
 
         {/* Right: Spinning Circular Button */}
@@ -43,7 +44,7 @@ export default function CTASection() {
               </defs>
               <text className="text-[10px] font-bold tracking-[0.2em] uppercase fill-white/95">
                 <textPath href="#circlePath" textLength="230" startOffset="0%">
-                  Schedule A Call. Schedule A Call.
+                  {t("cta.button_text")} . {t("cta.button_text")} . 
                 </textPath>
               </text>
             </svg>

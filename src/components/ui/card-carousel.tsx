@@ -32,6 +32,9 @@ interface CarouselProps {
   showPagination?: boolean
   showNavigation?: boolean
   actionButton?: React.ReactNode
+  badgeText?: string
+  headline?: string
+  description?: string
 }
 
 export const CardCarousel: React.FC<CarouselProps> = ({
@@ -40,6 +43,9 @@ export const CardCarousel: React.FC<CarouselProps> = ({
   showPagination = true,
   showNavigation = true,
   actionButton,
+  badgeText = "Featured Projects",
+  headline = "Our Recent Work",
+  description = "Uncompromising structural engineering and high-end luxury residential construction across the Greater Toronto Area.",
 }) => {
   const css = `
   .swiper {
@@ -80,15 +86,13 @@ export const CardCarousel: React.FC<CarouselProps> = ({
             className="absolute left-6 top-6 rounded-full border border-black/10 text-sm md:left-8 bg-white/90 shadow px-4 py-1.5 z-10 hidden sm:inline-flex"
           >
             <SparklesIcon className="fill-[#F9A825] stroke-0 text-[#F9A825] w-4 h-4 mr-2" />
-            Featured Projects
+            {badgeText}
           </Badge>
 
           <div className="flex flex-col justify-center w-full text-center pb-4 pt-10 sm:pt-4 z-10 relative">
-            <h3 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900 mb-3">
-              Our Recent <span className="text-[#F4511E]">Work</span>
-            </h3>
+            <h3 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900 mb-3" dangerouslySetInnerHTML={{ __html: headline.replace("Work", `<span class="text-[#F4511E]">Work</span>`).replace("Projects", `<span class="text-[#F4511E]">Projects</span>`)}}></h3>
             <p className="text-gray-500 text-lg max-w-md mx-auto">
-              Uncompromising structural engineering and high-end luxury residential construction across the Greater Toronto Area.
+              {description}
             </p>
           </div>
 
