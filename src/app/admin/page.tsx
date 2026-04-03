@@ -1,6 +1,7 @@
 "use client";
 
 import { createClient } from "@/utils/supabase/client";
+import MegaMenuEditor from "@/components/admin/MegaMenuEditor";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useCallback } from "react";
 
@@ -17,6 +18,7 @@ interface ContentItem {
 // ─── Sidebar Sections ─────────────────────────────────────────────────────────
 const SECTIONS = [
   { id: "navbar", label: "Nav Bar", icon: "🧭" },
+  { id: "megamenu", label: "Mega Menu", icon: "🗂️" },
   { id: "homepage", label: "Home Page", icon: "🏠" },
   { id: "services", label: "Services", icon: "⚙️" },
   { id: "servicearea", label: "Service Area", icon: "📍" },
@@ -230,7 +232,11 @@ export default function AdminDashboard() {
 
         {/* Fields */}
         <div className="flex-1 overflow-y-auto p-6">
-          {loading ? (
+          {activeSection === "megamenu" ? (
+            <div className="max-w-6xl">
+               <MegaMenuEditor />
+            </div>
+          ) : loading ? (
             <div className="flex items-center justify-center h-64">
               <div className="w-8 h-8 border-2 border-[#F9A825]/30 border-t-[#F9A825] rounded-full animate-spin" />
             </div>
@@ -256,7 +262,7 @@ export default function AdminDashboard() {
                   <div className="bg-[#111] p-5 rounded-xl border border-white/10">
                     <h2 className="text-lg font-bold text-[#F9A825] mb-4 flex items-center gap-2"><span className="text-xl">🧭</span> Main Nav Bar Settings</h2>
                     <div className="grid grid-cols-1 gap-4">
-                      {filteredContent.filter(i => !i.key.includes("top_bar")).map((item) => (
+                      {filteredContent.filter(i => !i.key.includes("top_bar") && i.key !== "navbar.mega_menu_json").map((item) => (
                         <ContentField key={item.key} item={item} value={edits[item.key] ?? ""} saving={saving[item.key]} saved={saved[item.key]} uploading={uploadingKey === item.key} onChange={(val) => setEdits((prev) => ({ ...prev, [item.key]: val }))} onSave={() => handleSave(item.key)} onImageUpload={(file) => handleImageUpload(item.key, file)} />
                       ))}
                     </div>
