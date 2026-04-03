@@ -18,11 +18,42 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Emperor Sami Group | Custom Home Building & Renovations",
-  description:
-    "Emperor Sami Group provides expert residential construction services including custom home building, home renovations, and basement finishing in the Toronto area.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const supabase = await createClient();
+  const { data: contentData } = await supabase.from("site_content").select("*").eq('section', 'seo_settings');
+  const siteContent = contentData || [];
+  const getValue = (key: string) => siteContent.find((c) => c.key === key)?.value;
+
+  const title = getValue("seo.title") || "Emperor Sami Group | Custom Home Building & Renovations";
+  const description = getValue("seo.description") || "Emperor Sami Group provides expert residential construction services including custom home building, home renovations, and basement finishing in the Toronto area.";
+  
+  const rawFavicon = getValue("seo.favicon");
+  // Check if string contains standard URL otherwise use bucket format
+  const getImageUrl = (raw: string) => raw.startsWith('http') || raw.startsWith('/') ? raw : `https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/${raw}`;
+
+  const favicon = rawFavicon ? getImageUrl(rawFavicon) : "/favicon.ico";
+  const rawOgImage = getValue("seo.og_image");
+  const ogImage = rawOgImage ? getImageUrl(rawOgImage) : "";
+
+  return {
+    title,
+    description,
+    icons: {
+      icon: favicon,
+    },
+    openGraph: {
+      title,
+      description,
+      images: ogImage ? [{ url: ogImage }] : [],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: ogImage ? [ogImage] : [],
+    }
+  };
+}
 
 export default async function RootLayout({
   children,
