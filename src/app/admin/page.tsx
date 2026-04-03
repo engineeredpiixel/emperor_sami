@@ -734,7 +734,7 @@ function ContactPageEditor({ content, edits, saving, saved, uploadingKey, setEdi
     {
       id: 'form',
       label: 'Message Box (Form)',
-      fields: groupFilter(['contactpage.form_header', 'contactpage.form_subheader', 'contactpage.placeholder_name', 'contactpage.placeholder_email', 'contactpage.placeholder_phone', 'contactpage.placeholder_location', 'contactpage.placeholder_budget', 'contactpage.form_budget_placeholder', 'contactpage.placeholder_service', 'contactpage.form_service_placeholder', 'contactpage.placeholder_date', 'contactpage.placeholder_time', 'contactpage.form_time_placeholder', 'contactpage.placeholder_specs', 'contactpage.form_submit'])
+      fields: groupFilter(['contactpage.form_header', 'contactpage.form_subheader', 'contactpage.placeholder_name', 'contactpage.placeholder_email', 'contactpage.placeholder_phone', 'contactpage.placeholder_location', 'contactpage.placeholder_budget', 'contactpage.form_budget_placeholder', 'contactpage.form_budget_1', 'contactpage.form_budget_2', 'contactpage.form_budget_3', 'contactpage.form_budget_4', 'contactpage.placeholder_service', 'contactpage.form_service_placeholder', 'contactpage.placeholder_date', 'contactpage.placeholder_time', 'contactpage.form_time_placeholder', 'contactpage.placeholder_specs', 'contactpage.form_submit'])
     }
   ];
 

@@ -220,10 +220,10 @@ export default function ContactPage() {
                     <div className="relative group">
                       <select id="budget" required defaultValue="" className="peer w-full bg-transparent border-b-2 border-black/10 px-0 py-4 text-[#111] text-lg font-medium focus:outline-none focus:border-transparent transition-colors appearance-none" disabled={isSubmitting}>
                         <option value="" disabled className="text-gray-400">{t("contactpage.form_budget_placeholder") || "Select Project Range"}</option>
-                        <option value="50k" className="bg-white text-[#111]">$50,000 - $100,000</option>
-                        <option value="100k" className="bg-white text-[#111]">$100,000 - $250,000</option>
-                        <option value="250k" className="bg-white text-[#111]">$250,000 - $500,000</option>
-                        <option value="500k+" className="bg-white text-[#111]">$500,000+ (Master Build)</option>
+                        <option value={t("contactpage.form_budget_1") || "$50,000 - $100,000"} className="bg-white text-[#111]">{t("contactpage.form_budget_1") || "$50,000 - $100,000"}</option>
+                        <option value={t("contactpage.form_budget_2") || "$100,000 - $250,000"} className="bg-white text-[#111]">{t("contactpage.form_budget_2") || "$100,000 - $250,000"}</option>
+                        <option value={t("contactpage.form_budget_3") || "$250,000 - $500,000"} className="bg-white text-[#111]">{t("contactpage.form_budget_3") || "$250,000 - $500,000"}</option>
+                        <option value={t("contactpage.form_budget_4") || "$500,000+ (Master Build)"} className="bg-white text-[#111]">{t("contactpage.form_budget_4") || "$500,000+ (Master Build)"}</option>
                       </select>
                       <label className="absolute left-0 -top-4 text-[10px] text-gray-400 font-bold uppercase tracking-widest peer-focus:text-[#D8A02A] transition-colors">{t("contactpage.placeholder_budget") || "Allocation Range"}</label>
                       <div className="absolute bottom-0 left-0 w-full h-[2px] bg-[#D8A02A] origin-left scale-x-0 group-focus-within:scale-x-100 transition-transform duration-500 ease-out" />
