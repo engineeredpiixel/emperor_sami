@@ -42,7 +42,6 @@ const megaMenuSchema = z.object({
 
 type MegaMenuFormValues = z.infer<typeof megaMenuSchema>;
 
-// Components to abstract Field Arrays for cleaner code
 const CategoryItemEditor = ({ control, register, categoryIndex, type }: any) => {
   const { fields, append, remove } = useFieldArray({
     control,
@@ -50,15 +49,15 @@ const CategoryItemEditor = ({ control, register, categoryIndex, type }: any) => 
   });
 
   return (
-    <div className="pl-4 border-l-2 border-white/10 mt-3 space-y-2">
+    <div className="pl-5 border-l-2 border-slate-200 mt-4 space-y-3">
       {fields.map((field, index) => (
         <div key={field.id} className="flex gap-2 items-center">
           <input
             {...register(`${type}.categories.${categoryIndex}.items.${index}.value`)}
-            className="flex-1 bg-white/5 border border-white/10 rounded px-3 py-1.5 text-sm text-white focus:outline-none focus:border-[#F9A825]"
+            className="flex-1 bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all shadow-sm"
             placeholder="Link item name"
           />
-          <button type="button" onClick={() => remove(index)} className="p-1.5 text-red-400 hover:bg-white/5 rounded transition-colors">
+          <button type="button" onClick={() => remove(index)} className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors">
             <Trash2 size={16} />
           </button>
         </div>
@@ -66,9 +65,9 @@ const CategoryItemEditor = ({ control, register, categoryIndex, type }: any) => 
       <button
         type="button"
         onClick={() => append({ value: "" })}
-        className="text-xs text-[#F9A825] hover:text-white flex items-center gap-1 mt-2 transition-colors font-medium"
+        className="text-sm text-indigo-600 hover:text-indigo-800 flex items-center gap-1.5 mt-3 transition-colors font-semibold"
       >
-        <Plus size={14} /> Add Link Item
+        <Plus size={16} strokeWidth={2.5} /> Add Link Item
       </button>
     </div>
   );
@@ -83,30 +82,30 @@ const CategoryEditor = ({ control, register, type }: any) => {
   return (
     <div className="space-y-6">
       {fields.map((field, index) => (
-        <div key={field.id} className="bg-white/5 border border-white/10 rounded-lg p-4 relative group">
+        <div key={field.id} className="bg-slate-50 border border-slate-200 rounded-xl p-5 relative group shadow-sm hover:shadow-md transition-shadow duration-300">
           <div className="flex justify-between items-start mb-4">
             <div className="flex-1 mr-4">
-              <label className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1.5 block">Category Title</label>
+              <label className="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 block">Category Title</label>
               <input
                 {...register(`${type}.categories.${index}.title`)}
-                className="w-full bg-[#1a1a1a] border border-white/10 rounded px-3 py-2 text-white focus:outline-none focus:border-[#F9A825]"
+                className="w-full bg-white border border-slate-200 rounded-lg px-4 py-2.5 text-slate-800 font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all shadow-sm"
                 placeholder="e.g. Custom Home Building"
               />
             </div>
-            <button type="button" onClick={() => remove(index)} className="p-2 text-gray-500 hover:text-red-400 hover:bg-white/5 rounded transition-colors">
+            <button type="button" onClick={() => remove(index)} className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors">
               <Trash2 size={18} />
             </button>
           </div>
-          <label className="text-xs font-semibold text-gray-400 uppercase tracking-widest block mb-1.5">Category Links ({type})</label>
+          <label className="text-[11px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Category Links ({type})</label>
           <CategoryItemEditor control={control} register={register} categoryIndex={index} type={type} />
         </div>
       ))}
       <button
         type="button"
         onClick={() => append({ title: "", items: [{ value: "" }] })}
-        className="w-full py-3 border border-dashed border-[#F9A825]/50 hover:bg-[#F9A825]/10 rounded-lg text-[#F9A825] transition-colors flex items-center justify-center gap-2 font-bold uppercase tracking-wider text-sm"
+        className="w-full py-4 border-2 border-dashed border-indigo-200 bg-indigo-50/50 hover:bg-indigo-50 hover:border-indigo-300 rounded-xl text-indigo-600 transition-all flex items-center justify-center gap-2 font-bold text-sm shadow-sm"
       >
-        <Plus size={18} /> Add New Category
+        <Plus size={18} strokeWidth={2.5} /> Add New Category
       </button>
     </div>
   );
@@ -119,36 +118,36 @@ const HowItWorksEditor = ({ control, register }: any) => {
   });
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-5">
       {fields.map((field, index) => (
-        <div key={field.id} className="bg-white/5 border border-white/10 rounded-lg p-4 flex items-start gap-4">
-          <div className="flex-1 space-y-3">
+        <div key={field.id} className="bg-slate-50 border border-slate-200 rounded-xl p-5 flex items-start gap-4 shadow-sm hover:shadow-md transition-shadow">
+          <div className="flex-1 space-y-4">
             <div>
-              <label className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1.5 block">Step {index + 1} Title</label>
+              <label className="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 block">Step {index + 1} Title</label>
               <input
                 {...register(`howItWorks.steps.${index}.title`)}
-                className="w-full bg-[#1a1a1a] border border-white/10 rounded px-3 py-2 text-white focus:outline-none focus:border-[#F9A825]"
+                className="w-full bg-white border border-slate-200 rounded-lg px-4 py-2.5 text-slate-800 font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all shadow-sm"
               />
             </div>
             <div>
-              <label className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1.5 block">Description</label>
+              <label className="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 block">Description</label>
               <textarea
                 {...register(`howItWorks.steps.${index}.description`)}
-                className="w-full bg-[#1a1a1a] border border-white/10 rounded px-3 py-2 text-white focus:outline-none focus:border-[#F9A825] min-h-[80px]"
+                className="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 text-slate-700 min-h-[90px] resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all shadow-sm text-sm leading-relaxed"
               />
             </div>
           </div>
-          <button type="button" onClick={() => remove(index)} className="p-2 text-gray-500 hover:text-red-400 hover:bg-white/5 rounded transition-colors mt-6">
-            <Trash2 size={18} />
+          <button type="button" onClick={() => remove(index)} className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors mt-7">
+            <Trash2 size={20} />
           </button>
         </div>
       ))}
       <button
         type="button"
         onClick={() => append({ title: "", description: "" })}
-        className="w-full py-3 border border-dashed border-[#F9A825]/50 hover:bg-[#F9A825]/10 rounded-lg text-[#F9A825] transition-colors flex items-center justify-center gap-2 font-bold uppercase tracking-wider text-sm"
+        className="w-full py-4 border-2 border-dashed border-indigo-200 bg-indigo-50/50 hover:bg-indigo-50 hover:border-indigo-300 rounded-xl text-indigo-600 transition-all flex items-center justify-center gap-2 font-bold text-sm shadow-sm"
       >
-        <Plus size={18} /> Add Step
+        <Plus size={18} strokeWidth={2.5} /> Add Step
       </button>
     </div>
   );
@@ -172,12 +171,10 @@ export default function MegaMenuEditor() {
       if (initialJson) {
         try {
           const parsed = typeof initialJson === 'string' ? JSON.parse(initialJson) : initialJson;
-          // Transform items back into array of objects for react-hook-form useFieldArray
           const transformCategories = (cats: any[]) => cats.map(c => ({
             title: c.title || "",
             items: (c.items || []).map((i: string) => ({ value: i }))
           }));
-          
           return {
             residential: {
               title: parsed.residential?.title || "",
@@ -217,7 +214,6 @@ export default function MegaMenuEditor() {
     setIsSaving(true);
     setStatusMsg(null);
     try {
-      // Transform form data back to expected JSON schema (arrays of strings)
       const transformToSave = (cats: any[]) => cats.map(c => ({
         title: c.title,
         items: c.items.map((i: any) => i.value).filter(Boolean)
@@ -262,18 +258,18 @@ export default function MegaMenuEditor() {
   ];
 
   return (
-    <div className="bg-[#111] rounded-xl border border-white/5 overflow-hidden">
+    <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
       {/* Tabs */}
-      <div className="flex border-b border-white/10">
+      <div className="flex border-b border-slate-200 bg-slate-50/50">
         {tabs.map(tab => (
           <button
             key={tab.id}
             type="button"
             onClick={() => setActiveTab(tab.id)}
-            className={`flex-1 py-4 text-sm font-bold uppercase tracking-wider transition-colors ${
+            className={`flex-1 py-4.5 text-[13px] font-bold uppercase tracking-wider transition-all border-b-2 ${
               activeTab === tab.id 
-                ? "bg-white/5 text-[#F9A825] border-b-2 border-[#F9A825]" 
-                : "text-gray-500 hover:text-white hover:bg-white/[0.02]"
+                ? "bg-white text-indigo-600 border-indigo-600 shadow-[0_4px_10px_rgba(0,0,0,0.02)] z-10" 
+                : "text-slate-500 hover:text-slate-800 hover:bg-slate-50 border-transparent"
             }`}
           >
             {tab.label}
@@ -281,23 +277,23 @@ export default function MegaMenuEditor() {
         ))}
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="p-6">
+      <form onSubmit={handleSubmit(onSubmit)} className="p-8">
         
         {/* Residential Tab */}
         <div className={activeTab === 'residential' ? 'block' : 'hidden'}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 border-b border-white/5 pb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 border-b border-slate-100 pb-8">
             <div>
-              <label className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1.5 block">Division Title</label>
+              <label className="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 block">Division Title</label>
               <input 
                 {...register("residential.title")} 
-                className="w-full bg-[#1a1a1a] border border-white/10 rounded-lg px-4 py-3 text-white focus:ring-1 focus:ring-[#F9A825] transition-all outline-none" 
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-800 font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all shadow-sm" 
               />
             </div>
             <div>
-              <label className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1.5 block">Division Description</label>
+              <label className="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 block">Division Description</label>
               <textarea 
                 {...register("residential.description")} 
-                className="w-full bg-[#1a1a1a] border border-white/10 rounded-lg px-4 py-3 text-white focus:ring-1 focus:ring-[#F9A825] transition-all outline-none h-[48px]" 
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all h-[48px] resize-none overflow-hidden shadow-sm text-sm" 
               />
             </div>
           </div>
@@ -306,19 +302,19 @@ export default function MegaMenuEditor() {
 
         {/* Commercial Tab */}
         <div className={activeTab === 'commercial' ? 'block' : 'hidden'}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 border-b border-white/5 pb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 border-b border-slate-100 pb-8">
             <div>
-              <label className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1.5 block">Division Title</label>
+              <label className="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 block">Division Title</label>
               <input 
                 {...register("commercial.title")} 
-                className="w-full bg-[#1a1a1a] border border-white/10 rounded-lg px-4 py-3 text-white focus:ring-1 focus:ring-[#F9A825] transition-all outline-none" 
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-800 font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all shadow-sm" 
               />
             </div>
             <div>
-              <label className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1.5 block">Division Description</label>
+              <label className="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 block">Division Description</label>
               <textarea 
                 {...register("commercial.description")} 
-                className="w-full bg-[#1a1a1a] border border-white/10 rounded-lg px-4 py-3 text-white focus:ring-1 focus:ring-[#F9A825] transition-all outline-none h-[48px]" 
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all h-[48px] resize-none overflow-hidden shadow-sm text-sm" 
               />
             </div>
           </div>
@@ -327,39 +323,39 @@ export default function MegaMenuEditor() {
 
         {/* Process & Links Tab */}
         <div className={activeTab === 'process' ? 'block' : 'hidden'}>
-          <div className="mb-8 border-b border-white/5 pb-8">
-            <label className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1.5 block">Section Title</label>
+          <div className="mb-8 border-b border-slate-100 pb-8">
+            <label className="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 block">Section Title</label>
             <input 
               {...register("howItWorks.title")} 
-              className="w-full max-w-md bg-[#1a1a1a] border border-white/10 rounded-lg px-4 py-3 text-white focus:ring-1 focus:ring-[#F9A825] transition-all outline-none" 
+              className="w-full max-w-md bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-800 font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all shadow-sm" 
             />
           </div>
           
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
             <div className="lg:col-span-2">
-              <h3 className="text-[#F9A825] font-bold uppercase tracking-widest mb-4 flex items-center gap-2">
-                 Steps
+              <h3 className="text-slate-800 font-bold tracking-tight mb-5 flex items-center gap-2">
+                 Process Steps Configuration
               </h3>
               <HowItWorksEditor control={control} register={register} />
             </div>
             
             <div className="space-y-6">
-              <h3 className="text-[#F9A825] font-bold uppercase tracking-widest mb-4 flex items-center gap-2">
+              <h3 className="text-slate-800 font-bold tracking-tight mb-5 flex items-center gap-2">
                  Call To Actions
               </h3>
-              <div className="bg-white/5 border border-white/10 rounded-lg p-4 space-y-4">
+              <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 space-y-5 shadow-sm">
                 <div>
-                  <label className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1.5 block">Primary Button</label>
+                  <label className="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 block">Primary Button (Black)</label>
                   <input 
                     {...register("actions.primaryButton")} 
-                    className="w-full bg-[#1a1a1a] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:ring-1 focus:ring-[#F9A825] outline-none" 
+                    className="w-full bg-white border border-slate-200 rounded-lg px-3 py-2.5 text-sm text-slate-800 font-semibold focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none shadow-sm" 
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1.5 block">Secondary Link</label>
+                  <label className="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 block">Secondary Button (Outline)</label>
                   <input 
                     {...register("actions.secondaryLink")} 
-                    className="w-full bg-[#1a1a1a] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:ring-1 focus:ring-[#F9A825] outline-none" 
+                    className="w-full bg-white border border-slate-200 rounded-lg px-3 py-2.5 text-sm text-slate-800 font-semibold focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none shadow-sm" 
                   />
                 </div>
               </div>
@@ -368,13 +364,13 @@ export default function MegaMenuEditor() {
         </div>
 
         {/* Global Submit Bar */}
-        <div className="mt-8 pt-6 border-t border-white/10 flex items-center justify-between">
+        <div className="mt-10 pt-6 border-t border-slate-200 flex items-center justify-between">
           <div>
             {Object.keys(errors).length > 0 && (
-              <span className="text-red-400 text-sm">Please fix all missing fields before saving.</span>
+              <span className="text-red-500 text-sm font-medium flex items-center gap-1.5"><Trash2 size={14}/> Please fix missing fields.</span>
             )}
             {statusMsg && (
-              <span className={`text-sm font-semibold px-4 py-2 rounded-lg ${statusMsg.type === 'success' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}>
+              <span className={`text-sm font-bold tracking-wide px-4 py-2 rounded-lg ${statusMsg.type === 'success' ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-red-50 text-red-600 border border-red-100'}`}>
                 {statusMsg.text}
               </span>
             )}
@@ -382,10 +378,10 @@ export default function MegaMenuEditor() {
           <button
             type="submit"
             disabled={isSaving}
-            className="flex items-center gap-2 px-8 py-3 bg-[#F9A825] hover:bg-[#e6960c] text-black font-black uppercase tracking-widest rounded-lg transition-transform hover:scale-105 disabled:opacity-50 disabled:hover:scale-100 shadow-[0_0_20px_rgba(249,168,37,0.3)]"
+            className="flex items-center gap-2 px-8 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold tracking-wide rounded-xl transition-all shadow-md shadow-indigo-600/20 hover:shadow-lg hover:-translate-y-0.5 disabled:opacity-50 disabled:hover:-translate-y-0"
           >
             {isSaving ? <Loader2 size={18} className="animate-spin" /> : <Save size={18} />}
-            {isSaving ? "Syncing to JSON..." : "Update Mega Menu"}
+            {isSaving ? "Syncing..." : "Publish Mega Menu"}
           </button>
         </div>
       </form>

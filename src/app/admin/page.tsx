@@ -3,7 +3,8 @@
 import { createClient } from "@/utils/supabase/client";
 import MegaMenuEditor from "@/components/admin/MegaMenuEditor";
 import { useRouter } from "next/navigation";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
+import { ChevronDown, Search, Menu, LogOut, Loader2, Save, UploadCloud } from "lucide-react";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface ContentItem {
@@ -15,26 +16,20 @@ interface ContentItem {
   label: string;
 }
 
-// ─── Sidebar Sections ─────────────────────────────────────────────────────────
-const SECTIONS = [
-  { id: "navbar", label: "Nav Bar", icon: "🧭" },
-  { id: "megamenu", label: "Mega Menu", icon: "🗂️" },
-  { id: "homepage", label: "Home Page", icon: "🏠" },
-  { id: "services", label: "Services", icon: "⚙️" },
-  { id: "servicearea", label: "Service Area", icon: "📍" },
-  { id: "project", label: "Project", icon: "📁" },
-  { id: "about", label: "About US", icon: "👤" },
-  { id: "contact", label: "Contact US", icon: "📞" },
-  { id: "footer", label: "Footer", icon: "📄" },
-  { id: "settings", label: "Site Settings", icon: "🛠️" },
-];
+interface SidebarSection {
+  id: string;
+  label: string;
+  icon: string;
+  order_index: number;
+  parent_id: string | null;
+}
 
 // ─── Main Dashboard ───────────────────────────────────────────────────────────
 export default function AdminDashboard() {
   const router = useRouter();
   const supabase = createClient();
 
-  const [activeSection, setActiveSection] = useState("navbar");
+  const [activeSection, setActiveSection] = useState("homepage_hero");
   const [content, setContent] = useState<ContentItem[]>([]);
   const [edits, setEdits] = useState<Record<string, string>>({});
   const [saving, setSaving] = useState<Record<string, boolean>>({});
@@ -44,16 +39,34 @@ export default function AdminDashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [uploadingKey, setUploadingKey] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
+  
+  // Database Sidebar state
+  const [sidebarSections, setSidebarSections] = useState<SidebarSection[]>([]);
+  const [expandedParents, setExpandedParents] = useState<Record<string, boolean>>({
+    'homepage': true,
+    'navbar': true
+  });
 
-  // ── Fetch user ──
+  // ── Fetch user & sidebar ──
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
       if (data.user) setUserEmail(data.user.email ?? "");
+    });
+    
+    supabase.from("admin_sidebar").select("*").order("order_index").then(({ data }) => {
+      if (data) setSidebarSections(data as SidebarSection[]);
     });
   }, [supabase]);
 
   // ── Fetch content for active section ──
   const fetchContent = useCallback(async () => {
+    // Prevent fetching if it's a structural parent without content, or mega menu
+    if (activeSection === 'megamenu') {
+      setContent([]);
+      setLoading(false);
+      return;
+    }
+    
     setLoading(true);
     const { data, error } = await supabase
       .from("site_content")
@@ -76,47 +89,60 @@ export default function AdminDashboard() {
     fetchContent();
   }, [fetchContent]);
 
+  // ── Data Hierarchy Building ──
+  const { rootSections, childSections } = useMemo(() => {
+    const root = sidebarSections.filter(s => !s.parent_id);
+    const children = sidebarSections.filter(s => !!s.parent_id);
+    return { rootSections: root, childSections: children };
+  }, [sidebarSections]);
+
+  const toggleParent = (parentId: string) => {
+    setExpandedParents(prev => ({ ...prev, [parentId]: !prev[parentId] }));
+  };
+
   // ── Save a single field ──
   const handleSave = async (key: string) => {
     setSaving((prev) => ({ ...prev, [key]: true }));
     const { error } = await supabase
       .from("site_content")
       .update({ value: edits[key] })
-      .eq("key", key)
-      .eq("section", activeSection);
+      .eq("key", key);
 
     setSaving((prev) => ({ ...prev, [key]: false }));
     if (!error) {
       setSaved((prev) => ({ ...prev, [key]: true }));
       setTimeout(() => setSaved((prev) => ({ ...prev, [key]: false })), 2000);
+    } else {
+      alert("Error saving: " + error.message);
     }
   };
 
-  // ── Upload image to Supabase Storage ──
+  // ── Image Upload ──
   const handleImageUpload = async (key: string, file: File) => {
     setUploadingKey(key);
-    const ext = file.name.split(".").pop();
-    const filename = `${key.replace(/\./g, "_")}_${Date.now()}.${ext}`;
-    const { error: uploadError } = await supabase.storage
-      .from("cms_assets")
-      .upload(filename, file, { upsert: true });
+    try {
+      const fileExt = file.name.split(".").pop();
+      const fileName = `${key}_${Date.now()}.${fileExt}`;
+      const filePath = `cms/${fileName}`;
 
-    if (!uploadError) {
-      const { data } = supabase.storage.from("cms_assets").getPublicUrl(filename);
-      const publicUrl = data.publicUrl;
+      const { error: uploadError } = await supabase.storage.from("images").upload(filePath, file);
+      if (uploadError) throw uploadError;
+
+      const { data: { publicUrl } } = supabase.storage.from("images").getPublicUrl(filePath);
+
       setEdits((prev) => ({ ...prev, [key]: publicUrl }));
-      await supabase
-        .from("site_content")
-        .update({ value: publicUrl })
-        .eq("key", key)
-        .eq("section", activeSection);
+      const { error: updateError } = await supabase.from("site_content").update({ value: publicUrl }).eq("key", key);
+      if (updateError) throw updateError;
+      
       setSaved((prev) => ({ ...prev, [key]: true }));
       setTimeout(() => setSaved((prev) => ({ ...prev, [key]: false })), 2000);
+    } catch (error: any) {
+      alert("Error uploading image: " + error.message);
+    } finally {
+      setUploadingKey(null);
     }
-    setUploadingKey(null);
   };
 
-  // ── Sign out ──
   const handleSignOut = async () => {
     await supabase.auth.signOut();
     router.push("/admin/login");
@@ -130,161 +156,170 @@ export default function AdminDashboard() {
       item.key.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const currentSection = SECTIONS.find((s) => s.id === activeSection);
+  const currentSection = sidebarSections.find((s) => s.id === activeSection);
+  const isMegaMenu = activeSection === "megamenu";
 
   return (
-    <div className="flex h-screen bg-[#080808] text-white overflow-hidden">
-      {/* ─── Sidebar ──────────────────────────────────────────────── */}
+    <div className="flex h-screen bg-slate-50 text-slate-900 font-sans overflow-hidden selection:bg-indigo-100">
+      
+      {/* ─── Light Mode Sidebar ─────────────────────────────────────────── */}
       <aside
-        className={`${sidebarOpen ? "w-64" : "w-16"} flex-shrink-0 border-r border-white/8 bg-[#0c0c0c] flex flex-col transition-all duration-300 ease-in-out overflow-hidden`}
+        className={`${sidebarOpen ? "w-72" : "w-16"} flex-shrink-0 border-r border-slate-200 bg-white flex flex-col transition-all duration-300 ease-in-out shadow-[4px_0_24px_rgba(0,0,0,0.02)] z-10`}
       >
-        {/* Logo */}
-        <div className="flex items-center gap-3 px-4 py-5 border-b border-white/8 min-h-[72px]">
-          <div className="w-8 h-8 rounded-lg bg-[#F9A825]/15 border border-[#F9A825]/25 flex items-center justify-center flex-shrink-0">
-            <svg className="w-4 h-4 text-[#F9A825]" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+        {/* Logo Area */}
+        <div className="flex items-center gap-3 px-5 py-6 border-b border-slate-100 min-h-[80px]">
+          <div className="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center flex-shrink-0 shadow-md shadow-indigo-200">
+            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
             </svg>
           </div>
           {sidebarOpen && (
-            <div className="overflow-hidden">
-              <p className="text-white font-black text-sm tracking-tight">Emperor Sami</p>
-              <p className="text-white/30 text-[10px] tracking-widest uppercase">CMS Dashboard</p>
+            <div className="overflow-hidden whitespace-nowrap">
+              <p className="text-slate-800 font-bold text-[15px] tracking-tight">Emperor Sami</p>
+              <p className="text-slate-500 text-[11px] font-semibold tracking-wider uppercase mt-0.5">CMS Dashboard</p>
             </div>
           )}
         </div>
 
-        {/* Nav */}
-        <nav className="flex-1 overflow-y-auto py-3 px-2">
-          {SECTIONS.map((section) => (
-            <button
-              key={section.id}
-              onClick={() => setActiveSection(section.id)}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl mb-0.5 text-left transition-all duration-150 group
-                ${activeSection === section.id
-                  ? "bg-[#F9A825]/12 text-[#F9A825]"
-                  : "text-white/40 hover:text-white/80 hover:bg-white/5"
-                }`}
-            >
-              <span className="text-base flex-shrink-0">{section.icon}</span>
-              {sidebarOpen && (
-                <span className="text-sm font-medium truncate">{section.label}</span>
-              )}
-            </button>
-          ))}
+        {/* Dynamic Nested Nav */}
+        <nav className="flex-1 overflow-y-auto py-5 px-3 custom-scrollbar">
+          {rootSections.map((rootItem) => {
+            const children = childSections.filter(c => c.parent_id === rootItem.id);
+            const isParent = children.length > 0;
+            const isExpanded = expandedParents[rootItem.id];
+            const isActive = activeSection === rootItem.id;
+
+            return (
+              <div key={rootItem.id} className="mb-1">
+                {/* Root Button */}
+                <button
+                  onClick={() => isParent ? toggleParent(rootItem.id) : setActiveSection(rootItem.id)}
+                  className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-left transition-all duration-200 group
+                    ${isActive && !isParent ? "bg-indigo-50 text-indigo-700 font-semibold" : "text-slate-600 hover:bg-slate-100 hover:text-slate-900 font-medium"}
+                  `}
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="text-lg opacity-80">{rootItem.icon}</span>
+                    {sidebarOpen && <span className="text-sm">{rootItem.label}</span>}
+                  </div>
+                  {sidebarOpen && isParent && (
+                    <ChevronDown size={14} className={`text-slate-400 transition-transform duration-300 ${isExpanded ? "rotate-180" : ""}`} />
+                  )}
+                </button>
+
+                {/* Submenu Drawer */}
+                {isParent && sidebarOpen && (
+                  <div className={`overflow-hidden transition-all duration-300 flex flex-col ${isExpanded ? "max-h-[500px] mt-1 mb-2 opacity-100" : "max-h-0 opacity-0"}`}>
+                    {children.map(child => (
+                      <button
+                        key={child.id}
+                        onClick={() => setActiveSection(child.id)}
+                        className={`w-full flex items-center gap-3 pl-10 pr-3 py-2.5 rounded-lg text-sm transition-all duration-200 
+                          ${activeSection === child.id ? "bg-indigo-50/70 text-indigo-700 font-semibold border-l-2 border-indigo-600" : "text-slate-500 hover:bg-slate-50 hover:text-slate-900 font-medium border-l-2 border-transparent"}
+                        `}
+                      >
+                        <span className="opacity-70 text-base">{child.icon}</span>
+                        <span>{child.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </nav>
 
-        {/* User */}
-        {sidebarOpen && (
-          <div className="p-3 border-t border-white/8">
-            <div className="flex items-center gap-2 px-2 py-2 rounded-xl bg-white/5 mb-2">
-              <div className="w-7 h-7 rounded-full bg-[#F9A825]/20 flex items-center justify-center flex-shrink-0">
-                <span className="text-[#F9A825] text-xs font-bold">{userEmail[0]?.toUpperCase()}</span>
+        {/* User Block */}
+        <div className="p-4 border-t border-slate-100">
+          <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 flex flex-col gap-3">
+            {sidebarOpen && (
+              <div className="overflow-hidden">
+                <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest mb-1">Logged in as</p>
+                <p className="text-slate-700 text-xs font-semibold truncate">{userEmail || "Admin"}</p>
               </div>
-              <p className="text-white/50 text-xs truncate">{userEmail}</p>
-            </div>
+            )}
             <button
               onClick={handleSignOut}
-              className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-white/30 hover:text-red-400 hover:bg-red-500/8 transition-all duration-150 text-sm"
+              className="flex items-center justify-center gap-2 w-full py-2 bg-white border border-slate-200 hover:bg-slate-100 hover:border-slate-300 rounded-lg text-slate-600 font-semibold text-xs tracking-wide transition-all shadow-sm"
             >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
-              </svg>
-              Sign Out
+              <LogOut size={14} />
+              {sidebarOpen && "Sign Out"}
             </button>
           </div>
-        )}
+        </div>
       </aside>
 
-      {/* ─── Main Content ──────────────────────────────────────────── */}
-      <main className="flex-1 flex flex-col overflow-hidden">
-        {/* Header */}
-        <header className="flex items-center justify-between px-6 py-4 border-b border-white/8 bg-[#0c0c0c] min-h-[72px]">
-          <div className="flex items-center gap-4">
+      {/* ─── Main Content Pane ─────────────────────────────────────────── */}
+      <main className="flex-1 flex flex-col min-w-0 bg-[#FBFBFB]">
+        
+        <header className="h-[80px] bg-white border-b border-slate-200 px-6 sm:px-10 flex items-center justify-between shadow-[0_4px_24px_rgba(0,0,0,0.01)] flex-shrink-0 z-10">
+          <div className="flex items-center gap-5">
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="w-8 h-8 rounded-lg border border-white/10 flex items-center justify-center text-white/40 hover:text-white/80 hover:border-white/20 transition-all"
+              className="w-9 h-9 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 flex items-center justify-center text-slate-500 hover:text-slate-800 transition-all shadow-sm"
             >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d={sidebarOpen ? "M6 18L18 6M6 6l12 12" : "M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5"} />
-              </svg>
+              <Menu size={18} />
             </button>
             <div>
-              <h1 className="text-white font-black text-lg">
-                {currentSection?.icon} {currentSection?.label}
+              <h1 className="text-slate-900 font-extrabold text-xl tracking-tight flex items-center gap-2">
+                <span>{currentSection?.icon}</span> {currentSection?.label || "Select Section"}
               </h1>
-              <p className="text-white/30 text-xs">{filteredContent.length} editable fields</p>
+              {!isMegaMenu && (
+                <p className="text-slate-500 text-xs font-medium mt-0.5">{filteredContent.length} active database fields</p>
+              )}
             </div>
           </div>
-          {/* Search */}
-          <div className="relative">
-            <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/25" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-            </svg>
+          
+          <div className="relative hidden md:block">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search fields..."
-              className="bg-white/5 border border-white/10 rounded-xl pl-9 pr-4 py-2 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-white/20 w-56"
+              placeholder="Search fields or keys..."
+              className="bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-4 py-2 text-sm text-slate-700 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all w-64 shadow-inner"
             />
           </div>
         </header>
 
-        {/* Fields */}
-        <div className="flex-1 overflow-y-auto p-6">
-          {activeSection === "megamenu" ? (
-            <div className="max-w-6xl">
+        {/* Dynamic Fields Area */}
+        <div className="flex-1 overflow-y-auto p-6 sm:p-10 custom-scrollbar">
+          {isMegaMenu ? (
+            <div className="max-w-6xl mx-auto">
                <MegaMenuEditor />
             </div>
           ) : loading ? (
-            <div className="flex items-center justify-center h-64">
-              <div className="w-8 h-8 border-2 border-[#F9A825]/30 border-t-[#F9A825] rounded-full animate-spin" />
+            <div className="flex items-center justify-center h-full min-h-[300px]">
+              <div className="flex flex-col items-center gap-3">
+                <Loader2 size={32} className="animate-spin text-indigo-600" />
+                <p className="text-slate-400 font-medium text-sm">Querying database...</p>
+              </div>
             </div>
           ) : filteredContent.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-64 text-center">
-              <p className="text-white/20 text-lg mb-2">No content fields found</p>
-              <p className="text-white/15 text-sm">
-                This section has no editable content yet. Run the SQL setup script to populate it.
+            <div className="flex flex-col items-center justify-center h-full min-h-[300px] text-center max-w-md mx-auto">
+              <div className="w-16 h-16 bg-slate-100 rounded-2xl flex items-center justify-center mb-4">
+                <svg className="w-8 h-8 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" /></svg>
+              </div>
+              <p className="text-slate-700 font-bold text-lg mb-1">No content fields found</p>
+              <p className="text-slate-500 text-sm">
+                This section currently has no editable CMS mapping. You may need to run the SQL injection script for <b>{activeSection}</b>.
               </p>
             </div>
           ) : (
-            <div className="flex flex-col gap-6 max-w-6xl">
-              {activeSection === "navbar" ? (
-                <>
-                  <div className="bg-[#111] p-5 rounded-xl border border-white/10">
-                    <h2 className="text-lg font-bold text-[#F9A825] mb-4 flex items-center gap-2"><span className="text-xl">👆</span> Top Bar Settings</h2>
-                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
-                      {filteredContent.filter(i => i.key.includes("top_bar")).map((item) => (
-                        <ContentField key={item.key} item={item} value={edits[item.key] ?? ""} saving={saving[item.key]} saved={saved[item.key]} uploading={uploadingKey === item.key} onChange={(val) => setEdits((prev) => ({ ...prev, [item.key]: val }))} onSave={() => handleSave(item.key)} onImageUpload={(file) => handleImageUpload(item.key, file)} />
-                      ))}
-                    </div>
-                  </div>
-                  <div className="bg-[#111] p-5 rounded-xl border border-white/10">
-                    <h2 className="text-lg font-bold text-[#F9A825] mb-4 flex items-center gap-2"><span className="text-xl">🧭</span> Main Nav Bar Settings</h2>
-                    <div className="grid grid-cols-1 gap-4">
-                      {filteredContent.filter(i => !i.key.includes("top_bar") && i.key !== "navbar.mega_menu_json").map((item) => (
-                        <ContentField key={item.key} item={item} value={edits[item.key] ?? ""} saving={saving[item.key]} saved={saved[item.key]} uploading={uploadingKey === item.key} onChange={(val) => setEdits((prev) => ({ ...prev, [item.key]: val }))} onSave={() => handleSave(item.key)} onImageUpload={(file) => handleImageUpload(item.key, file)} />
-                      ))}
-                    </div>
-                  </div>
-                </>
-              ) : (
-                <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
-                  {filteredContent.map((item) => (
-                    <ContentField
-                      key={item.key}
-                      item={item}
-                      value={edits[item.key] ?? ""}
-                      saving={saving[item.key]}
-                      saved={saved[item.key]}
-                      uploading={uploadingKey === item.key}
-                      onChange={(val) => setEdits((prev) => ({ ...prev, [item.key]: val }))}
-                      onSave={() => handleSave(item.key)}
-                      onImageUpload={(file) => handleImageUpload(item.key, file)}
-                    />
-                  ))}
-                </div>
-              )}
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 max-w-7xl mx-auto">
+              {filteredContent.map((item) => (
+                <ContentField
+                  key={item.key}
+                  item={item}
+                  value={edits[item.key] ?? ""}
+                  saving={saving[item.key]}
+                  saved={saved[item.key]}
+                  uploading={uploadingKey === item.key}
+                  onChange={(val) => setEdits((prev) => ({ ...prev, [item.key]: val }))}
+                  onSave={() => handleSave(item.key)}
+                  onImageUpload={(file) => handleImageUpload(item.key, file)}
+                />
+              ))}
             </div>
           )}
         </div>
@@ -293,117 +328,92 @@ export default function AdminDashboard() {
   );
 }
 
-// ─── Content Field Component ──────────────────────────────────────────────────
-function ContentField({
-  item,
-  value,
-  saving,
-  saved,
-  uploading,
-  onChange,
-  onSave,
-  onImageUpload,
-}: {
-  item: ContentItem;
-  value: string;
-  saving?: boolean;
-  saved?: boolean;
-  uploading?: boolean;
-  onChange: (v: string) => void;
-  onSave: () => void;
-  onImageUpload: (file: File) => void;
-}) {
+// ─── Content Field Component (Light Mode Refactor) ──────────────────────────
+function ContentField({ item, value, saving, saved, uploading, onChange, onSave, onImageUpload }: any) {
   const isDirty = value !== (item.value ?? "");
 
   return (
-    <div className="bg-white/[0.03] border border-white/8 rounded-2xl p-5 hover:border-white/12 transition-all duration-200">
+    <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300 relative group flex flex-col h-full">
       {/* Field Header */}
-      <div className="flex items-start justify-between gap-3 mb-3">
+      <div className="flex items-start justify-between gap-3 mb-5">
         <div>
-          <p className="text-white font-semibold text-sm">{item.label}</p>
-          <p className="text-white/25 text-xs font-mono mt-0.5">{item.key}</p>
+          <p className="text-slate-800 font-bold text-[15px]">{item.label}</p>
+          <div className="flex items-center gap-2 mt-1">
+            <span className="text-slate-400 text-xs font-mono bg-slate-50 px-1.5 py-0.5 rounded border border-slate-100">{item.key}</span>
+          </div>
         </div>
-        <span className={`px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider flex-shrink-0
-          ${item.type === "image" ? "bg-purple-500/15 text-purple-300" :
-            item.type === "textarea" ? "bg-blue-500/15 text-blue-300" :
-            "bg-white/8 text-white/30"}`}>
+        <span className={`px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider flex-shrink-0 border
+          ${item.type === "image" ? "bg-purple-50 text-purple-600 border-purple-100" :
+            item.type === "textarea" ? "bg-amber-50 text-amber-600 border-amber-100" :
+            "bg-blue-50 text-blue-600 border-blue-100"}`}>
           {item.type}
         </span>
       </div>
 
-      {/* Input */}
-      {item.type === "image" ? (
-        <div className="space-y-3">
-          {value && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={value} alt={item.label} className="w-full h-32 object-cover rounded-xl border border-white/10" />
-          )}
-          <label className="flex items-center gap-2 cursor-pointer w-full border border-dashed border-white/15 rounded-xl px-4 py-3 hover:border-[#F9A825]/40 hover:bg-[#F9A825]/5 transition-all duration-200 group">
-            <svg className="w-4 h-4 text-white/30 group-hover:text-[#F9A825]/60" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
-            </svg>
-            <span className="text-white/30 group-hover:text-white/50 text-sm">
-              {uploading ? "Uploading..." : "Click to upload new image"}
-            </span>
-            <input
-              type="file"
-              accept="image/*"
-              className="hidden"
-              disabled={uploading}
-              onChange={(e) => {
-                const file = e.target.files?.[0];
-                if (file) onImageUpload(file);
-              }}
-            />
-          </label>
+      {/* Input Area */}
+      <div className="flex-1">
+        {item.type === "image" ? (
+          <div className="space-y-4">
+            {value && (
+              <div className="relative group/img overflow-hidden rounded-xl border border-slate-200">
+                <img src={value} alt={item.label} className="w-full h-40 object-cover bg-slate-50" />
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/img:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
+                  <span className="text-white text-xs font-semibold px-3 py-1 bg-black/50 rounded-full">Current Image</span>
+                </div>
+              </div>
+            )}
+            <label className="flex items-center justify-center gap-2 cursor-pointer w-full border-2 border-dashed border-slate-200 rounded-xl px-4 py-6 hover:border-indigo-400 hover:bg-indigo-50/50 transition-all duration-200">
+              {uploading ? (
+                <Loader2 size={18} className="animate-spin text-indigo-500" />
+              ) : (
+                <UploadCloud size={20} className="text-slate-400" />
+              )}
+              <span className="text-slate-600 font-medium text-sm">
+                {uploading ? "Uploading chunk..." : "Upload new image"}
+              </span>
+              <input type="file" accept="image/*" className="hidden" onChange={(e) => {
+                if (e.target.files && e.target.files[0]) onImageUpload(e.target.files[0]);
+              }} />
+            </label>
+          </div>
+        ) : item.type === "textarea" ? (
+          <textarea
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            rows={4}
+            className="w-full bg-slate-50 border border-slate-200 text-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-sm resize-none"
+            placeholder="Enter configuration value..."
+          />
+        ) : (
           <input
             type="text"
             value={value}
             onChange={(e) => onChange(e.target.value)}
-            className="w-full bg-white/5 border border-white/8 rounded-xl px-3 py-2 text-white/50 text-xs font-mono focus:outline-none focus:border-white/20"
-            placeholder="Or paste image URL..."
+            className="w-full bg-slate-50 border border-slate-200 text-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-sm font-medium"
+            placeholder="Enter configuration value..."
           />
-        </div>
-      ) : item.type === "textarea" ? (
-        <textarea
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          rows={4}
-          className="w-full bg-white/5 border border-white/8 rounded-xl px-4 py-3 text-white text-sm resize-none focus:outline-none focus:border-[#F9A825]/40 focus:bg-white/[0.06] transition-all duration-200"
-        />
-      ) : (
-        <input
-          type="text"
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          className="w-full bg-white/5 border border-white/8 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-[#F9A825]/40 focus:bg-white/[0.06] transition-all duration-200"
-        />
-      )}
+        )}
+      </div>
 
-      {/* Save Button */}
-      {item.type !== "image" && (
-        <div className="flex justify-end mt-3">
-          <button
-            onClick={onSave}
-            disabled={saving || !isDirty}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-widest transition-all duration-200
-              ${saved
-                ? "bg-green-500/15 text-green-400 border border-green-500/20"
-                : isDirty
-                ? "bg-[#F9A825] text-[#080808] hover:bg-[#F9A825]/90"
-                : "bg-white/5 text-white/20 cursor-not-allowed"
-              }`}
-          >
-            {saving ? (
-              <><div className="w-3 h-3 border-2 border-current border-t-transparent rounded-full animate-spin" /> Saving</>
-            ) : saved ? (
-              <><svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg> Saved!</>
-            ) : (
-              "Save"
-            )}
-          </button>
-        </div>
-      )}
+      {/* Save Trigger */}
+      <div className="mt-6 flex justify-end">
+        <button
+          onClick={onSave}
+          disabled={!isDirty || saving}
+          className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-bold tracking-wide transition-all
+            ${saved ? "bg-emerald-500 text-white shadow-emerald-500/20" :
+            isDirty ? "bg-indigo-600 hover:bg-indigo-700 text-white shadow-md shadow-indigo-600/20 hover:shadow-lg hover:-translate-y-0.5" :
+            "bg-slate-100 text-slate-400 cursor-not-allowed"}`}
+        >
+          {saving ? (
+            <><Loader2 size={16} className="animate-spin" /> Saving...</>
+          ) : saved ? (
+            <><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" /></svg> Deployed Live</>
+          ) : (
+            <><Save size={16} /> Save Changes</>
+          )}
+        </button>
+      </div>
     </div>
   );
 }
