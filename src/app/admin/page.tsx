@@ -629,7 +629,7 @@ function FooterEditor({ content, edits, saving, saved, uploadingKey, setEdits, h
   const groupFilter = (keys: string[]) => content.filter((c: any) => keys.includes(c.key));
 
   const ctaGroup = groupFilter(['footer.banner_img', 'footer.banner_title', 'footer.cta_headline', 'footer.cta_desc', 'footer.cta_button', 'footer.cta_placeholder']);
-  const infoGroup = groupFilter(['footer.description', 'footer.links1_header', 'footer.links2_header', 'footer.links3_header']);
+  const infoGroup = groupFilter(['footer.description', 'footer.links1_header', 'footer.links2_header', 'footer.links3_header', 'footer.contact_phone', 'footer.contact_location', 'footer.contact_email']);
   const socialGroup = groupFilter(['footer.social_facebook', 'footer.social_instagram', 'footer.social_twitter', 'footer.social_houzz']);
   const bottomGroup = groupFilter(['footer.copyright', 'footer.bottom_text', 'footer.terms_text', 'footer.privacy_text']);
 

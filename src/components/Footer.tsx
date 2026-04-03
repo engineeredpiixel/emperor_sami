@@ -168,8 +168,8 @@ export default function Footer() {
                   <svg className="w-[18px] h-[18px] text-[#D8A02A] shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   </svg>
-                  <a href={`tel:${(t("contact.phone") || "+16479011626").replace(/[^0-9+]/g, '')}`} className="text-[#899197] text-[15px] group-hover:text-white transition-colors">
-                    {t("contact.phone") || "+1 647 901 1626"}
+                  <a href={`tel:${(t("footer.contact_phone") || "+16479011626").replace(/[^0-9+]/g, '')}`} className="text-[#899197] text-[15px] group-hover:text-white transition-colors">
+                    {t("footer.contact_phone") || "+1 647 901 1626"}
                   </a>
                 </li>
                 <li className="flex items-start gap-4 group">
@@ -178,15 +178,15 @@ export default function Footer() {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                   <span className="text-[#899197] text-[15px] leading-relaxed">
-                    {t("contact.location") || "Toronto, Ontario"}
+                    {t("footer.contact_location") || "Toronto, Ontario"}
                   </span>
                 </li>
                 <li className="flex items-center gap-4 group">
                   <svg className="w-[18px] h-[18px] text-[#D8A02A] shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
-                  <a href={`mailto:${t("contact.email") || "info@emperorsamigroup.com"}`} className="text-[#899197] text-[15px] group-hover:text-white transition-colors">
-                    {t("contact.email") || "info@emperorsamigroup.com"}
+                  <a href={`mailto:${t("footer.contact_email") || "info@emperorsamigroup.com"}`} className="text-[#899197] text-[15px] group-hover:text-white transition-colors">
+                    {t("footer.contact_email") || "info@emperorsamigroup.com"}
                   </a>
                 </li>
               </ul>
