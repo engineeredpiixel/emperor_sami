@@ -32,7 +32,7 @@ const defaultCommitments = [
 ];
 
 export default function CoreValuesSection() {
-  const { t } = useCMS();
+  const { t, getImage } = useCMS();
   const [visible, setVisible] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null); 
   const sectionRef = useRef<HTMLElement>(null);
@@ -49,13 +49,14 @@ export default function CoreValuesSection() {
     for (let i = 1; i <= 4; i++) {
        const titleKey = `corevalues.value${i}_title`;
        const descKey = `corevalues.value${i}_desc`;
+       const imgKey = `corevalues.value${i}_img`;
        const title = t(titleKey);
        if (title && !title.startsWith("[Missing") && title.trim() !== "") {
           list.push({
              id: `0${i}`,
              title: title,
              description: t(descKey),
-             image: defaultImages[i - 1] || defaultImages[0]
+             image: getImage(imgKey) || defaultImages[i - 1] || defaultImages[0]
           });
        }
     }
