@@ -16,7 +16,15 @@ interface ContentItem {
 
 // ─── Sidebar Sections ─────────────────────────────────────────────────────────
 const SECTIONS = [
-  { id: "hero", label: "Hero Section", icon: "🏠" },
+  { id: "navbar", label: "Nav Bar", icon: "🧭" },
+  { id: "homepage", label: "Home Page", icon: "🏠" },
+  { id: "services", label: "Services", icon: "⚙️" },
+  { id: "servicearea", label: "Service Area", icon: "📍" },
+  { id: "project", label: "Project", icon: "📁" },
+  { id: "about", label: "About US", icon: "👤" },
+  { id: "contact", label: "Contact US", icon: "📞" },
+  { id: "footer", label: "Footer", icon: "📄" },
+  { id: "settings", label: "Site Settings", icon: "🛠️" },
 ];
 
 // ─── Main Dashboard ───────────────────────────────────────────────────────────
@@ -24,7 +32,7 @@ export default function AdminDashboard() {
   const router = useRouter();
   const supabase = createClient();
 
-  const [activeSection, setActiveSection] = useState("hero");
+  const [activeSection, setActiveSection] = useState("navbar");
   const [content, setContent] = useState<ContentItem[]>([]);
   const [edits, setEdits] = useState<Record<string, string>>({});
   const [saving, setSaving] = useState<Record<string, boolean>>({});
