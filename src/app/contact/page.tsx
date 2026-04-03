@@ -126,7 +126,7 @@ export default function ContactPage() {
                 </div>
                 <div className="flex flex-col relative z-10">
                   <span className="text-gray-400 text-[10px] font-black uppercase tracking-[0.3em] mb-1">{t("contactpage.sec2_box1_label") || "Direct Line"}</span>
-                  <a href={`tel:${(t("footer.contact_phone") || "+16479011626").replace(/[^0-9+]/g, '')}`} className="text-[#111] text-lg font-bold tracking-widest hover:text-[#D8A02A] transition-colors">{t("footer.contact_phone") || "+1 (647) 901-1626"}</a>
+                  <a href={`tel:${(t("contactpage.sec2_phone") || "+16479011626").replace(/[^0-9+]/g, '')}`} className="text-[#111] text-lg font-bold tracking-widest hover:text-[#D8A02A] transition-colors">{t("contactpage.sec2_phone") || "+1 (647) 901-1626"}</a>
                 </div>
               </div>
 
@@ -140,7 +140,7 @@ export default function ContactPage() {
                 </div>
                 <div className="flex flex-col relative z-10 w-full overflow-hidden">
                   <span className="text-gray-400 text-[10px] font-black uppercase tracking-[0.3em] mb-1">{t("contactpage.sec2_box2_label") || "Master Inbox"}</span>
-                  <a href={`mailto:${t("footer.contact_email") || "info@emperorsamigroup.com"}`} className="text-[#111] flex-1 text-sm sm:text-[13px] font-bold tracking-wider hover:text-[#D8A02A] transition-colors truncate">{t("footer.contact_email") || "info@emperorsamigroup.com"}</a>
+                  <a href={`mailto:${t("contactpage.sec2_email") || "info@emperorsamigroup.com"}`} className="text-[#111] flex-1 text-sm sm:text-[13px] font-bold tracking-wider hover:text-[#D8A02A] transition-colors truncate">{t("contactpage.sec2_email") || "info@emperorsamigroup.com"}</a>
                 </div>
               </div>
 
@@ -219,7 +219,7 @@ export default function ContactPage() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-8">
                     <div className="relative group">
                       <select id="budget" required defaultValue="" className="peer w-full bg-transparent border-b-2 border-black/10 px-0 py-4 text-[#111] text-lg font-medium focus:outline-none focus:border-transparent transition-colors appearance-none" disabled={isSubmitting}>
-                        <option value="" disabled className="text-gray-400">Select Project Range</option>
+                        <option value="" disabled className="text-gray-400">{t("contactpage.form_budget_placeholder") || "Select Project Range"}</option>
                         <option value="50k" className="bg-white text-[#111]">$50,000 - $100,000</option>
                         <option value="100k" className="bg-white text-[#111]">$100,000 - $250,000</option>
                         <option value="250k" className="bg-white text-[#111]">$250,000 - $500,000</option>
@@ -234,7 +234,7 @@ export default function ContactPage() {
 
                     <div className="relative group">
                       <select id="service" required defaultValue="" className="peer w-full bg-transparent border-b-2 border-black/10 px-0 py-4 text-[#111] text-lg font-medium focus:outline-none focus:border-transparent transition-colors appearance-none" disabled={isSubmitting}>
-                        <option value="" disabled className="text-gray-400">Select Service</option>
+                        <option value="" disabled className="text-gray-400">{t("contactpage.form_service_placeholder") || "Select Service"}</option>
                         <optgroup label="Residential Division">
                           {Object.values(residentialServicesData).map(s => (
                             <option key={s.slug} value={s.slug} className="bg-white text-[#111]">{s.heroTitle}</option>
@@ -263,7 +263,7 @@ export default function ContactPage() {
 
                     <div className="relative group">
                       <select id="time" required defaultValue="" className="peer w-full bg-transparent border-b-2 border-black/10 px-0 py-4 text-[#111] text-lg font-medium focus:outline-none focus:border-transparent transition-colors appearance-none cursor-pointer" disabled={isSubmitting}>
-                        <option value="" disabled className="text-gray-400">Toronto Time (EST)</option>
+                        <option value="" disabled className="text-gray-400">{t("contactpage.form_time_placeholder") || "Toronto Time (EST)"}</option>
                         <optgroup label="Morning">
                           <option value="9:00 AM" className="bg-white text-[#111]">9:00 AM</option>
                           <option value="10:00 AM" className="bg-white text-[#111]">10:00 AM</option>

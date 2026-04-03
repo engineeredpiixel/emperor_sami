@@ -729,12 +729,12 @@ function ContactPageEditor({ content, edits, saving, saved, uploadingKey, setEdi
     {
       id: 'protocol',
       label: 'Initiate Protocol',
-      fields: groupFilter(['contactpage.sec2_eyebrow', 'contactpage.sec2_title1', 'contactpage.sec2_title2', 'contactpage.sec2_desc', 'contactpage.sec2_box1_label', 'contactpage.sec2_box2_label'])
+      fields: groupFilter(['contactpage.sec2_eyebrow', 'contactpage.sec2_title1', 'contactpage.sec2_title2', 'contactpage.sec2_desc', 'contactpage.sec2_box1_label', 'contactpage.sec2_phone', 'contactpage.sec2_box2_label', 'contactpage.sec2_email'])
     },
     {
       id: 'form',
       label: 'Message Box (Form)',
-      fields: groupFilter(['contactpage.form_header', 'contactpage.form_subheader', 'contactpage.placeholder_name', 'contactpage.placeholder_email', 'contactpage.placeholder_phone', 'contactpage.placeholder_location', 'contactpage.placeholder_budget', 'contactpage.placeholder_service', 'contactpage.placeholder_date', 'contactpage.placeholder_time', 'contactpage.placeholder_specs', 'contactpage.form_submit'])
+      fields: groupFilter(['contactpage.form_header', 'contactpage.form_subheader', 'contactpage.placeholder_name', 'contactpage.placeholder_email', 'contactpage.placeholder_phone', 'contactpage.placeholder_location', 'contactpage.placeholder_budget', 'contactpage.form_budget_placeholder', 'contactpage.placeholder_service', 'contactpage.form_service_placeholder', 'contactpage.placeholder_date', 'contactpage.placeholder_time', 'contactpage.form_time_placeholder', 'contactpage.placeholder_specs', 'contactpage.form_submit'])
     }
   ];
 

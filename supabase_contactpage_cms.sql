@@ -18,7 +18,9 @@ INSERT INTO public.site_content (section, key, type, label, value) VALUES
 ('page_contact', 'contactpage.sec2_title2', 'text', 'Section 2 Title Line 2', 'Build.'),
 ('page_contact', 'contactpage.sec2_desc', 'textarea', 'Section 2 Description', 'Send the coordinates. We deploy the architecture. From flagship estates to subterranean integrations, our structurals are standing by.'),
 ('page_contact', 'contactpage.sec2_box1_label', 'text', 'Contact Box 1 Label', 'Direct Line'),
+('page_contact', 'contactpage.sec2_phone', 'text', 'Contact Phone Number', '+1 (647) 901-1626'),
 ('page_contact', 'contactpage.sec2_box2_label', 'text', 'Contact Box 2 Label', 'Master Inbox'),
+('page_contact', 'contactpage.sec2_email', 'text', 'Contact Email Address', 'info@emperorsamigroup.com'),
 
 -- Message Box / Form Section
 ('page_contact', 'contactpage.form_header', 'text', 'Form Header Text', 'Secure Data Link'),
@@ -28,9 +30,12 @@ INSERT INTO public.site_content (section, key, type, label, value) VALUES
 ('page_contact', 'contactpage.placeholder_phone', 'text', 'Phone Input Label', 'Phone Number'),
 ('page_contact', 'contactpage.placeholder_location', 'text', 'Location Input Label', 'Project Location'),
 ('page_contact', 'contactpage.placeholder_budget', 'text', 'Budget Input Label', 'Allocation Range'),
+('page_contact', 'contactpage.form_budget_placeholder', 'text', 'Budget Dropdown Placeholder', 'Select Project Range'),
 ('page_contact', 'contactpage.placeholder_service', 'text', 'Service Input Label', 'Service Scope'),
+('page_contact', 'contactpage.form_service_placeholder', 'text', 'Service Dropdown Placeholder', 'Select Service'),
 ('page_contact', 'contactpage.placeholder_date', 'text', 'Date Input Label', 'Consultation Date'),
 ('page_contact', 'contactpage.placeholder_time', 'text', 'Time Input Label', 'Preferred Time'),
+('page_contact', 'contactpage.form_time_placeholder', 'text', 'Time Dropdown Placeholder', 'Toronto Time (EST)'),
 ('page_contact', 'contactpage.placeholder_specs', 'text', 'Job Specs Input Label', 'Project Specifications'),
 ('page_contact', 'contactpage.form_submit', 'text', 'Submit Button Text', 'Deploy Specifications')
 
