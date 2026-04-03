@@ -120,11 +120,48 @@ export default function AdminDashboard() {
   const handleImageUpload = async (key: string, file: File) => {
     setUploadingKey(key);
     try {
-      const fileExt = file.name.split(".").pop();
-      const fileName = `${key}_${Date.now()}.${fileExt}`;
+      // Client-side WebP Conversion & 4K Optimization
+      const webpBlob = await new Promise<Blob>((resolve, reject) => {
+        const img = new Image();
+        const url = URL.createObjectURL(file);
+        img.onload = () => {
+          URL.revokeObjectURL(url);
+          const canvas = document.createElement("canvas");
+          
+          // Downscale 4K+ images to a reasonable maximum (2560px wide) to save bandwidth
+          let width = img.width;
+          let height = img.height;
+          const MAX_DIMENSION = 2560;
+          
+          if (width > MAX_DIMENSION || height > MAX_DIMENSION) {
+            const ratio = Math.min(MAX_DIMENSION / width, MAX_DIMENSION / height);
+            width = Math.round(width * ratio);
+            height = Math.round(height * ratio);
+          }
+          
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext("2d");
+          if (!ctx) return reject(new Error("Canvas context failed"));
+          ctx.drawImage(img, 0, 0, width, height);
+          
+          canvas.toBlob(
+            (blob) => { if (blob) resolve(blob); else reject(new Error("WebP conversion failed")); },
+            "image/webp",
+            0.85 // 85% high-quality compression
+          );
+        };
+        img.onerror = () => reject(new Error("Image load failed"));
+        img.src = url;
+      });
+
+      const fileName = `${key}_${Date.now()}.webp`;
       const filePath = `cms/${fileName}`;
 
-      const { error: uploadError } = await supabase.storage.from("images").upload(filePath, file);
+      const { error: uploadError } = await supabase.storage.from("images").upload(filePath, webpBlob, {
+        contentType: "image/webp",
+        upsert: true
+      });
       if (uploadError) throw uploadError;
 
       const { data: { publicUrl } } = supabase.storage.from("images").getPublicUrl(filePath);
@@ -136,7 +173,7 @@ export default function AdminDashboard() {
       setSaved((prev) => ({ ...prev, [key]: true }));
       setTimeout(() => setSaved((prev) => ({ ...prev, [key]: false })), 2000);
     } catch (error: any) {
-      alert("Error uploading image: " + error.message);
+      alert("Error processing or uploading image: " + error.message);
     } finally {
       setUploadingKey(null);
     }
