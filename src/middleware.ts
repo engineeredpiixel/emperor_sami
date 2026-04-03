@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createServerClient } from '@supabase/ssr';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY!;
-
 export async function middleware(request: NextRequest) {
-  // Generate a cryptographically secure nonce using edge runtime primitives
-  const nonce = btoa(crypto.randomUUID());
+  try {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY;
+
+    // Generate a secure nonce using crypto.randomUUID
+    const nonce = crypto.randomUUID().replace(/-/g, '');
   
   const cspHeader = `
     default-src 'self';
@@ -27,6 +28,12 @@ export async function middleware(request: NextRequest) {
   requestHeaders.set('Content-Security-Policy', cspHeader);
 
   let supabaseResponse = NextResponse.next({ request: { headers: requestHeaders } });
+
+  // If keys are missing, bypass auth to prevent crashing the entire site
+  if (!supabaseUrl || !supabaseKey) {
+    console.error("Middleware Auth Bypass: Missing Supabase Env Variables.");
+    return supabaseResponse;
+  }
 
   // Supabase SSR session refresh
   const supabase = createServerClient(supabaseUrl, supabaseKey, {
@@ -68,6 +75,12 @@ export async function middleware(request: NextRequest) {
   supabaseResponse.headers.set('Cross-Origin-Opener-Policy', 'same-origin');
 
   return supabaseResponse;
+
+  } catch (error) {
+    console.error("Middleware Critical Failure:", error);
+    // Hard fallback: let the route legitimately proceed so the website doesn't crash 500!
+    return NextResponse.next();
+  }
 }
 
 export const config = {
