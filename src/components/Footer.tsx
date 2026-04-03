@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useCMS } from "@/components/CMSProvider";
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
   const { t } = useCMS();
@@ -11,6 +12,10 @@ export default function Footer() {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
+
+  const pathname = usePathname();
+
+  if (pathname === '/login' || pathname?.startsWith('/admin')) return null;
 
   return (
     <div className="w-full bg-[#FAF9F6] pt-[6rem] sm:pt-[8rem]">

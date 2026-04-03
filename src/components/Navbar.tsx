@@ -2,11 +2,13 @@
 
 import { useState, useEffect, useRef, useMemo } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { megaMenuData as staticMegaMenu } from "@/lib/megaMenuData";
 import { useCMS } from "@/components/CMSProvider";
 
 export default function Navbar() {
   const { t, getRaw } = useCMS();
+  const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -61,6 +63,8 @@ export default function Navbar() {
   const transitionStyle = {
     transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
   };
+
+  if (pathname === '/login' || pathname?.startsWith('/admin')) return null;
 
   return (
     <>

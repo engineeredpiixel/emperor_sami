@@ -72,7 +72,7 @@ export default function LoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full bg-black/50 border border-white/10 text-white px-5 py-3.5 focus:outline-none focus:border-[#D8A02A] focus:ring-1 focus:ring-[#D8A02A] transition-colors rounded placeholder-gray-600"
-              placeholder="golamjiilanee@gmail.com"
+              placeholder="admin@emperorsami.com"
             />
           </div>
 
@@ -108,6 +108,12 @@ export default function LoginPage() {
             )}
           </button>
         </form>
+
+        <div className="mt-5 text-right w-full">
+          <Link href="/login" onClick={(e) => { e.preventDefault(); alert("Please reset your password in the Supabase Dashboard under Authentication -> Users.") }} className="text-[#888] text-xs hover:text-[#D8A02A] transition-colors">
+            Forgot Password?
+          </Link>
+        </div>
 
         <div className="mt-8 text-center border-t border-white/10 pt-6">
           <Link href="/" className="text-[#888] text-xs hover:text-white transition-colors">
