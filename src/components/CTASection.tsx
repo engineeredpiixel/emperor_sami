@@ -4,12 +4,15 @@ import Image from "next/image";
 import { useCMS } from "@/components/CMSProvider";
 
 export default function CTASection() {
-  const { t } = useCMS();
+  const { t, getImage } = useCMS();
+  
+  const bgImage = getImage("cta.image") || "/cta_dream_home_dusk_1774903473288.png";
+
   return (
     <section className="relative w-full h-[420px] sm:h-[460px] lg:h-[260px] overflow-hidden group cursor-pointer z-10">
       {/* Background Image */}
       <Image
-        src="/cta_dream_home_dusk_1774903473288.png"
+        src={bgImage}
         fill
         className="object-cover transition-transform duration-[3s] group-hover:scale-105"
         alt="Build Your Dream Home Background"
