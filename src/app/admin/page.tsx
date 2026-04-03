@@ -521,6 +521,8 @@ function FAQEditor({ content, edits, saving, saved, setEdits, handleSave }: any)
 
 // ─── Core Values Paired Editor ─────────────────────────────────────────
 function CoreValuesEditor({ content, edits, saving, saved, uploadingKey, setEdits, handleSave, handleImageUpload }: any) {
+  const [activeTab, setActiveTab] = useState("headers");
+
   const globalFields = content.filter((c: any) => !c.key.match(/corevalues\.value\d/));
   const values = [1,2,3,4].map(num => ({
     num,
@@ -529,120 +531,154 @@ function CoreValuesEditor({ content, edits, saving, saved, uploadingKey, setEdit
     img: content.find((c: any) => c.key === `corevalues.value${num}_img`)
   })).filter(v => v.title && v.desc);
 
+  const tabs = [
+    { id: 'headers', label: 'Global Headers', count: globalFields.length },
+    ...values.map(v => ({ id: `value${v.num}`, label: `Value ${v.num}`, count: 3 }))
+  ];
+
   return (
-    <div className="space-y-10 max-w-7xl mx-auto">
-      {globalFields.length > 0 && (
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-          {globalFields.map((item: any) => (
-            <ContentField
-              key={item.key}
-              item={item}
-              value={edits[item.key] ?? ""}
-              saving={saving[item.key]}
-              saved={saved[item.key]}
-              onChange={(val: string) => setEdits((prev: any) => ({ ...prev, [item.key]: val }))}
-              onSave={() => handleSave(item.key)}
-            />
-          ))}
+    <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm max-w-7xl mx-auto flex flex-col sm:flex-row">
+      {/* Side Tabs (Vertical) */}
+      <div className="w-full sm:w-64 border-b sm:border-b-0 sm:border-r border-slate-200 bg-slate-50/50 flex flex-row sm:flex-col shrink-0 overflow-x-auto sm:overflow-visible">
+        <div className="p-4 sm:p-5 border-b border-slate-200 hidden sm:block">
+           <p className="text-slate-800 font-extrabold text-sm uppercase tracking-widest">Navigation</p>
         </div>
-      )}
+        {tabs.map(tab => (
+          <button
+            key={tab.id}
+            onClick={() => setActiveTab(tab.id)}
+            className={`flex items-center justify-between py-4 sm:py-5 px-6 font-bold uppercase tracking-wider transition-all text-left whitespace-nowrap
+              ${activeTab === tab.id 
+                ? "bg-white text-indigo-600 sm:border-r-[3px] border-indigo-600 shadow-[-4px_0_15px_rgba(0,0,0,0.02)] z-10" 
+                : "text-slate-500 hover:text-slate-800 hover:bg-slate-100 border-transparent text-[11px] sm:text-xs"}
+            `}
+          >
+            <span>{tab.label}</span>
+            {tab.count > 0 && (
+              <span className={`hidden sm:flex text-[10px] items-center justify-center w-5 h-5 rounded-full ${activeTab === tab.id ? 'bg-indigo-100 text-indigo-600' : 'bg-slate-200 text-slate-500'}`}>
+                {tab.count}
+              </span>
+            )}
+          </button>
+        ))}
+      </div>
 
-      <div>
-        <h3 className="text-slate-800 font-extrabold text-lg mb-6 flex items-center gap-2">
-          <svg className="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-             <path d="M2 20h20M4 20V5h16v15M8 9h8m-8 4h8" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          Value Cards (Title + Description + Image)
-        </h3>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {values.map(({ num, title, desc, img }) => {
-            const isDirtyTitle = (edits[title.key] ?? "") !== (title.value ?? "");
-            const isDirtyDesc = (edits[desc.key] ?? "") !== (desc.value ?? "");
-            const isDirty = isDirtyTitle || isDirtyDesc;
-            const isSaving = saving[title.key] || saving[desc.key];
-            const isSaved = saved[title.key] || saved[desc.key];
+      {/* Active Area */}
+      <div className="flex-1 p-6 sm:p-10 bg-[#FBFBFB]">
+        {activeTab === "headers" && (
+          <div className="space-y-6">
+             <h3 className="text-slate-800 font-extrabold text-xl mb-6 flex items-center gap-2">
+                <svg className="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                   <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16m-7 6h7"/>
+                </svg>
+                Global Headers
+             </h3>
+            {globalFields.length > 0 ? (
+              <div className="grid grid-cols-1 gap-6">
+                {globalFields.map((item: any) => (
+                  <ContentField
+                    key={item.key}
+                    item={item}
+                    value={edits[item.key] ?? ""}
+                    saving={saving[item.key]}
+                    saved={saved[item.key]}
+                    onChange={(val: string) => setEdits((prev: any) => ({ ...prev, [item.key]: val }))}
+                    onSave={() => handleSave(item.key)}
+                  />
+                ))}
+              </div>
+            ) : (
+              <p className="text-slate-500">No global headers found.</p>
+            )}
+          </div>
+        )}
 
-            return (
-              <div key={num} className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
-                <div className="flex items-center justify-between mb-5">
-                  <div>
-                    <p className="text-slate-800 font-bold text-[15px]">Card {num}</p>
-                    <div className="flex items-center gap-2 mt-1">
-                      <span className="text-slate-400 text-xs font-mono bg-slate-50 px-1.5 py-0.5 rounded border border-slate-100">Value Set {num}</span>
-                    </div>
-                  </div>
-                  <span className="px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider bg-indigo-50 text-indigo-600 border border-indigo-100">
-                    COMBINED
-                  </span>
-                </div>
+        {values.map(v => (
+          activeTab === `value${v.num}` && (
+            <div key={v.num} className="space-y-6 max-w-2xl">
+               {/* Header Area */}
+               <div className="flex items-center justify-between mb-2">
+                 <h3 className="text-slate-800 font-extrabold text-xl flex items-center gap-2">
+                    <svg className="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                       <path d="M2 20h20M4 20V5h16v15M8 9h8m-8 4h8" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    Value {v.num} Card
+                 </h3>
+               </div>
+               <p className="text-slate-500 text-sm font-medium mb-6">
+                 Edit the expanding section representing your #{v.num} core commitment.
+               </p>
 
-                <div className="mb-4">
-                  <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Title</label>
+              <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm flex flex-col gap-6">
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Card Title</label>
                   <input
                     type="text"
-                    value={edits[title.key] ?? ""}
-                    onChange={(e) => setEdits((prev: any) => ({ ...prev, [title.key]: e.target.value }))}
+                    value={edits[v.title.key] ?? ""}
+                    onChange={(e) => setEdits((prev: any) => ({ ...prev, [v.title.key]: e.target.value }))}
                     className="w-full bg-slate-50 border border-slate-200 text-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-sm font-medium"
                     placeholder="Enter title..."
                   />
                 </div>
 
-                <div className="mb-6">
-                  <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Description</label>
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Detailed Description</label>
                   <textarea
-                    value={edits[desc.key] ?? ""}
-                    onChange={(e) => setEdits((prev: any) => ({ ...prev, [desc.key]: e.target.value }))}
-                    rows={4}
-                    className="w-full bg-slate-50 border border-slate-200 text-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-sm resize-none"
+                    value={edits[v.desc.key] ?? ""}
+                    onChange={(e) => setEdits((prev: any) => ({ ...prev, [v.desc.key]: e.target.value }))}
+                    rows={5}
+                    className="w-full bg-slate-50 border border-slate-200 text-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-sm leading-relaxed resize-none"
                     placeholder="Enter description..."
                   />
                 </div>
 
-                {img && (
-                  <div className="mb-6">
-                    <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Hover Image Mask</label>
+                {v.img && (
+                  <div>
+                    <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Hover Background Image</label>
                     <div className="space-y-4">
-                      {edits[img.key] && (
-                        <div className="relative overflow-hidden rounded-xl border border-slate-200">
-                          <img src={edits[img.key]} alt="BG" className="w-full h-32 object-cover bg-slate-50" />
+                      {edits[v.img.key] && (
+                        <div className="relative overflow-hidden rounded-xl border border-slate-200 shadow-sm">
+                          <img src={edits[v.img.key]} alt="BG" className="w-full h-48 object-cover bg-slate-50" />
                         </div>
                       )}
                       <label className="flex items-center justify-center gap-2 cursor-pointer w-full border-2 border-dashed border-slate-200 rounded-xl px-4 py-4 hover:border-indigo-400 hover:bg-indigo-50/50 transition-all duration-200">
-                        {uploadingKey === img.key ? <Loader2 size={18} className="animate-spin text-indigo-500" /> : <UploadCloud size={20} className="text-slate-400" />}
+                        {uploadingKey === v.img.key ? <Loader2 size={18} className="animate-spin text-indigo-500" /> : <UploadCloud size={20} className="text-slate-400" />}
                         <span className="text-slate-600 font-medium text-sm">
-                          {uploadingKey === img.key ? "Uploading..." : "Upload custom image"}
+                          {uploadingKey === v.img.key ? "Uploading image..." : "Upload replacement image"}
                         </span>
-                        <input type="file" accept="image/*" className="hidden" onChange={(e) => { if (e.target.files && e.target.files[0]) handleImageUpload(img.key, e.target.files[0]); }} />
+                        <input type="file" accept="image/*" className="hidden" onChange={(e) => { if (e.target.files && e.target.files[0]) handleImageUpload(v.img.key, e.target.files[0]); }} />
                       </label>
                     </div>
                   </div>
                 )}
 
-                <div className="mt-auto flex justify-end">
+                <div className="mt-4 pt-6 border-t border-slate-100 flex justify-end">
                   <button
                     onClick={() => { 
-                      if (isDirtyTitle) handleSave(title.key); 
-                      if (isDirtyDesc) handleSave(desc.key); 
+                      const isDirtyTitle = (edits[v.title.key] ?? "") !== (v.title.value ?? "");
+                      const isDirtyDesc = (edits[v.desc.key] ?? "") !== (v.desc.value ?? "");
+                      if (isDirtyTitle) handleSave(v.title.key); 
+                      if (isDirtyDesc) handleSave(v.desc.key); 
                     }}
-                    disabled={!isDirty || isSaving}
-                    className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-bold tracking-wide transition-all
-                      ${isSaved ? "bg-emerald-500 text-white shadow-emerald-500/20" :
-                        isDirty ? "bg-indigo-600 hover:bg-indigo-700 text-white shadow-md shadow-indigo-600/20 hover:shadow-lg hover:-translate-y-0.5" :
+                    disabled={!((edits[v.title.key] ?? "") !== (v.title.value ?? "") || (edits[v.desc.key] ?? "") !== (v.desc.value ?? "")) || saving[v.title.key] || saving[v.desc.key]}
+                    className={`flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-bold tracking-wide transition-all
+                      ${saved[v.title.key] || saved[v.desc.key] ? "bg-emerald-500 text-white shadow-emerald-500/20" :
+                        (edits[v.title.key] ?? "") !== (v.title.value ?? "") || (edits[v.desc.key] ?? "") !== (v.desc.value ?? "") ? "bg-indigo-600 hover:bg-indigo-700 text-white shadow-md shadow-indigo-600/20 hover:shadow-lg hover:-translate-y-0.5" :
                         "bg-slate-100 text-slate-400 cursor-not-allowed"}`}
                   >
-                    {isSaving ? (
+                    {saving[v.title.key] || saving[v.desc.key] ? (
                       <><Loader2 size={16} className="animate-spin" /> Saving...</>
-                    ) : isSaved ? (
-                      <><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" /></svg> Saved</>
+                    ) : saved[v.title.key] || saved[v.desc.key] ? (
+                      <><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" /></svg> Paired Save</>
                     ) : (
-                      <><Save size={16} /> Save Changes</>
+                      <><Save size={16} /> Save Active Card</>
                     )}
                   </button>
                 </div>
               </div>
-            );
-          })}
-        </div>
+            </div>
+          )
+        ))}
       </div>
     </div>
   );
