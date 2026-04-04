@@ -1107,6 +1107,12 @@ function ContentField({ item, value, saving, saved, uploading, onChange, onSave,
 // ─── About Page Tabbed Editor ────────────────────────────────────
 function AboutPageEditor({ content, edits, saving, saved, uploadingKey, setEdits, handleSave, handleImageUpload }: any) {
   const [activeTab, setActiveTab] = useState("hero");
+  const [activeSubTab, setActiveSubTab] = useState("General Setup");
+
+  // Reset subtab when changing main tab
+  useEffect(() => {
+    setActiveSubTab("General Setup");
+  }, [activeTab]);
 
   const groupFilter = (matchStr: string) => content.filter((c: any) => c.key.includes(matchStr));
 
@@ -1118,6 +1124,34 @@ function AboutPageEditor({ content, edits, saving, saved, uploadingKey, setEdits
   ];
 
   const activeFields = tabs.find(t => t.id === activeTab)?.fields || [];
+
+  const getSubGroup = (key: string) => {
+    if (key.includes(".shard.1.")) return "Shard 1";
+    if (key.includes(".shard.2.")) return "Shard 2";
+    if (key.includes(".shard.3.")) return "Shard 3";
+    if (key.includes(".card.1.")) return "Card 1";
+    if (key.includes(".card.2.")) return "Card 2";
+    if (key.includes(".card.3.")) return "Card 3";
+    if (key.includes(".card.4.")) return "Card 4";
+    if (key.includes(".reveal.")) return "Hover Reveal";
+    if (key.includes(".1.")) return "Item 1";
+    if (key.includes(".2.")) return "Item 2";
+    if (key.includes(".3.")) return "Item 3";
+    if (key.includes(".4.")) return "Item 4";
+    if (key.includes(".5.")) return "Item 5";
+    if (key.includes(".6.")) return "Item 6";
+    return "General Setup";
+  };
+
+  const subGroups = (Array.from(new Set(activeFields.map((f: any) => getSubGroup(f.key)))) as string[]).sort((a, b) => {
+    if (a === "General Setup") return -1;
+    if (b === "General Setup") return 1;
+    return a.localeCompare(b);
+  });
+
+  // Ensure activeSubTab is always valid
+  const validSubTab = subGroups.includes(activeSubTab) ? activeSubTab : subGroups[0] || "General Setup";
+  const displayFields = activeFields.filter((f: any) => getSubGroup(f.key) === validSubTab);
 
   return (
     <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm max-w-7xl mx-auto flex flex-col sm:flex-row">
@@ -1146,9 +1180,27 @@ function AboutPageEditor({ content, edits, saving, saved, uploadingKey, setEdits
       {/* Active Area */}
       <div className="flex-1 p-6 sm:p-10 bg-[#FBFBFB]">
         <div className="space-y-6 max-w-4xl">
-          {activeFields.length > 0 ? (
+          {subGroups.length > 1 && (
+            <div className="flex flex-wrap gap-2 mb-6 border-b border-slate-200 pb-4">
+              {subGroups.map(sg => (
+                <button
+                  key={sg}
+                  onClick={() => setActiveSubTab(sg)}
+                  className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all ${
+                    validSubTab === sg 
+                      ? "bg-indigo-600 text-white shadow-md"
+                      : "bg-white text-slate-500 border border-slate-200 hover:border-indigo-300 hover:text-indigo-600"
+                  }`}
+                >
+                  {sg}
+                </button>
+              ))}
+            </div>
+          )}
+          
+          {displayFields.length > 0 ? (
             <div className="grid grid-cols-1 gap-6">
-              {activeFields.map((item: any) => (
+              {displayFields.map((item: any) => (
                 <ContentField
                   key={item.key}
                   item={item}
