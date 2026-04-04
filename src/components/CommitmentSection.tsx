@@ -191,7 +191,7 @@ export default function CommitmentSection({ hideButton = false }: { hideButton?:
             {/* Layer 0: The Core Matrix (Inner Masterpiece) */}
             <div className="absolute inset-0 w-full h-full z-0 overflow-hidden bg-black rounded-[4px]">
               <Image
-                src="/custom_home_interior_1774895577855.png"
+                src={t("about.promise.reveal.inner_img", "/custom_home_interior_1774895577855.png")}
                 alt="Luxury custom home interior"
                 fill
                 className="object-cover transition-all duration-[2.5s] ease-out scale-100 group-[.is-open]/engine:scale-110 opacity-30 group-[.is-open]/engine:opacity-100 will-change-transform"
@@ -199,7 +199,7 @@ export default function CommitmentSection({ hideButton = false }: { hideButton?:
               {/* Inner label on hover */}
               <div className="absolute inset-0 flex items-center justify-center z-10 opacity-0 group-[.is-open]/engine:opacity-100 transition-opacity duration-[1.5s] delay-300 pointer-events-none">
                 <span className="bg-black/60 backdrop-blur-md border border-white/20 text-white font-bold tracking-[0.2em] uppercase px-8 py-4 rounded-full text-xs shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
-                  Masterpiece Revealed
+                  {t("about.promise.reveal.text", "Masterpiece Revealed")}
                 </span>
               </div>
             </div>
@@ -209,7 +209,7 @@ export default function CommitmentSection({ hideButton = false }: { hideButton?:
               className="absolute inset-0 w-full h-full z-20 transition-all duration-[1s] ease-[0.25,1,0.5,1] will-change-transform group-[.is-open]/engine:-translate-x-6 group-[.is-open]/engine:-translate-y-6 md:group-[.is-open]/engine:-translate-x-12 md:group-[.is-open]/engine:-translate-y-12 lg:group-[.is-open]/engine:-translate-x-24 lg:group-[.is-open]/engine:-translate-y-24 group-[.is-open]/engine:drop-shadow-[15px_15px_25px_rgba(0,0,0,0.85)] drop-shadow-[0px_0px_0px_rgba(0,0,0,0)]"
               style={{ clipPath: 'polygon(0 0, 100% 0, 100% 20%, 80% 20%, 80% 40%, 60% 40%, 60% 60%, 40% 60%, 40% 80%, 20% 80%, 20% 100%, 0 100%)' }}
             >
-              <Image src="/custom_home_exterior_1774895595441.png" alt="Premium home foundation" fill className="object-cover" />
+              <Image src={t("about.promise.reveal.outer_img", "/custom_home_exterior_1774895595441.png")} alt="Premium home foundation" fill className="object-cover" />
               <div className="absolute inset-0 bg-black/0 group-[.is-open]/engine:bg-black/30 transition-colors duration-[1s]" />
             </div>
 
@@ -218,7 +218,7 @@ export default function CommitmentSection({ hideButton = false }: { hideButton?:
               className="absolute inset-0 w-full h-full z-10 transition-all duration-[1s] ease-[0.25,1,0.5,1] will-change-transform group-[.is-open]/engine:translate-x-6 group-[.is-open]/engine:translate-y-6 md:group-[.is-open]/engine:translate-x-12 md:group-[.is-open]/engine:translate-y-12 lg:group-[.is-open]/engine:translate-x-24 lg:group-[.is-open]/engine:translate-y-24 group-[.is-open]/engine:drop-shadow-[-15px_-15px_25px_rgba(0,0,0,0.85)] drop-shadow-[0px_0px_0px_rgba(0,0,0,0)]"
               style={{ clipPath: 'polygon(100% 20%, 100% 100%, 20% 100%, 20% 80%, 40% 80%, 40% 60%, 60% 60%, 60% 40%, 80% 40%, 80% 20%)' }}
             >
-              <Image src="/custom_home_exterior_1774895595441.png" alt="Premium home foundation" fill className="object-cover" />
+              <Image src={t("about.promise.reveal.outer_img", "/custom_home_exterior_1774895595441.png")} alt="Premium home foundation" fill className="object-cover" />
               <div className="absolute inset-0 bg-black/0 group-[.is-open]/engine:bg-black/50 transition-colors duration-[1s]" />
             </div>
 
