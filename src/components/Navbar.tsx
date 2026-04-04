@@ -294,10 +294,10 @@ export default function Navbar() {
                           <div className="mt-10 flex flex-col gap-3 relative z-10">
                             <Link href="/contact#secure-data-link" className="w-full text-center bg-[#F9A825] hover:bg-[#F4511E] text-[#111] font-black uppercase tracking-[0.2em] py-4 rounded-sm transition-all duration-500 transform hover:-translate-y-1 shadow-[0_10px_30px_rgba(249,168,37,0.2)] hover:shadow-[0_15px_40px_rgba(244,81,30,0.4)] relative overflow-hidden group/cta">
                                <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover/cta:translate-x-[100%] transition-transform duration-700 ease-in-out skew-x-[-20deg]" />
-                               {t("navbar.btn_book_strategy") || "Book Strategy Call"}
+                               {t("nav.mega.how.btn_book") || "Book A Free Strategy Call"}
                             </Link>
                             <Link href="/services" className="w-full text-center py-3 text-[11px] uppercase tracking-widest text-gray-500 hover:text-white transition-colors font-bold group/btn">
-                              View All Services <span className="inline-block transition-transform group-hover/btn:translate-x-2">&rarr;</span>
+                              {t("nav.mega.how.btn_view") || "View All Services"} <span className="inline-block transition-transform group-hover/btn:translate-x-2">&rarr;</span>
                             </Link>
                           </div>
                         </div>

@@ -52,6 +52,8 @@ VALUES
   ('nav_mega', 'nav.mega.how.step2.desc', 'text', 'Step 2 Desc', 'We engineer a comprehensive plan, from architectural design to permits.'),
   ('nav_mega', 'nav.mega.how.step3.title', 'text', 'Step 3 Title', 'Flawless Execution'),
   ('nav_mega', 'nav.mega.how.step3.desc', 'text', 'Step 3 Desc', 'We build it. You step into a meticulously finished environment.'),
+  ('nav_mega', 'nav.mega.how.btn_book', 'text', 'Book Strategy Call Button', 'Book A Free Strategy Call'),
+  ('nav_mega', 'nav.mega.how.btn_view', 'text', 'View All Services Button', 'View All Services →'),
   ('nav_mega', 'services.grid.card_subtitle', 'text', 'Services Grid Card Tag', 'Construction Complete'),
   ('nav_mega', 'services.grid.view_button', 'text', 'Services Grid Quick View', 'View Deep Dive'),
   ('page_services', 'new-construction.card.title', 'text', 'New Construction Card Title', 'New Construction'),
