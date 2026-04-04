@@ -1370,8 +1370,20 @@ function ServicesTabbedEditor({ content, edits, saving, saved, uploadingKey, set
 
   const getSubGroup = (key: string) => {
     if (key.includes('services.grid')) return "Grid Display Labels";
+    
+    // RESIDENTIAL GROUPS
+    if (['new-construction', 'custom-design', 'quality-materials', 'turnkey-solutions'].some(sub => key.includes(sub))) return "Custom Home Building";
+    if (['kitchen-remodeling', 'bathroom-remodeling', 'room-additions', 'whole-home-renovations'].some(sub => key.includes(sub))) return "Home Renovations";
+    if (['open-concepts', 'home-theaters', 'guest-suites', 'recreation-rooms'].some(sub => key.includes(sub))) return "Basement Finishing";
+    if (['decks-porches', 'roofing', 'siding', 'windows-doors', 'fence-installation'].some(sub => key.includes(sub))) return "Exterior Improvements";
+    
+    // COMMERCIAL GROUPS
+    if (['ground-up-construction', 'design-build', 'material-sourcing'].some(sub => key.includes(sub)) || (key.includes('turnkey-solutions') && activeTab === 'com_cards')) return "Commercial Construction";
+    if (['tenant-build-outs', 'vanilla-shell-finish', 'office-modernization', 'ada-compliance'].some(sub => key.includes(sub))) return "Commercial Remodeling";
+    if (['adaptive-reuse', 'executive-suites', 'cafeteria-builds', 'acoustic-partitioning'].some(sub => key.includes(sub))) return "Interior Optimization";
+    if (['commercial-roofing', 'facade-upgrades', 'storefront-glazing', 'security-fencing'].some(sub => key.includes(sub))) return "Exterior & Security";
+    
     const slugParts = key.split('.');
-    // e.g. new-construction.card.title
     if (slugParts.length > 0) {
       const rawSlug = slugParts[0];
       return rawSlug.replace(/-/g, ' ').replace(/\b\w/g, (l: any) => l.toUpperCase());
