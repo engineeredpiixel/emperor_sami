@@ -17,8 +17,21 @@ const getStaticSupabase = () => createClient(
 // Cache the CMS queries to edge memory with a 60-second revalidation loop
 export const getGlobalContent = unstable_cache(
   async () => {
-    const { data } = await getStaticSupabase().from("site_content").select("*");
-    return data || [];
+    let allData: any[] = [];
+    let page = 0;
+    const pageSize = 1000;
+    while (true) {
+      const { data, error } = await getStaticSupabase()
+        .from("site_content")
+        .select("*")
+        .range(page * pageSize, (page + 1) * pageSize - 1);
+      
+      if (error || !data || data.length === 0) break;
+      allData = [...allData, ...data];
+      if (data.length < pageSize) break;
+      page++;
+    }
+    return allData;
   },
   ['global-site-content'],
   { tags: ['cms'], revalidate: 60 }
