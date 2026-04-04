@@ -1543,7 +1543,6 @@ function ServiceInnerPagesEditor({ content, edits, saving, saved, uploadingKey, 
     { id: 'details', label: 'Uncompromised Execution', filter: (k: string) => k.includes('.details.') },
     { id: 'workflow', label: 'The Workflow', filter: (k: string) => k.includes('.process.') },
     { id: 'bento', label: 'Executive Mechanics', filter: (k: string) => k.includes('.bentoFeatures.') },
-    { id: 'study', label: 'Case Study', filter: (k: string) => k.includes('.caseStudy.') },
     { id: 'faq', label: 'Objection Mitigation', filter: (k: string) => k.includes('.faqs.') },
   ];
 
