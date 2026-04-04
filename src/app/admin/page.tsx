@@ -290,9 +290,7 @@ export default function AdminDashboard() {
               <h1 className="text-slate-900 font-extrabold text-xl tracking-tight flex items-center gap-2">
                 <span>{currentSection?.icon}</span> {currentSection?.label || "Select Section"}
               </h1>
-              {!isMegaMenu && (
-                <p className="text-slate-500 text-xs font-medium mt-0.5">{filteredContent.length} active database fields</p>
-              )}
+              <p className="text-slate-500 text-xs font-medium mt-0.5">{filteredContent.length} active database fields</p>
             </div>
           </div>
           
@@ -1270,19 +1268,22 @@ function MegaMenuTabbedEditor({ content, edits, saving, saved, uploadingKey, set
     return a.localeCompare(b);
   });
 
+  const [activeSubGroup, setActiveSubGroup] = useState<string | null>(null);
+  const currentSubGroup = activeSubGroup && subGroups.includes(activeSubGroup) ? activeSubGroup : subGroups[0];
+
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm max-w-7xl mx-auto flex flex-col sm:flex-row">
-      <div className="w-full sm:w-64 border-b sm:border-b-0 sm:border-r border-slate-200 bg-slate-50/50 flex flex-row sm:flex-col shrink-0 overflow-x-auto sm:overflow-visible">
-        <div className="p-4 sm:p-5 border-b border-slate-200 hidden sm:block">
+    <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm max-w-7xl mx-auto flex flex-col lg:flex-row">
+      <div className="w-full lg:w-64 border-b lg:border-b-0 lg:border-r border-slate-200 bg-slate-50/50 flex flex-row lg:flex-col shrink-0 overflow-x-auto lg:overflow-visible">
+        <div className="p-4 sm:p-5 border-b border-slate-200 hidden lg:block">
            <p className="text-slate-800 font-extrabold text-sm uppercase tracking-widest">Navigation</p>
         </div>
         {tabs.map(tab => (
           <button
             key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
+            onClick={() => { setActiveTab(tab.id); setActiveSubGroup(null); }}
             className={`flex items-center justify-between py-4 sm:py-5 px-6 font-bold uppercase tracking-wider transition-all text-left whitespace-nowrap
               ${activeTab === tab.id 
-                ? "bg-white text-indigo-600 sm:border-r-[3px] border-indigo-600 shadow-[-4px_0_15px_rgba(0,0,0,0.02)] z-10" 
+                ? "bg-white text-indigo-600 lg:border-r-[3px] border-indigo-600 shadow-[-4px_0_15px_rgba(0,0,0,0.02)] z-10" 
                 : "text-slate-500 hover:text-slate-800 hover:bg-slate-100 border-transparent text-[11px] sm:text-xs"}
             `}
           >
@@ -1290,35 +1291,54 @@ function MegaMenuTabbedEditor({ content, edits, saving, saved, uploadingKey, set
           </button>
         ))}
       </div>
-      <div className="flex-1 p-6 sm:p-10 bg-[#FBFBFB] space-y-12 max-h-[80vh] overflow-y-auto custom-scrollbar">
-        {subGroups.map((group) => {
-          const groupFields = tabContent.filter((f: any) => getSubGroup(f.key) === group);
-          return (
-            <div key={group} className="relative">
-              <div className="flex items-center gap-4 mb-6">
-                <h3 className="text-slate-800 font-extrabold text-lg uppercase tracking-wider">
-                  {group}
-                </h3>
-                <div className="flex-1 h-[1px] bg-slate-200"></div>
+      <div className="flex-1 flex flex-col max-h-[80vh]">
+        
+        {subGroups.length > 1 && (
+           <div className="p-4 border-b border-slate-200 bg-slate-50 flex gap-2 overflow-x-auto custom-scrollbar shrink-0">
+              {subGroups.map(group => (
+                 <button 
+                    key={group}
+                    onClick={() => setActiveSubGroup(group)}
+                    className={`px-4 py-2 rounded-full text-[11px] font-bold uppercase tracking-wider transition-all whitespace-nowrap ${
+                        currentSubGroup === group ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/20" : "bg-white border border-slate-200 text-slate-500 hover:border-indigo-300 hover:text-indigo-600"
+                    }`}
+                 >
+                   {group}
+                 </button>
+              ))}
+           </div>
+        )}
+
+        <div className="p-6 sm:p-10 bg-[#FBFBFB] overflow-y-auto space-y-12">
+          {subGroups.filter(g => g === currentSubGroup).map((group) => {
+            const groupFields = tabContent.filter((f: any) => getSubGroup(f.key) === group);
+            return (
+              <div key={group} className="relative">
+                <div className="flex items-center gap-4 mb-6">
+                  <h3 className="text-slate-800 font-extrabold text-lg uppercase tracking-wider">
+                    {group}
+                  </h3>
+                  <div className="flex-1 h-[1px] bg-slate-200"></div>
+                </div>
+                <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                  {groupFields.map((item: any) => (
+                    <ContentField
+                      key={item.key}
+                      item={item}
+                      value={edits[item.key] ?? ""}
+                      saving={saving[item.key]}
+                      saved={saved[item.key]}
+                      uploading={uploadingKey === item.key}
+                      onChange={(val: string) => setEdits((prev: any) => ({ ...prev, [item.key]: val }))}
+                      onSave={() => handleSave(item.key)}
+                      onImageUpload={(file: File) => handleImageUpload(item.key, file)}
+                    />
+                  ))}
+                </div>
               </div>
-              <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-                {groupFields.map((item: any) => (
-                  <ContentField
-                    key={item.key}
-                    item={item}
-                    value={edits[item.key] ?? ""}
-                    saving={saving[item.key]}
-                    saved={saved[item.key]}
-                    uploading={uploadingKey === item.key}
-                    onChange={(val: string) => setEdits((prev: any) => ({ ...prev, [item.key]: val }))}
-                    onSave={() => handleSave(item.key)}
-                    onImageUpload={(file: File) => handleImageUpload(item.key, file)}
-                  />
-                ))}
-              </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </div>
   );
