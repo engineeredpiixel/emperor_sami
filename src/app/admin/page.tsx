@@ -110,13 +110,18 @@ export default function AdminDashboard() {
   };
 
   // ── Save a single field ──
-  const handleSave = async (key: string) => {
+  const handleSave = async (key: string, itemObj?: any) => {
     setSaving((prev) => ({ ...prev, [key]: true }));
-    const { error } = await supabase
-      .from("site_content")
-      .update({ value: edits[key] })
-      .eq("key", key);
-
+    let res;
+    const existing = content.find(c => c.key === key);
+    if (existing) {
+       res = await supabase.from("site_content").update({ value: edits[key] }).eq("key", key);
+    } else {
+       const insertPayload = { section: itemObj?.section || activeSection, key: key, value: edits[key] || "", type: itemObj?.type || "text", label: itemObj?.label || key };
+       res = await supabase.from("site_content").insert(insertPayload);
+       if (!res.error) setContent((prev: any) => [...prev, insertPayload as ContentItem]);
+    }
+    const { error } = res;
     setSaving((prev) => ({ ...prev, [key]: false }));
     if (!error) {
       setSaved((prev) => ({ ...prev, [key]: true }));
@@ -127,7 +132,7 @@ export default function AdminDashboard() {
   };
 
   // ── Image Upload ──
-  const handleImageUpload = async (key: string, file: File) => {
+  const handleImageUpload = async (key: string, file: File, itemObj?: any) => {
     setUploadingKey(key);
     try {
       // Client-side WebP Conversion & 4K Optimization
@@ -177,7 +182,17 @@ export default function AdminDashboard() {
       const { data: { publicUrl } } = supabase.storage.from("images").getPublicUrl(filePath);
 
       setEdits((prev) => ({ ...prev, [key]: publicUrl }));
-      const { error: updateError } = await supabase.from("site_content").update({ value: publicUrl }).eq("key", key);
+      const existing = content.find(c => c.key === key);
+      let updateError;
+      if (existing) {
+         const res = await supabase.from("site_content").update({ value: publicUrl }).eq("key", key);
+         updateError = res.error;
+      } else {
+         const insertPayload = { section: itemObj?.section || activeSection, key: key, value: publicUrl, type: itemObj?.type || "image", label: itemObj?.label || key };
+         const res = await supabase.from("site_content").insert(insertPayload);
+         updateError = res.error;
+         if (!updateError) setContent((prev: any) => [...prev, insertPayload as ContentItem]);
+      }
       if (updateError) throw updateError;
       
       setSaved((prev) => ({ ...prev, [key]: true }));
@@ -1660,7 +1675,8 @@ function ProjectInnerPagesEditor({ content, edits, saving, saved, uploadingKey, 
      if (parts[0] === 'project' && parts.length >= 3) return parts[1];
      return null;
   }))).filter(Boolean) as string[];
-  const allSlugs = Array.from(new Set([...staticProjects.map(p => p.slug), ...dbSlugs]));
+  const [addedSlugs, setAddedSlugs] = useState<string[]>([]);
+  const allSlugs = Array.from(new Set([...staticProjects.map(p => p.slug), ...dbSlugs, ...addedSlugs]));
 
   const [selectedSlug, setSelectedSlug] = useState<string>(allSlugs[0] || "");
   const [stagedSlug, setStagedSlug] = useState<string>(allSlugs[0] || "");
@@ -1712,10 +1728,13 @@ function ProjectInnerPagesEditor({ content, edits, saving, saved, uploadingKey, 
     if (!newSlug) return;
     const cleanSlug = newSlug.toLowerCase().trim().replace(/[^a-z0-9-]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
     alert("Project workspace initialized! The fields will now render for " + cleanSlug);
+    setAddedSlugs(prev => [...prev, cleanSlug]);
     setSelectedSlug(cleanSlug);
     setStagedSlug(cleanSlug);
     setIsAddingNew(false);
     setNewSlug("");
+    setFilterDivision("All");
+    setFilterCategory("All");
   };
 
   const staticProject = staticProjects.find(p => p.slug === selectedSlug);
@@ -1793,7 +1812,7 @@ function ProjectInnerPagesEditor({ content, edits, saving, saved, uploadingKey, 
             </select>
             <div className="mt-4 flex justify-end">
                <button
-                  onClick={() => handleSave(finalKey)}
+                  onClick={() => handleSave(finalKey, { section: "page_projects_inner", type: "text", label: label })}
                   disabled={saving[finalKey]}
                   className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all
                      ${saved[finalKey] ? "bg-emerald-500 text-white" : "bg-indigo-600 text-white hover:bg-indigo-700"}`}
@@ -1917,8 +1936,8 @@ function ProjectInnerPagesEditor({ content, edits, saving, saved, uploadingKey, 
                      uploading={uploadingKey === item.key}
                      placeholder={item.placeholder}
                      onChange={(val: string) => setEdits((prev: any) => ({ ...prev, [item.key]: val }))}
-                     onSave={() => handleSave(item.key)}
-                     onImageUpload={(file: File) => handleImageUpload(item.key, file)}
+                     onSave={() => handleSave(item.key, item)}
+                     onImageUpload={(file: File) => handleImageUpload(item.key, file, item)}
                    />
                 ))}
              </div>
@@ -1945,8 +1964,8 @@ function ProjectInnerPagesEditor({ content, edits, saving, saved, uploadingKey, 
                      uploading={uploadingKey === item.key}
                      placeholder={item.placeholder}
                      onChange={(val: string) => setEdits((prev: any) => ({ ...prev, [item.key]: val }))}
-                     onSave={() => handleSave(item.key)}
-                     onImageUpload={(file: File) => handleImageUpload(item.key, file)}
+                     onSave={() => handleSave(item.key, item)}
+                     onImageUpload={(file: File) => handleImageUpload(item.key, file, item)}
                    />
                  ))}
                </div>
