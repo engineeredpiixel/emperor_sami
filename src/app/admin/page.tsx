@@ -60,22 +60,32 @@ export default function AdminDashboard() {
 
   // ── Fetch content for active section ──
   const fetchContent = useCallback(async () => {
-
-    
     setLoading(true);
-    let query = supabase.from("site_content").select("*");
-    if (activeSection === "page_services") {
-      query = query.or(`section.eq.${activeSection},key.ilike.%services.grid%`);
-    } else {
-      query = query.eq("section", activeSection);
-    }
-    
-    const { data, error } = await query.order("key");
+    let allData: any[] = [];
+    let page = 0;
+    const pageSize = 1000;
 
-    if (!error && data) {
-      setContent(data as ContentItem[]);
+    while (true) {
+      let query = supabase.from("site_content").select("*").range(page * pageSize, (page + 1) * pageSize - 1);
+      
+      if (activeSection === "page_services") {
+        query = query.or(`section.eq.${activeSection},key.ilike.%services.grid%`);
+      } else {
+        query = query.eq("section", activeSection);
+      }
+      
+      const { data, error } = await query.order("key");
+
+      if (error || !data || data.length === 0) break;
+      allData = [...allData, ...data];
+      if (data.length < pageSize) break;
+      page++;
+    }
+
+    if (allData.length > 0) {
+      setContent(allData as ContentItem[]);
       const initialEdits: Record<string, string> = {};
-      data.forEach((item: ContentItem) => {
+      allData.forEach((item: ContentItem) => {
         initialEdits[item.key] = item.value;
       });
       setEdits(initialEdits);
