@@ -13,7 +13,7 @@ interface ContentItem {
 
 interface CMSContextType {
   content: ContentItem[];
-  t: (key: string) => string;
+  t: (key: string, defaultValue?: string) => string;
   getImage: (key: string) => string;
   getRaw: (key: string) => string;
 }
@@ -28,9 +28,9 @@ export function CMSProvider({
   children: ReactNode;
 }) {
   // Returns text string; handles multiline properly out-of-the-box in React when used in suitable elements
-  const t = (key: string) => {
+  const t = (key: string, defaultValue?: string) => {
     const item = content.find((c) => c.key === key);
-    if (!item) return `[Missing: ${key}]`;
+    if (!item) return defaultValue !== undefined ? defaultValue : `[Missing: ${key}]`;
     return item.value;
   };
 

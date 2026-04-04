@@ -79,7 +79,7 @@ export default function CommitmentSection({ hideButton = false }: { hideButton?:
               <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
             </svg>
             <span className="text-[#F4511E] text-xs font-bold tracking-[0.2em] uppercase">
-              {t("commitment.badge_text")}
+              {t("about.promise.label", "Our Promise")}
             </span>
           </div>
 
@@ -88,7 +88,7 @@ export default function CommitmentSection({ hideButton = false }: { hideButton?:
             className={`text-[2rem] sm:text-4xl lg:text-[2.6rem] leading-[1.2] text-[#111111] mb-6 transition-all duration-700 delay-100 will-change-transform ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}
           >
-            <span className="font-black">{t("commitment.headline")}</span>
+            <span className="font-black">{t("about.promise.title_1", "Our Commitment to")} <br/> {t("about.promise.title_2", "Excellence")}</span>
           </h2>
 
           {/* Description */}
@@ -96,7 +96,7 @@ export default function CommitmentSection({ hideButton = false }: { hideButton?:
             className={`text-gray-500 text-sm sm:text-base leading-relaxed mb-10 max-w-[480px] transition-all duration-700 delay-200 will-change-transform ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}
           >
-            {t("commitment.description")}
+            {t("about.promise.desc", "Every project we undertake is a testament to our dedication to quality and precision.")}
           </p>
 
           {/* Features 2x2 grid */}
@@ -107,45 +107,45 @@ export default function CommitmentSection({ hideButton = false }: { hideButton?:
             {/* Feature 1 */}
             <div className="flex flex-col gap-4 p-4 bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-gray-100 hover:-translate-y-1 transition-transform cursor-pointer group/card">
               <div className="w-full h-[140px] relative rounded-lg overflow-hidden shrink-0">
-                <Image src="/card_project_management_1774895647508.png" fill sizes="(max-width: 768px) 100vw, 33vw" quality={50} className="object-cover transition-transform duration-700 group-hover/card:scale-105" alt="Complete Project Management" />
+                <Image src={t('about.promise.card.1.img', '/card_project_management_1774895647508.png')} fill sizes="(max-width: 768px) 100vw, 33vw" quality={50} className="object-cover transition-transform duration-700 group-hover/card:scale-105" alt={t('about.promise.card.1.title', 'Complete Project Management')} />
                 <div className="absolute top-2 right-2 w-8 h-8 rounded-full bg-[#F9A825] flex items-center justify-center text-[#111] shadow-md z-10">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 </div>
               </div>
-              <span className="text-[#111111] text-[15px] font-extrabold leading-tight">Complete Project<br />Management</span>
+              <span className="text-[#111111] text-[15px] font-extrabold leading-tight w-2/3">{t('about.promise.card.1.title', 'Complete Project Management')}</span>
             </div>
 
             {/* Feature 2 */}
             <div className="flex flex-col gap-4 p-4 bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-gray-100 hover:-translate-y-1 transition-transform cursor-pointer group/card">
               <div className="w-full h-[140px] relative rounded-lg overflow-hidden shrink-0">
-                <Image src="/card_budget_guarantee_1774895665774.png" fill sizes="(max-width: 768px) 100vw, 33vw" quality={50} className="object-cover transition-transform duration-700 group-hover/card:scale-105" alt="On-Time, On-Budget Guarantee" />
+                <Image src={t('about.promise.card.2.img', '/card_budget_guarantee_1774895665774.png')} fill sizes="(max-width: 768px) 100vw, 33vw" quality={50} className="object-cover transition-transform duration-700 group-hover/card:scale-105" alt={t('about.promise.card.2.title', 'On-Time, On-Budget Guarantee')} />
                 <div className="absolute top-2 right-2 w-8 h-8 rounded-full bg-[#F9A825] flex items-center justify-center text-[#111] shadow-md z-10">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 </div>
               </div>
-              <span className="text-[#111111] text-[15px] font-extrabold leading-tight">On-Time, On-Budget<br />Guarantee</span>
+              <span className="text-[#111111] text-[15px] font-extrabold leading-tight w-2/3">{t('about.promise.card.2.title', 'On-Time, On-Budget Guarantee')}</span>
             </div>
 
             {/* Feature 3 */}
             <div className="hidden sm:flex flex-col gap-4 p-4 bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-gray-100 hover:-translate-y-1 transition-transform cursor-pointer group/card">
               <div className="w-full h-[140px] relative rounded-lg overflow-hidden shrink-0">
-                <Image src="/card_elite_quality_1774895683555.png" fill sizes="(max-width: 768px) 100vw, 33vw" quality={50} className="object-cover transition-transform duration-700 group-hover/card:scale-105" alt="Elite Custom Home Building Quality" />
+                <Image src={t('about.promise.card.3.img', '/card_elite_quality_1774895683555.png')} fill sizes="(max-width: 768px) 100vw, 33vw" quality={50} className="object-cover transition-transform duration-700 group-hover/card:scale-105" alt={t('about.promise.card.3.title', 'Elite Custom Home Building Quality')} />
                 <div className="absolute top-2 right-2 w-8 h-8 rounded-full bg-[#F9A825] flex items-center justify-center text-[#111] shadow-md z-10">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>
                 </div>
               </div>
-              <span className="text-[#111111] text-[15px] font-extrabold leading-tight">Elite Custom Home<br />Building Quality</span>
+              <span className="text-[#111111] text-[15px] font-extrabold leading-tight w-2/3">{t('about.promise.card.3.title', 'Elite Custom Home Building Quality')}</span>
             </div>
 
             {/* Feature 4 */}
             <div className="hidden sm:flex flex-col gap-4 p-4 bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-gray-100 hover:-translate-y-1 transition-transform cursor-pointer group/card">
               <div className="w-full h-[140px] relative rounded-lg overflow-hidden shrink-0">
-                <Image src="/card_safety_compliant_1774895701318.png" fill sizes="(max-width: 768px) 100vw, 33vw" quality={50} className="object-cover transition-transform duration-700 group-hover/card:scale-105" alt="Fully Licensed & Insured" />
+                <Image src={t('about.promise.card.4.img', '/card_safety_compliant_1774895701318.png')} fill sizes="(max-width: 768px) 100vw, 33vw" quality={50} className="object-cover transition-transform duration-700 group-hover/card:scale-105" alt={t('about.promise.card.4.title', 'Fully Licensed & Insured General Contractor')} />
                 <div className="absolute top-2 right-2 w-8 h-8 rounded-full bg-[#F9A825] flex items-center justify-center text-[#111] shadow-md z-10">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
                 </div>
               </div>
-              <span className="text-[#111111] text-[15px] font-extrabold leading-tight">Fully Licensed & Insured<br />General Contractor</span>
+              <span className="text-[#111111] text-[15px] font-extrabold leading-tight w-2/3">{t('about.promise.card.4.title', 'Fully Licensed & Insured General Contractor')}</span>
             </div>
           </div>
 

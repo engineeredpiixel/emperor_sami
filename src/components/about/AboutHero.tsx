@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { useCMS } from "@/components/CMSProvider";
 
 const SHARDS = [
   {
@@ -37,9 +38,15 @@ const SHARDS = [
 ];
 
 export default function AboutHero() {
+  const { t } = useCMS();
   const [isMounted, setIsMounted] = useState(false);
   const [animationsFinished, setAnimationsFinished] = useState(false);
   const [hoveredShard, setHoveredShard] = useState<number | null>(null);
+
+  const titleText = t('about.hero.title', 'THE MASTER BUILDERS.');
+  const words = titleText.split(' ');
+  const lastWord = words.pop() || '';
+  const remainingWords = words.join(' ');
 
   useEffect(() => {
     setIsMounted(true);
@@ -124,8 +131,8 @@ export default function AboutHero() {
          <h1 
             className="text-[#FAF9F6] text-[12vw] sm:text-[9vw] font-black uppercase tracking-tighter leading-[0.85] text-center mix-blend-difference select-none"
          >
-            The Master <br/> 
-            <span className="text-transparent" style={{ WebkitTextStroke: '2px #FAF9F6' }}>Builders.</span>
+            {remainingWords} <br/> 
+            <span className="text-transparent" style={{ WebkitTextStroke: '2px #FAF9F6' }}>{lastWord}</span>
          </h1>
       </div>
 

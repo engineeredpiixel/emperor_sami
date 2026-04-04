@@ -398,6 +398,17 @@ export default function AdminDashboard() {
               setEdits={setEdits}
               handleSave={handleSave}
             />
+          ) : activeSection === "page_about" ? (
+            <AboutPageEditor
+              content={filteredContent}
+              edits={edits}
+              saving={saving}
+              saved={saved}
+              uploadingKey={uploadingKey}
+              setEdits={setEdits}
+              handleSave={handleSave}
+              handleImageUpload={handleImageUpload}
+            />
           ) : (
             <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 max-w-7xl mx-auto">
               {filteredContent.map((item) => (
@@ -1088,6 +1099,73 @@ function ContentField({ item, value, saving, saved, uploading, onChange, onSave,
             <><Save size={16} /> Save Changes</>
           )}
         </button>
+      </div>
+    </div>
+  );
+}
+
+// ─── About Page Tabbed Editor ────────────────────────────────────
+function AboutPageEditor({ content, edits, saving, saved, uploadingKey, setEdits, handleSave, handleImageUpload }: any) {
+  const [activeTab, setActiveTab] = useState("hero");
+
+  const groupFilter = (matchStr: string) => content.filter((c: any) => c.key.includes(matchStr));
+
+  const tabs = [
+    { id: 'hero', label: 'Hero Section', fields: groupFilter('about.hero') },
+    { id: 'apex', label: 'Apex Executions', fields: groupFilter('about.apex') },
+    { id: 'team', label: 'The Elite Team', fields: groupFilter('about.team') },
+    { id: 'promise', label: 'Our Promise', fields: groupFilter('about.promise') },
+  ];
+
+  const activeFields = tabs.find(t => t.id === activeTab)?.fields || [];
+
+  return (
+    <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm max-w-7xl mx-auto flex flex-col sm:flex-row">
+      {/* Side Tabs (Vertical) */}
+      <div className="w-full sm:w-64 border-b sm:border-b-0 sm:border-r border-slate-200 bg-slate-50/50 flex flex-row sm:flex-col shrink-0 overflow-x-auto sm:overflow-visible">
+        {tabs.map(tab => (
+          <button
+            key={tab.id}
+            onClick={() => setActiveTab(tab.id)}
+            className={`flex items-center justify-between py-4 sm:py-5 px-6 font-bold uppercase tracking-wider transition-all text-left whitespace-nowrap
+              ${activeTab === tab.id 
+                ? "bg-white text-indigo-600 sm:border-r-[3px] border-indigo-600 shadow-[-4px_0_15px_rgba(0,0,0,0.02)] z-10" 
+                : "text-slate-500 hover:text-slate-800 hover:bg-slate-100 border-transparent text-[11px] sm:text-xs"}
+            `}
+          >
+            <span>{tab.label}</span>
+            {tab.fields.length > 0 && (
+              <span className={`hidden sm:flex text-[10px] items-center justify-center w-5 h-5 rounded-full ${activeTab === tab.id ? 'bg-indigo-100 text-indigo-600' : 'bg-slate-200 text-slate-500'}`}>
+                {tab.fields.length}
+              </span>
+            )}
+          </button>
+        ))}
+      </div>
+
+      {/* Active Area */}
+      <div className="flex-1 p-6 sm:p-10 bg-[#FBFBFB]">
+        <div className="space-y-6 max-w-4xl">
+          {activeFields.length > 0 ? (
+            <div className="grid grid-cols-1 gap-6">
+              {activeFields.map((item: any) => (
+                <ContentField
+                  key={item.key}
+                  item={item}
+                  value={edits[item.key] ?? ""}
+                  saving={saving[item.key]}
+                  saved={saved[item.key]}
+                  uploading={uploadingKey === item.key}
+                  onChange={(val: string) => setEdits((prev: any) => ({ ...prev, [item.key]: val }))}
+                  onSave={() => handleSave(item.key)}
+                  onImageUpload={(file: File) => handleImageUpload(item.key, file)}
+                />
+              ))}
+            </div>
+          ) : (
+            <p className="text-sm text-slate-500 italic">No content fields mapped to this section.</p>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -4,8 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState, useRef } from "react";
 import { masterProjects } from "@/lib/projectsData";
+import { useCMS } from "@/components/CMSProvider";
 
 export default function TeamSection() {
+  const { t } = useCMS();
   const [inView, setInView] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -46,13 +48,13 @@ export default function TeamSection() {
          {/* ── SECTION HEADER ── */}
          <div className={`flex flex-col gap-6 md:flex-row md:items-end justify-between transition-all duration-1000 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
             <h2 className="text-4xl sm:text-5xl lg:text-[4rem] font-black text-[#111] uppercase tracking-tighter leading-none">
-               The Apex <br/>
-               <span className="text-gray-300">Executions.</span>
+               {t('about.apex.title_1', 'The Apex')} <br/>
+               <span className="text-gray-300">{t('about.apex.title_2', 'Executions.')}</span>
             </h2>
             <div className="max-w-md w-full border-t border-[#111] pt-4">
-               <span className="text-[#D8A02A] text-[10px] font-black tracking-[0.3em] uppercase block mb-2">Our 6 Structural Pillars</span>
+               <span className="text-[#D8A02A] text-[10px] font-black tracking-[0.3em] uppercase block mb-2">{t('about.apex.subtitle', 'Our 6 Structural Pillars')}</span>
                <p className="text-sm font-bold text-gray-500 uppercase tracking-widest leading-relaxed">
-                  Every service sector is represented by a multi-million dollar flagship project showcasing our absolute dominance in that discipline.
+                  {t('about.apex.desc', 'Every service sector is represented by a multi-million dollar flagship project showcasing our absolute dominance in that discipline.')}
                </p>
             </div>
          </div>

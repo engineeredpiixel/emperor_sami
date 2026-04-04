@@ -15,7 +15,7 @@ const getStaticSupabase = () => createClient(
 );
 
 // Cache the CMS queries to edge memory with a 60-second revalidation loop
-const getGlobalContent = unstable_cache(
+export const getGlobalContent = unstable_cache(
   async () => {
     const { data } = await getStaticSupabase().from("site_content").select("*");
     return data || [];

@@ -1,44 +1,24 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
+import { useCMS } from "@/components/CMSProvider";
 
-const TEAM_MEMBERS = [
-  {
-    id: 1,
-    firstName: "E.",
-    lastName: "SAMI",
-    role: "Founder & Master Builder",
-    image: "/team_1.png",
-    description: "The visionary architect who engineered the transition from standard contracting to multi-generational luxury fortresses. Dictates the highest standard of structural supremacy."
-  },
-  {
-    id: 2,
-    firstName: "ALEXANDER",
-    lastName: "VANCE",
-    role: "Lead Structural Engineer",
-    image: "/team_2.png",
-    description: "Forces mathematics into reality. Vance specializes in cantilevered steel loads, hydrostatic underpinning, and zero-tolerance load bearing removal."
-  },
-  {
-    id: 3,
-    firstName: "MARCUS",
-    lastName: "STERN",
-    role: "Chief of Subterranean Integration",
-    image: "/team_3.png",
-    description: "Commands all subterranean expansions, dictating deep-trench shoring, massive hydrostatic vapor sealing, and bunker-level acoustic isolation."
-  },
-  {
-    id: 4,
-    firstName: "ELENA",
-    lastName: "ROSTOVA",
-    role: "Head of Acquisitions",
-    image: "/team_4.png",
-    description: "The ruthless negotiator ensuring we exclusively secure the absolute highest-grade metropolitan lots within the Greater Toronto Area."
-  }
-];
+
 
 export default function EliteTeamReveal() {
+  const { t } = useCMS();
+  
+  const TEAM_MEMBERS = useMemo(() => {
+    return [1, 2, 3, 4].map(id => ({
+      id,
+      firstName: t(`about.team.${id}.fname`, ''),
+      lastName: t(`about.team.${id}.lname`, ''),
+      role: t(`about.team.${id}.role`, ''),
+      image: t(`about.team.${id}.img`, `/team_${id}.png`),
+      description: t(`about.team.${id}.desc`, '')
+    }));
+  }, [t]);
   const [activeId, setActiveId] = useState<number>(1);
   const [isMounted, setIsMounted] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
@@ -63,20 +43,19 @@ export default function EliteTeamReveal() {
             <div className="flex items-center gap-4 mb-6">
                <div className="w-1.5 h-1.5 bg-[#D8A02A] rounded-full animate-ping" />
                <span className="text-[#D8A02A] text-[10px] md:text-sm font-black tracking-[0.4em] uppercase">
-                  The Human Foundation
+                  {t('about.team.label', 'The Human Foundation')}
                </span>
                <div className="flex-1 h-[1px] bg-gray-800 max-w-[100px]" />
             </div>
             
             <h2 className="text-4xl sm:text-6xl lg:text-[5rem] font-black text-white uppercase tracking-tighter leading-[0.9]">
-               The Structural <br />
-               <span className="text-transparent" style={{ WebkitTextStroke: '2px #444' }}>Pillars.</span>
+               {t('about.team.title_1', 'The Structural')} <br />
+               <span className="text-transparent" style={{ WebkitTextStroke: '2px #444' }}>{t('about.team.title_2', 'Pillars.')}</span>
             </h2>
          </div>
          
          <p className="max-w-md text-gray-500 font-bold uppercase tracking-widest leading-relaxed text-xs text-justify">
-            A devastating physical execution is entirely dependent on the commander overseeing it. Meet the absolute apex masters 
-            dictating our multi-million dollar residential pipelines.
+            {t('about.team.desc', 'A devastating physical execution is entirely dependent on the commander overseeing it. Meet the absolute apex masters dictating our multi-million dollar residential pipelines.')}
          </p>
       </div>
 
