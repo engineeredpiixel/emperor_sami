@@ -4,33 +4,30 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useCMS } from "@/components/CMSProvider";
 
-const SHARDS = [
+const generateShards = (t: any) => [
   {
     id: 1,
-    image: "/portfolio_lakefront_mansion_1774904298419.png",
-    subtitle: "Architectural Supremacy",
-    title: "The Foundation",
-    // Left wedge
+    image: t('about.hero.shard.1.img', "/portfolio_lakefront_mansion_1774904298419.png"),
+    subtitle: t('about.hero.shard.1.subtitle', "Architectural Supremacy"),
+    title: t('about.hero.shard.1.title', "The Foundation"),
     defaultClip: "polygon(0% 0%, 34% 0%, 22% 100%, 0% 100%)",
     hoverClip: "polygon(0% 0%, 60% 0%, 45% 100%, 0% 100%)",
     delay: "delay-[800ms]",
   },
   {
     id: 2,
-    image: "/custom_home_interior_1774895577855.png",
-    subtitle: "Uncompromising Physics",
-    title: "The Structure",
-    // Center wedge
+    image: t('about.hero.shard.2.img', "/custom_home_interior_1774895577855.png"),
+    subtitle: t('about.hero.shard.2.subtitle', "Uncompromising Physics"),
+    title: t('about.hero.shard.2.title', "The Structure"),
     defaultClip: "polygon(35% 0%, 67% 0%, 55% 100%, 23% 100%)",
     hoverClip: "polygon(15% 0%, 85% 0%, 73% 100%, 3% 100%)",
     delay: "delay-[1100ms]",
   },
   {
     id: 3,
-    image: "/portfolio_bespoke_exterior_1774904336356.png",
-    subtitle: "High Fashion Luxury",
-    title: "The Aesthetic",
-    // Right wedge
+    image: t('about.hero.shard.3.img', "/portfolio_bespoke_exterior_1774904336356.png"),
+    subtitle: t('about.hero.shard.3.subtitle', "High Fashion Luxury"),
+    title: t('about.hero.shard.3.title', "The Aesthetic"),
     defaultClip: "polygon(68% 0%, 100% 0%, 100% 100%, 56% 100%)",
     hoverClip: "polygon(40% 0%, 100% 0%, 100% 100%, 28% 100%)",
     delay: "delay-[1400ms]",
@@ -47,6 +44,8 @@ export default function AboutHero() {
   const words = titleText.split(' ');
   const lastWord = words.pop() || '';
   const remainingWords = words.join(' ');
+
+  const shards = generateShards(t);
 
   useEffect(() => {
     setIsMounted(true);
@@ -75,7 +74,7 @@ export default function AboutHero() {
 
       {/* ── 2. THE TECTONIC GLASS SHARDS ── */}
       <div className="absolute inset-0 z-10 w-full h-full">
-         {SHARDS.map((shard) => {
+         {shards.map((shard) => {
             const isHovered = hoveredShard === shard.id;
             const isDimmed = hoveredShard !== null && hoveredShard !== shard.id;
             
@@ -139,7 +138,7 @@ export default function AboutHero() {
       {/* ── 4. BRANDING BUG ── */}
       <div className={`absolute bottom-8 left-8 sm:bottom-12 sm:left-12 z-50 flex items-center gap-4 transition-opacity duration-1000 delay-[2500ms] ${isMounted ? 'opacity-100' : 'opacity-0'}`}>
          <div className="w-1.5 h-1.5 bg-[#D8A02A] rounded-full animate-ping" />
-         <span className="text-white text-[10px] font-black tracking-[0.4em] uppercase">Emperor Sami Group</span>
+         <span className="text-white text-[10px] font-black tracking-[0.4em] uppercase">{t('about.hero.brand_label', 'Emperor Sami Group')}</span>
       </div>
 
       {/* ── SCROLL IDENTIFIER ── */}
