@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import { servicesData } from "@/lib/servicesData";
+import { servicesData, ServiceContentType } from "@/lib/servicesData";
+import { getGlobalContent } from "@/app/layout";
 
 import ServiceDetailContent from "@/components/services/ServiceDetailContent";
 import ServiceBentoBox from "@/components/services/ServiceBentoBox";
@@ -35,11 +36,37 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
 
 export default async function ServicePage(props: { params: Promise<{ slug: string }> }) {
   const params = await props.params;
-  const data = servicesData[params.slug];
+  const baseData = servicesData[params.slug];
 
-  if (!data) {
+  if (!baseData) {
     notFound();
   }
+
+  // Pull global CMS content and deeply merge string overrides into baseData
+  // This prevents us from having to rewrite all 15 inner page React components!
+  const allContent = await getGlobalContent();
+  const pageOverrides = allContent.filter(c => c.key.startsWith(`service.${params.slug}.`));
+
+  // Create a deep clone to avoid mutating the shared static base module
+  const data: ServiceContentType = JSON.parse(JSON.stringify(baseData));
+
+  // Helper rule: 'service.slug.fieldPath' -> maps to nested object property
+  pageOverrides.forEach(c => {
+     const parts = c.key.split('.');
+     // e.g. ['service', 'slug', 'heroTitle'] or ['service', 'slug', 'details', '0', 'title']
+     const path = parts.slice(2);
+     let target: any = data;
+     for (let i = 0; i < path.length - 1; i++) {
+        if (target[path[i]] === undefined) return; // safety stop
+        target = target[path[i]];
+     }
+     if (target && typeof target === 'object') {
+         // Never overwrite with empty string if baseData has something, fallback cleanly
+         if (c.value && c.value.trim() !== '') {
+            target[path[path.length - 1]] = c.value;
+         }
+     }
+  });
 
   return (
     <main className="flex-1 bg-[#faf9f6] min-h-screen -mt-20">

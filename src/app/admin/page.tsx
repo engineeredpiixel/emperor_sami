@@ -425,6 +425,17 @@ export default function AdminDashboard() {
               handleSave={handleSave}
               handleImageUpload={handleImageUpload}
             />
+          ) : activeSection === "page_service_inner" ? (
+            <ServiceInnerPagesEditor
+              content={filteredContent}
+              edits={edits}
+              saving={saving}
+              saved={saved}
+              uploadingKey={uploadingKey}
+              setEdits={setEdits}
+              handleSave={handleSave}
+              handleImageUpload={handleImageUpload}
+            />
           ) : (
             <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 max-w-7xl mx-auto">
               {filteredContent.map((item) => (
@@ -1474,6 +1485,101 @@ function ServicesTabbedEditor({ content, edits, saving, saved, uploadingKey, set
           })}
         </div>
       </div>
+    </div>
+  );
+}
+
+// ─── Service Inner Pages Sub-Router ────────────────────────────────────────
+function ServiceInnerPagesEditor({ content, edits, saving, saved, uploadingKey, setEdits, handleSave, handleImageUpload }: any) {
+  // Extract unique slugs from all fields starting with 'service.[slug].'
+  const uniqueSlugs = Array.from(new Set(content.map((c: any) => c.key.split('.')[1]))).filter(Boolean) as string[];
+  const [selectedSlug, setSelectedSlug] = useState<string>(uniqueSlugs[0] || "");
+
+  // Filter content just for the selected slug
+  const slugContent = content.filter((c: any) => c.key.startsWith(`service.${selectedSlug}.`));
+
+  const tabs = [
+    { id: 'hero', label: 'Hero Section', filter: (k: string) => k.includes('.heroTitle') || k.includes('.heroSubtitle') || k.includes('.heroImage') },
+    { id: 'overview', label: 'Capability Overview', filter: (k: string) => k.includes('.capabilityImage') || k.includes('.description') },
+    { id: 'details', label: 'Uncompromised Execution', filter: (k: string) => k.includes('.details.') },
+    { id: 'workflow', label: 'The Workflow', filter: (k: string) => k.includes('.process.') },
+    { id: 'bento', label: 'Executive Mechanics', filter: (k: string) => k.includes('.bentoFeatures.') },
+    { id: 'study', label: 'Case Study', filter: (k: string) => k.includes('.caseStudy.') },
+    { id: 'faq', label: 'Objection Mitigation', filter: (k: string) => k.includes('.faqs.') },
+  ];
+
+  const [activeTab, setActiveTab] = useState(tabs[0].id);
+  const currentFilter = tabs.find(t => t.id === activeTab)?.filter || (() => true);
+  const tabContent = slugContent.filter((c: any) => currentFilter(c.key));
+
+  return (
+    <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm max-w-7xl mx-auto flex flex-col">
+      {/* Top Banner Slug Selector */}
+      <div className="p-6 sm:p-8 border-b border-slate-200 bg-slate-50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+         <div>
+            <h2 className="text-xl font-black text-slate-800 uppercase tracking-widest mb-1">Sub-Page Editor</h2>
+            <p className="text-slate-500 text-sm">Select a specific service page to inject layout overrides.</p>
+         </div>
+         <select 
+            value={selectedSlug}
+            onChange={(e) => setSelectedSlug(e.target.value)}
+            className="w-full sm:w-auto min-w-[250px] p-3 rounded-lg border-2 border-slate-200 bg-white font-bold text-slate-700 outline-none focus:border-indigo-500 transition-colors cursor-pointer"
+         >
+            {uniqueSlugs.map(slug => (
+              <option key={slug} value={slug}>
+                 {slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+              </option>
+            ))}
+         </select>
+      </div>
+      
+      {uniqueSlugs.length > 0 ? (
+        <div className="flex flex-col lg:flex-row">
+          {/* Left Sub-Tabs */}
+          <div className="w-full lg:w-64 border-b lg:border-b-0 lg:border-r border-slate-200 bg-slate-50/50 flex flex-row lg:flex-col shrink-0 overflow-x-auto lg:overflow-visible">
+            {tabs.map(tab => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex items-center justify-between py-4 sm:py-5 px-6 font-bold uppercase tracking-wider transition-all text-left whitespace-nowrap
+                  ${activeTab === tab.id 
+                    ? "bg-white text-indigo-600 lg:border-r-[3px] border-indigo-600 shadow-[-4px_0_15px_rgba(0,0,0,0.02)] z-10" 
+                    : "text-slate-500 hover:text-slate-800 hover:bg-slate-100 border-transparent text-[11px] sm:text-xs"}
+                `}
+              >
+                <span>{tab.label}</span>
+              </button>
+            ))}
+          </div>
+          
+          {/* Right Content Area */}
+          <div className="flex-1 p-6 sm:p-10 bg-[#FBFBFB] overflow-y-auto max-h-[70vh]">
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+              {tabContent.length > 0 ? tabContent.map((item: any) => (
+                <ContentField
+                  key={item.key}
+                  item={item}
+                  value={edits[item.key] ?? ""}
+                  saving={saving[item.key]}
+                  saved={saved[item.key]}
+                  uploading={uploadingKey === item.key}
+                  onChange={(val: string) => setEdits((prev: any) => ({ ...prev, [item.key]: val }))}
+                  onSave={() => handleSave(item.key)}
+                  onImageUpload={(file: File) => handleImageUpload(item.key, file)}
+                />
+              )) : (
+                <div className="col-span-1 xl:col-span-2 text-center text-slate-500 py-12">
+                   No fields mapped for this section yet.
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="p-12 text-center">
+          <p className="text-slate-500">No sub-pages detected in the database.</p>
+        </div>
+      )}
     </div>
   );
 }
