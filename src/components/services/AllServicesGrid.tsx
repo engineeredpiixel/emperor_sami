@@ -7,10 +7,13 @@ import Link from "next/link";
 import { residentialServicesData } from "@/lib/servicesDataResidential";
 import { commercialServicesData } from "@/lib/servicesDataCommercial";
 
-import { megaMenuData } from "@/lib/megaMenuData";
+import { generateMegaMenuData } from "@/lib/megaMenuData";
+import { useCMS } from "@/components/CMSProvider";
 
 export default function AllServicesGrid() {
+  const { t } = useCMS();
   const visible = true;
+  const megaMenuData = generateMegaMenuData(t);
   const [activeSlug, setActiveSlug] = useState<string | null>(null);
 
   const renderCategorizedCards = (sections: any[], dataSource: Record<string, any>) => {
@@ -21,9 +24,9 @@ export default function AllServicesGrid() {
         if (!data) return null;
         return {
           category: section.title,
-          title: data.heroTitle,
+          title: t(`${data.slug}.card.title`, data.heroTitle),
           slug: data.slug,
-          description: data.description,
+          description: t(`${data.slug}.card.description`, data.description),
           image: data.heroImage,
           isNew: false
         };
@@ -112,7 +115,7 @@ export default function AllServicesGrid() {
                   <div className="flex items-center gap-3 mb-4">
                       <div className="w-12 h-[2px] bg-[#F9A825]" />
                       <span className="text-[#F9A825] font-black text-[9px] tracking-[0.4em] uppercase drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
-                          Construction Complete
+                          {t("services.grid.card_subtitle", "Construction Complete")}
                       </span>
                   </div>
                   
@@ -131,7 +134,7 @@ export default function AllServicesGrid() {
                            aria-label={`View deep dive on ${service.title}`}
                            className="group/btn inline-flex items-center gap-2 text-[10px] sm:text-xs font-black tracking-[0.2em] uppercase text-[#111] hover:text-[#F9A825] transition-colors"
                         >
-                           View Deep Dive 
+                           {t("services.grid.view_button", "View Deep Dive")}
                            <svg className="w-3 h-3 sm:w-4 sm:h-4 transition-transform group-hover/btn:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3"><path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                         </Link>
                      </div>
