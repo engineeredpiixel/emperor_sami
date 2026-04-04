@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import HashScroller from "@/components/HashScroller";
+import { preload } from "react-dom";
+import { getGlobalContent } from "@/app/layout";
 
 // Bespoke About Route Engines
 import AboutHero from "@/components/about/AboutHero";
@@ -20,7 +22,14 @@ export const metadata: Metadata = {
   description: "Learn about the absolute apex predators of the Greater Toronto Area luxury construction and structural engineering industry.",
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const content = await getGlobalContent();
+
+  // Preload the massive Hero Tectonic Shards instantly for <1.3s FCP hit
+  preload('/portfolio_lakefront_mansion_1774904298419.png', { as: 'image', fetchPriority: 'high' });
+  preload('/custom_home_interior_1774895577855.png', { as: 'image', fetchPriority: 'high' });
+  preload('/portfolio_bespoke_exterior_1774904336356.png', { as: 'image', fetchPriority: 'high' });
+
   return (
     <main className="flex-1 bg-white min-h-screen -mt-20">
       <HashScroller delay={300} />
