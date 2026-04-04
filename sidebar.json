@@ -1,0 +1,212 @@
+[
+  {
+    "id": "megamenu",
+    "label": "Mega Menu",
+    "icon": "🗂️",
+    "order_index": 2,
+    "parent_id": null
+  },
+  {
+    "id": "servicearea",
+    "label": "Service Area",
+    "icon": "📍",
+    "order_index": 5,
+    "parent_id": null
+  },
+  {
+    "id": "project",
+    "label": "Project",
+    "icon": "📁",
+    "order_index": 6,
+    "parent_id": null
+  },
+  {
+    "id": "about",
+    "label": "About US",
+    "icon": "👤",
+    "order_index": 7,
+    "parent_id": null
+  },
+  {
+    "id": "contact",
+    "label": "Contact US",
+    "icon": "📞",
+    "order_index": 8,
+    "parent_id": null
+  },
+  {
+    "id": "footer",
+    "label": "Footer",
+    "icon": "📄",
+    "order_index": 9,
+    "parent_id": null
+  },
+  {
+    "id": "settings",
+    "label": "Site Settings",
+    "icon": "🛠️",
+    "order_index": 10,
+    "parent_id": null
+  },
+  {
+    "id": "navbar_top",
+    "label": "Top Bar Settings",
+    "icon": "👆",
+    "order_index": 1,
+    "parent_id": "navbar"
+  },
+  {
+    "id": "navbar_main",
+    "label": "Main Nav Bar",
+    "icon": "🍔",
+    "order_index": 2,
+    "parent_id": "navbar"
+  },
+  {
+    "id": "homepage",
+    "label": "Home Page",
+    "icon": "🏠",
+    "order_index": 3,
+    "parent_id": null
+  },
+  {
+    "id": "homepage_hero",
+    "label": "Hero Section",
+    "icon": "✨",
+    "order_index": 1,
+    "parent_id": "homepage"
+  },
+  {
+    "id": "homepage_shield",
+    "label": "Certifications",
+    "icon": "🛡️",
+    "order_index": 2,
+    "parent_id": "homepage"
+  },
+  {
+    "id": "homepage_scrolling",
+    "label": "Scrolling Ticker",
+    "icon": "🔄",
+    "order_index": 3,
+    "parent_id": "homepage"
+  },
+  {
+    "id": "homepage_about",
+    "label": "About Section (Our Story)",
+    "icon": "🏢",
+    "order_index": 4,
+    "parent_id": "homepage"
+  },
+  {
+    "id": "homepage_cta",
+    "label": "Call To Action (CTA)",
+    "icon": "📣",
+    "order_index": 5,
+    "parent_id": "homepage"
+  },
+  {
+    "id": "homepage_faq",
+    "label": "FAQ Section",
+    "icon": "❓",
+    "order_index": 6,
+    "parent_id": "homepage"
+  },
+  {
+    "id": "homepage_values",
+    "label": "Core Values Section",
+    "icon": "💎",
+    "order_index": 4,
+    "parent_id": "homepage"
+  },
+  {
+    "id": "homepage_contact",
+    "label": "Contact Form Section",
+    "icon": "✉️",
+    "order_index": 7,
+    "parent_id": "homepage"
+  },
+  {
+    "id": "global_footer",
+    "label": "Global Footer",
+    "icon": "📄",
+    "order_index": 10,
+    "parent_id": null
+  },
+  {
+    "id": "seo_settings",
+    "label": "Site Settings",
+    "icon": "⚙️",
+    "order_index": 11,
+    "parent_id": null
+  },
+  {
+    "id": "page_contact",
+    "label": "Contact Us Page",
+    "icon": "✉️",
+    "order_index": 20,
+    "parent_id": null
+  },
+  {
+    "id": "page_about",
+    "label": "About Page",
+    "icon": "FileText",
+    "order_index": 3,
+    "parent_id": null
+  },
+  {
+    "id": "navbar",
+    "label": "Global Menus",
+    "icon": "🛰️",
+    "order_index": 5,
+    "parent_id": null
+  },
+  {
+    "id": "nav_mega",
+    "label": "Navigation Mega Menu",
+    "icon": "🗒️",
+    "order_index": 1,
+    "parent_id": "navbar"
+  },
+  {
+    "id": "services",
+    "label": "Services Matrix",
+    "icon": "📁",
+    "order_index": 6,
+    "parent_id": null
+  },
+  {
+    "id": "page_services",
+    "label": "Services Grid Editor",
+    "icon": "▣️",
+    "order_index": 1,
+    "parent_id": "services"
+  },
+  {
+    "id": "page_service_inner",
+    "label": "Inner Service Pages",
+    "icon": "FileText",
+    "order_index": 5,
+    "parent_id": null
+  },
+  {
+    "id": "page_projects",
+    "label": "Projects Page",
+    "icon": "Architecture",
+    "order_index": 7,
+    "parent_id": null
+  },
+  {
+    "id": "sect_testimonials",
+    "label": "Testimonials Settings",
+    "icon": "MessageSquare",
+    "order_index": 8,
+    "parent_id": null
+  },
+  {
+    "id": "page_projects_inner",
+    "label": "Project Archives Editor",
+    "icon": "🏗️",
+    "order_index": 32,
+    "parent_id": "pages"
+  }
+]

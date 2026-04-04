@@ -19,7 +19,7 @@ async function main() {
     label: 'Project Archives Editor',
     icon: '🏗️',
     order_index: 32,
-    parent_id: 'pages'
+    parent_id: null
   }, {
     onConflict: 'id'
   });
