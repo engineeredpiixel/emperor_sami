@@ -1064,7 +1064,7 @@ function CoreValuesEditor({ content, edits, saving, saved, uploadingKey, setEdit
 }
 
 // ─── Content Field Component (Light Mode Refactor) ──────────────────────────
-function ContentField({ item, value, saving, saved, uploading, onChange, onSave, onImageUpload }: any) {
+function ContentField({ item, value, saving, saved, uploading, onChange, onSave, onImageUpload, placeholder }: any) {
   const isDirty = value !== (item.value ?? "");
 
   return (
@@ -1117,7 +1117,7 @@ function ContentField({ item, value, saving, saved, uploading, onChange, onSave,
             onChange={(e) => onChange(e.target.value)}
             rows={4}
             className="w-full bg-slate-50 border border-slate-200 text-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-sm resize-none"
-            placeholder="Enter configuration value..."
+            placeholder={placeholder || "Enter configuration value..."}
           />
         ) : (
           <input
@@ -1125,7 +1125,7 @@ function ContentField({ item, value, saving, saved, uploading, onChange, onSave,
             value={value}
             onChange={(e) => onChange(e.target.value)}
             className="w-full bg-slate-50 border border-slate-200 text-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-sm font-medium"
-            placeholder="Enter configuration value..."
+            placeholder={placeholder || "Enter configuration value..."}
           />
         )}
       </div>
@@ -1675,44 +1675,47 @@ function ProjectInnerPagesEditor({ content, edits, saving, saved, uploadingKey, 
     setNewSlug("");
   };
 
+  const staticProject = staticProjects.find(p => p.slug === selectedSlug);
+
   // Base configuration structure
   const currentProjectPrefix = `project.${selectedSlug}.`;
   const requiredKeys = [
-    { key: 'title', type: 'text', label: 'Project Name (Hero)' },
-    { key: 'heroImage', type: 'image', label: 'Hero Background Image' },
-    { key: 'metrics_sqft', type: 'text', label: 'Metrics: Square Footage' },
-    { key: 'metrics_timeline', type: 'text', label: 'Metrics: Timeline' },
-    { key: 'metrics_scope', type: 'textarea', label: 'Metrics: Scope Detail' },
-    { key: 'challenge_headline', type: 'text', label: 'Constraint Analysis: Title' },
-    { key: 'challenge_desc', type: 'textarea', label: 'Constraint Analysis: Paragraph' },
-    { key: 'solution_headline', type: 'text', label: 'Tactical Solution: Title' },
-    { key: 'solution_desc', type: 'textarea', label: 'Tactical Solution: Paragraph' },
-    { key: 'testimonial_quote', type: 'textarea', label: 'Review / Testimonial: Quote' },
-    { key: 'testimonial_author', type: 'text', label: 'Review: Author Name (e.g., Alexander V.)' },
-    { key: 'testimonial_role', type: 'text', label: 'Review: Star Name / Other Location Data' },
-    { key: 'gallery_1', type: 'image', label: 'Final Execution Gallery Image 1' },
-    { key: 'gallery_2', type: 'image', label: 'Final Execution Gallery Image 2' },
-    { key: 'gallery_3', type: 'image', label: 'Final Execution Gallery Image 3' },
-    { key: 'gallery_4', type: 'image', label: 'Final Execution Gallery Image 4' },
+    { key: 'title', type: 'text', label: 'Project Name (Hero)', staticFallback: (p: any) => p?.title || "" },
+    { key: 'heroImage', type: 'image', label: 'Hero Background Image', staticFallback: (p: any) => p?.heroImage || "" },
+    { key: 'metrics_sqft', type: 'text', label: 'Metrics: Square Footage', staticFallback: (p: any) => p?.stats?.[0]?.value || "" },
+    { key: 'metrics_timeline', type: 'text', label: 'Metrics: Timeline', staticFallback: (p: any) => p?.stats?.[1]?.value || "" },
+    { key: 'metrics_scope', type: 'textarea', label: 'Metrics: Scope Detail', staticFallback: (p: any) => p?.stats?.[2]?.value || "" },
+    { key: 'challenge_headline', type: 'text', label: 'Constraint Analysis: Title', staticFallback: (p: any) => p?.constraintAnalysis?.challenge?.title || "" },
+    { key: 'challenge_desc', type: 'textarea', label: 'Constraint Analysis: Paragraph', staticFallback: (p: any) => p?.constraintAnalysis?.challenge?.description || "" },
+    { key: 'solution_headline', type: 'text', label: 'Tactical Solution: Title', staticFallback: (p: any) => p?.constraintAnalysis?.solution?.title || "" },
+    { key: 'solution_desc', type: 'textarea', label: 'Tactical Solution: Paragraph', staticFallback: (p: any) => p?.constraintAnalysis?.solution?.description || "" },
+    { key: 'testimonial_quote', type: 'textarea', label: 'Review / Testimonial: Quote', staticFallback: (p: any) => p?.testimonial?.quote || "" },
+    { key: 'testimonial_author', type: 'text', label: 'Review: Author Name', staticFallback: (p: any) => p?.testimonial?.author || "" },
+    { key: 'testimonial_role', type: 'text', label: 'Review: Star Name / Other', staticFallback: (p: any) => p?.testimonial?.role || "" },
+    { key: 'gallery_1', type: 'image', label: 'Gallery Image 1', staticFallback: (p: any) => p?.gallery?.[0] || "" },
+    { key: 'gallery_2', type: 'image', label: 'Gallery Image 2', staticFallback: (p: any) => p?.gallery?.[1] || "" },
+    { key: 'gallery_3', type: 'image', label: 'Gallery Image 3', staticFallback: (p: any) => p?.gallery?.[2] || "" },
+    { key: 'gallery_4', type: 'image', label: 'Gallery Image 4', staticFallback: (p: any) => p?.gallery?.[3] || "" },
   ];
 
-  // Global settings for projects (featured project CTA text and node section)
+  // Global settings for projects
   const globalKeys = [
-    { key: 'project_global_footer_title', type: 'text', label: 'Featured Projects Title' },
-    { key: 'project_global_footer_desc', type: 'textarea', label: 'Featured Projects Description' },
-    { key: 'project_global_footer_btn', type: 'text', label: 'Portfolio Button Text' },
-    { key: 'project_global_geographic_title', type: 'text', label: 'Geographic Node Map Title' },
+    { key: 'project_global_footer_title', type: 'text', label: 'Featured Projects Title', staticFallback: "Featured Projects" },
+    { key: 'project_global_footer_desc', type: 'textarea', label: 'Featured Projects Description', staticFallback: "A curated selection of our most prestigious residential and commercial projects" },
+    { key: 'project_global_footer_btn', type: 'text', label: 'Portfolio Button Text', staticFallback: "View Complete Portfolio" },
+    { key: 'project_global_geographic_title', type: 'text', label: 'Geographic Node Map Title', staticFallback: "Geographic Node" },
   ];
 
   // Fake inject to show in UI
   const slugContent = requiredKeys.map(rk => {
     const dbMatch = content.find((c: any) => c.key === `${currentProjectPrefix}${rk.key}`);
-    return dbMatch || { id: `temp-${rk.key}`, section: "page_projects_inner", key: `${currentProjectPrefix}${rk.key}`, value: "", type: rk.type, label: rk.label };
+    const fallbackValue = rk.staticFallback(staticProject);
+    return dbMatch || { id: `temp-${rk.key}`, section: "page_projects_inner", key: `${currentProjectPrefix}${rk.key}`, value: "", type: rk.type, label: rk.label, placeholder: fallbackValue };
   });
 
   const globalContentFields = globalKeys.map(gk => {
     const dbMatch = content.find((c: any) => c.key === gk.key);
-    return dbMatch || { id: `temp-${gk.key}`, section: "page_projects_inner", key: gk.key, value: "", type: gk.type, label: gk.label };
+    return dbMatch || { id: `temp-${gk.key}`, section: "page_projects_inner", key: gk.key, value: "", type: gk.type, label: gk.label, placeholder: gk.staticFallback };
   });
 
   const tabs = [
@@ -1731,6 +1734,7 @@ function ProjectInnerPagesEditor({ content, edits, saving, saved, uploadingKey, 
   const CustomDropdown = ({ sysKey, label, options }: { sysKey: string, label: string, options: string[] }) => {
       const finalKey = `${currentProjectPrefix}${sysKey}`;
       const value = edits[finalKey] ?? "";
+      const fallback = (staticProject as any)?.[sysKey];
       return (
          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
             <div className="flex items-center justify-between mb-4">
@@ -1741,7 +1745,7 @@ function ProjectInnerPagesEditor({ content, edits, saving, saved, uploadingKey, 
               onChange={(e) => setEdits((prev: any) => ({ ...prev, [finalKey]: e.target.value }))}
               className="w-full bg-slate-50 border border-slate-200 text-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 font-medium"
             >
-               <option value="">Default Config / Auto-assigned</option>
+               <option value="">Default Config: {fallback || "None/Blank"}</option>
                {options.map(opt => <option key={opt} value={opt}>{opt}</option>)}
             </select>
             <div className="mt-4 flex justify-end">
@@ -1828,6 +1832,7 @@ function ProjectInnerPagesEditor({ content, edits, saving, saved, uploadingKey, 
                      saving={saving[item.key]}
                      saved={saved[item.key]}
                      uploading={uploadingKey === item.key}
+                     placeholder={item.placeholder}
                      onChange={(val: string) => setEdits((prev: any) => ({ ...prev, [item.key]: val }))}
                      onSave={() => handleSave(item.key)}
                      onImageUpload={(file: File) => handleImageUpload(item.key, file)}
@@ -1855,6 +1860,7 @@ function ProjectInnerPagesEditor({ content, edits, saving, saved, uploadingKey, 
                      saving={saving[item.key]}
                      saved={saved[item.key]}
                      uploading={uploadingKey === item.key}
+                     placeholder={item.placeholder}
                      onChange={(val: string) => setEdits((prev: any) => ({ ...prev, [item.key]: val }))}
                      onSave={() => handleSave(item.key)}
                      onImageUpload={(file: File) => handleImageUpload(item.key, file)}
