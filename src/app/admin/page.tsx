@@ -1491,9 +1491,38 @@ function ServicesTabbedEditor({ content, edits, saving, saved, uploadingKey, set
 
 // ─── Service Inner Pages Sub-Router ────────────────────────────────────────
 function ServiceInnerPagesEditor({ content, edits, saving, saved, uploadingKey, setEdits, handleSave, handleImageUpload }: any) {
+  // Pre-mapped categories to split the 33 pages cleanly
+  const RESIDENTIAL_SLUGS = [
+    "new-construction", "custom-design", "quality-materials", "turnkey-solutions",
+    "kitchen-remodeling", "bathroom-remodeling", "room-additions", "whole-home-renovations",
+    "open-concepts", "home-theaters", "guest-suites", "recreation-rooms",
+    "decks-porches", "roofing", "siding", "windows-doors", "fence-installation"
+  ];
+
+  const COMMERCIAL_SLUGS = [
+    "ground-up-construction", "design-build", "material-sourcing", "turnkey-solutions",
+    "tenant-build-outs", "vanilla-shell-finish", "office-modernization", "ada-compliance",
+    "adaptive-reuse", "executive-suites", "cafeteria-builds", "acoustic-partitioning",
+    "commercial-roofing", "facade-upgrades", "storefront-glazing", "security-fencing"
+  ];
+
+  const [activeCategory, setActiveCategory] = useState<"Residential" | "Commercial">("Residential");
+
   // Extract unique slugs from all fields starting with 'service.[slug].'
-  const uniqueSlugs = Array.from(new Set(content.map((c: any) => c.key.split('.')[1]))).filter(Boolean) as string[];
-  const [selectedSlug, setSelectedSlug] = useState<string>(uniqueSlugs[0] || "");
+  const dbSlugs = Array.from(new Set(content.map((c: any) => c.key.split('.')[1]))).filter(Boolean) as string[];
+
+  const currentAvailableSlugs = activeCategory === "Residential" 
+      ? RESIDENTIAL_SLUGS.filter(s => dbSlugs.includes(s)) 
+      : COMMERCIAL_SLUGS.filter(s => dbSlugs.includes(s));
+
+  const [selectedSlug, setSelectedSlug] = useState<string>(currentAvailableSlugs[0] || "");
+
+  // When category changes, reset the slug to the first available in that category
+  useEffect(() => {
+     if (currentAvailableSlugs.length > 0 && !currentAvailableSlugs.includes(selectedSlug)) {
+        setSelectedSlug(currentAvailableSlugs[0]);
+     }
+  }, [activeCategory, currentAvailableSlugs, selectedSlug]);
 
   // Filter content just for the selected slug
   const slugContent = content.filter((c: any) => c.key.startsWith(`service.${selectedSlug}.`));
@@ -1514,26 +1543,40 @@ function ServiceInnerPagesEditor({ content, edits, saving, saved, uploadingKey, 
 
   return (
     <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm max-w-7xl mx-auto flex flex-col">
-      {/* Top Banner Slug Selector */}
+      {/* Top Banner Category & Slug Selector */}
       <div className="p-6 sm:p-8 border-b border-slate-200 bg-slate-50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
          <div>
-            <h2 className="text-xl font-black text-slate-800 uppercase tracking-widest mb-1">Sub-Page Editor</h2>
-            <p className="text-slate-500 text-sm">Select a specific service page to inject layout overrides.</p>
+            <h2 className="text-xl font-black text-slate-800 uppercase tracking-widest mb-1">Child Page Editor</h2>
+            <p className="text-slate-500 text-sm">Select a division and service group to inject content overrides.</p>
          </div>
-         <select 
-            value={selectedSlug}
-            onChange={(e) => setSelectedSlug(e.target.value)}
-            className="w-full sm:w-auto min-w-[250px] p-3 rounded-lg border-2 border-slate-200 bg-white font-bold text-slate-700 outline-none focus:border-indigo-500 transition-colors cursor-pointer"
-         >
-            {uniqueSlugs.map(slug => (
-              <option key={slug} value={slug}>
-                 {slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
-              </option>
-            ))}
-         </select>
+         
+         <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+            {/* Division Dropdown */}
+            <select 
+               value={activeCategory}
+               onChange={(e) => setActiveCategory(e.target.value as any)}
+               className="w-full sm:w-auto min-w-[180px] p-3 rounded-lg border-2 border-slate-200 bg-white font-bold text-slate-700 outline-none focus:border-indigo-500 transition-colors cursor-pointer"
+            >
+               <option value="Residential">Residential Division</option>
+               <option value="Commercial">Commercial Division</option>
+            </select>
+
+            {/* Page Dropdown */}
+            <select 
+               value={selectedSlug}
+               onChange={(e) => setSelectedSlug(e.target.value)}
+               className="w-full sm:w-auto min-w-[250px] p-3 rounded-lg border-2 border-slate-200 bg-white font-bold text-indigo-700 outline-none focus:border-indigo-500 transition-colors cursor-pointer"
+            >
+               {currentAvailableSlugs.map(slug => (
+                 <option key={slug} value={slug}>
+                    {slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                 </option>
+               ))}
+            </select>
+         </div>
       </div>
       
-      {uniqueSlugs.length > 0 ? (
+      {currentAvailableSlugs.length > 0 ? (
         <div className="flex flex-col lg:flex-row">
           {/* Left Sub-Tabs */}
           <div className="w-full lg:w-64 border-b lg:border-b-0 lg:border-r border-slate-200 bg-slate-50/50 flex flex-row lg:flex-col shrink-0 overflow-x-auto lg:overflow-visible">
