@@ -220,4 +220,109 @@ export const getSortedProjects = () => {
     });
 };
 
+export const hydrateProjectsWithCMS = (staticProjects: ProjectType[], globalContent: any[]): ProjectType[] => {
+  const projectKeys = globalContent.filter(c => c.key.startsWith('project.'));
+  if (projectKeys.length === 0) return staticProjects;
+
+  // Group overrides by slug
+  const overrides: Record<string, Record<string, string>> = {};
+  projectKeys.forEach(item => {
+    const parts = item.key.split('.');
+    if (parts.length >= 3) {
+      const slug = parts[1];
+      const field = parts.slice(2).join('.');
+      if (!overrides[slug]) overrides[slug] = {};
+      if (item.value !== null && item.value !== undefined) {
+        overrides[slug][field] = item.value;
+      }
+    }
+  });
+
+  // Map existing projects first
+  const clonedProjects = staticProjects.map(p => {
+    const over = overrides[p.slug];
+    if (!over) return p;
+    
+    return {
+      ...p,
+      title: over.title || p.title,
+      category: over.category || p.category,
+      division: over.division || p.division,
+      location: over.location || p.location,
+      heroImage: over.heroImage || p.heroImage,
+      metrics: {
+        sqft: over.metrics_sqft || p.metrics.sqft,
+        timeline: over.metrics_timeline || p.metrics.timeline,
+        scope: over.metrics_scope || p.metrics.scope
+      },
+      challenge: {
+        headline: over.challenge_headline || p.challenge.headline,
+        description: over.challenge_desc || p.challenge.description
+      },
+      solution: {
+        headline: over.solution_headline || p.solution.headline,
+        description: over.solution_desc || p.solution.description
+      },
+      testimonial: {
+        quote: over.testimonial_quote || p.testimonial.quote,
+        author: over.testimonial_author || p.testimonial.author,
+        role: over.testimonial_role || p.testimonial.role
+      },
+      gallery: [
+        over.gallery_1 || p.gallery[0],
+        over.gallery_2 || p.gallery[1],
+        over.gallery_3 || p.gallery[2],
+        over.gallery_4 || p.gallery[3]
+      ].filter(Boolean) as string[],
+    };
+  });
+
+  // Identify custom slugs that do NOT exist in staticProjects
+  const staticSlugs = new Set(staticProjects.map(p => p.slug));
+  const newSlugs = Object.keys(overrides).filter(s => !staticSlugs.has(s));
+
+  newSlugs.forEach(slug => {
+    const over = overrides[slug];
+    
+    // Look up lat/lng based on location if possible, otherwise default Toronto
+    const locData = LOCATIONS.find(l => l.name === over.location);
+    const lat = locData?.baseLat || 43.65107;
+    const lng = locData?.baseLng || -79.347015;
+
+    clonedProjects.push({
+      slug,
+      title: over.title || "Untitled Execution",
+      category: over.category || "Custom Design",
+      division: over.division || "Residential",
+      location: over.location || "Toronto",
+      lat,
+      lng,
+      heroImage: over.heroImage || "/optimized_v2/hero_res_custom.webp",
+      metrics: {
+        sqft: over.metrics_sqft || "Custom",
+        timeline: over.metrics_timeline || "Custom",
+        scope: over.metrics_scope || "Bespoke implementation"
+      },
+      challenge: {
+        headline: over.challenge_headline || "Architectural Constraints",
+        description: over.challenge_desc || "Custom execution requiring specific precision."
+      },
+      solution: {
+        headline: over.solution_headline || "Strategic Deployment",
+        description: over.solution_desc || "Deployed master craftsmen to finalize the objective."
+      },
+      testimonial: {
+        quote: over.testimonial_quote || "Exceptional execution.",
+        author: over.testimonial_author || "Private Client",
+        role: over.testimonial_role || ""
+      },
+      gallery: [
+        over.gallery_1, over.gallery_2, over.gallery_3, over.gallery_4
+      ].filter(Boolean) as string[],
+    });
+  });
+
+  return clonedProjects;
+};
+
 // Total generated items exported at runtime: Exactly 210.

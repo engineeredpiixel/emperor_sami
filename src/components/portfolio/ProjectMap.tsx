@@ -7,7 +7,7 @@ import dynamic from "next/dynamic";
 const Map = dynamic(() => import("pigeon-maps").then((m) => m.Map as ComponentType<any>), { ssr: false });
 const Overlay = dynamic(() => import("pigeon-maps").then((m) => m.Overlay as ComponentType<any>), { ssr: false });
 
-export default function ProjectMap({ data }: { data: ProjectType }) {
+export default function ProjectMap({ data, overrideTitle }: { data: ProjectType, overrideTitle?: string }) {
   const containerRef = useRef<HTMLElement>(null);
   const [inView, setInView] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
@@ -29,7 +29,7 @@ export default function ProjectMap({ data }: { data: ProjectType }) {
         {/* Narrative Side */}
         <div className={`w-full md:w-5/12 flex flex-col transition-all duration-1000 ${inView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'}`}>
            <div className="flex items-center gap-3 mb-6">
-              <span className="text-[#D8A02A] text-xs font-black tracking-[0.4em] uppercase">Geographic Node</span>
+              <span className="text-[#D8A02A] text-xs font-black tracking-[0.4em] uppercase">{overrideTitle || "Geographic Node"}</span>
               <div className="h-[1px] w-12 bg-[#D8A02A]" />
            </div>
            

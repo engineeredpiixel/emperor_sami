@@ -5,6 +5,7 @@ import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { ChevronDown, Search, Menu, LogOut, Loader2, Save, UploadCloud } from "lucide-react";
+import { getSortedProjects } from "@/lib/projectsData";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface ContentItem {
@@ -437,6 +438,17 @@ export default function AdminDashboard() {
             />
           ) : activeSection === "page_service_inner" ? (
             <ServiceInnerPagesEditor
+              content={filteredContent}
+              edits={edits}
+              saving={saving}
+              saved={saved}
+              uploadingKey={uploadingKey}
+              setEdits={setEdits}
+              handleSave={handleSave}
+              handleImageUpload={handleImageUpload}
+            />
+          ) : activeSection === "page_projects_inner" ? (
+            <ProjectInnerPagesEditor
               content={filteredContent}
               edits={edits}
               saving={saving}
@@ -1632,6 +1644,227 @@ function ServiceInnerPagesEditor({ content, edits, saving, saved, uploadingKey, 
           <p className="text-slate-500">No sub-pages detected in the database.</p>
         </div>
       )}
+    </div>
+  );
+}
+
+// ─── Project Inner Pages Editor ───────────────────────────────────────────────
+function ProjectInnerPagesEditor({ content, edits, saving, saved, uploadingKey, setEdits, handleSave, handleImageUpload }: any) {
+  const LOCATIONS = ["Toronto", "Oakville", "Vaughan", "Richmond Hill", "Markham", "Burlington", "Newmarket", "King City", "Mississauga", "Etobicoke", "Beverly Hills", "Los Angeles"];
+  const CATEGORIES = ["New Construction", "Custom Design", "Quality Materials", "Turnkey Solutions", "Kitchen Remodeling", "Bathroom Remodeling", "Room Additions", "Whole Home Renovations", "Open Concepts", "Home Theaters", "Guest Suites", "Recreation Rooms", "Decks & Porches", "Roofing", "Siding", "Windows & Doors", "Fence Installation", "Ground-Up Construction", "Design-Build Services", "Structural Material Sourcing", "Turnkey Facility Solutions", "Tenant Build-Outs", "Vanilla Shell Finish", "Office Space Modernization", "ADA Compliance Retrofitting", "Adaptive Reuse Conversions", "Executive Suite Construction", "Breakroom & Cafeteria Builds", "Acoustic Partitioning", "Commercial Roofing Systems", "Architectural Facade Upgrades", "Storefront Glazing & Entry", "Perimeter Security Fencing"];
+  const DIVISIONS = ["Residential", "Commercial"];
+
+  const staticProjects = getSortedProjects();
+  const dbSlugs = Array.from(new Set(content.map((c: any) => {
+     const parts = c.key.split('.');
+     if (parts[0] === 'project' && parts.length >= 3) return parts[1];
+     return null;
+  }))).filter(Boolean) as string[];
+  const allSlugs = Array.from(new Set([...staticProjects.map(p => p.slug), ...dbSlugs]));
+
+  const [selectedSlug, setSelectedSlug] = useState<string>(allSlugs[0] || "");
+  const [newSlug, setNewSlug] = useState("");
+  const [isAddingNew, setIsAddingNew] = useState(false);
+
+  const handleAddNew = async () => {
+    if (!newSlug) return;
+    const cleanSlug = newSlug.toLowerCase().replace(/[^a-z0-9-]/g, '-');
+    alert("Project workspace initialized! The fields will now render for " + cleanSlug);
+    setSelectedSlug(cleanSlug);
+    setIsAddingNew(false);
+    setNewSlug("");
+  };
+
+  // Base configuration structure
+  const currentProjectPrefix = `project.${selectedSlug}.`;
+  const requiredKeys = [
+    { key: 'title', type: 'text', label: 'Project Name (Hero)' },
+    { key: 'heroImage', type: 'image', label: 'Hero Background Image' },
+    { key: 'metrics_sqft', type: 'text', label: 'Metrics: Square Footage' },
+    { key: 'metrics_timeline', type: 'text', label: 'Metrics: Timeline' },
+    { key: 'metrics_scope', type: 'textarea', label: 'Metrics: Scope Detail' },
+    { key: 'challenge_headline', type: 'text', label: 'Constraint Analysis: Title' },
+    { key: 'challenge_desc', type: 'textarea', label: 'Constraint Analysis: Paragraph' },
+    { key: 'solution_headline', type: 'text', label: 'Tactical Solution: Title' },
+    { key: 'solution_desc', type: 'textarea', label: 'Tactical Solution: Paragraph' },
+    { key: 'testimonial_quote', type: 'textarea', label: 'Review / Testimonial: Quote' },
+    { key: 'testimonial_author', type: 'text', label: 'Review: Author Name (e.g., Alexander V.)' },
+    { key: 'testimonial_role', type: 'text', label: 'Review: Star Name / Other Location Data' },
+    { key: 'gallery_1', type: 'image', label: 'Final Execution Gallery Image 1' },
+    { key: 'gallery_2', type: 'image', label: 'Final Execution Gallery Image 2' },
+    { key: 'gallery_3', type: 'image', label: 'Final Execution Gallery Image 3' },
+    { key: 'gallery_4', type: 'image', label: 'Final Execution Gallery Image 4' },
+  ];
+
+  // Global settings for projects (featured project CTA text and node section)
+  const globalKeys = [
+    { key: 'project_global_footer_title', type: 'text', label: 'Featured Projects Title' },
+    { key: 'project_global_footer_desc', type: 'textarea', label: 'Featured Projects Description' },
+    { key: 'project_global_footer_btn', type: 'text', label: 'Portfolio Button Text' },
+    { key: 'project_global_geographic_title', type: 'text', label: 'Geographic Node Map Title' },
+  ];
+
+  // Fake inject to show in UI
+  const slugContent = requiredKeys.map(rk => {
+    const dbMatch = content.find((c: any) => c.key === `${currentProjectPrefix}${rk.key}`);
+    return dbMatch || { id: `temp-${rk.key}`, section: "page_projects_inner", key: `${currentProjectPrefix}${rk.key}`, value: "", type: rk.type, label: rk.label };
+  });
+
+  const globalContentFields = globalKeys.map(gk => {
+    const dbMatch = content.find((c: any) => c.key === gk.key);
+    return dbMatch || { id: `temp-${gk.key}`, section: "page_projects_inner", key: gk.key, value: "", type: gk.type, label: gk.label };
+  });
+
+  const tabs = [
+    { id: 'hero', label: 'Hero & Classification', filter: (k: string) => k.includes('.title') || k.includes('.heroImage') },
+    { id: 'metrics', label: 'Final Execution Metrics', filter: (k: string) => k.includes('.metrics_') },
+    { id: 'solution', label: 'Constraint / Solutions', filter: (k: string) => k.includes('.challenge_') || k.includes('.solution_') },
+    { id: 'testimonial', label: 'Reviews', filter: (k: string) => k.includes('.testimonial_') },
+    { id: 'gallery', label: 'Final Execution Gallery', filter: (k: string) => k.includes('.gallery_') },
+    { id: 'globals', label: 'Global Page Settings', filter: () => false } // custom renderer
+  ];
+
+  const [activeTab, setActiveTab] = useState(tabs[0].id);
+  const currentFilter = tabs.find(t => t.id === activeTab)?.filter || (() => true);
+  const tabContent = slugContent.filter((c: any) => currentFilter(c.key));
+
+  const CustomDropdown = ({ sysKey, label, options }: { sysKey: string, label: string, options: string[] }) => {
+      const finalKey = `${currentProjectPrefix}${sysKey}`;
+      const value = edits[finalKey] ?? "";
+      return (
+         <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+            <div className="flex items-center justify-between mb-4">
+              <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider">{label}</label>
+            </div>
+            <select 
+              value={value}
+              onChange={(e) => setEdits((prev: any) => ({ ...prev, [finalKey]: e.target.value }))}
+              className="w-full bg-slate-50 border border-slate-200 text-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 font-medium"
+            >
+               <option value="">Default Config / Auto-assigned</option>
+               {options.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+            </select>
+            <div className="mt-4 flex justify-end">
+               <button
+                  onClick={() => handleSave(finalKey)}
+                  disabled={saving[finalKey]}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all
+                     ${saved[finalKey] ? "bg-emerald-500 text-white" : "bg-indigo-600 text-white hover:bg-indigo-700"}`}
+               >
+                 {saving[finalKey] ? "Saving..." : saved[finalKey] ? "Saved" : "Save Dropdown"}
+               </button>
+            </div>
+         </div>
+      );
+  };
+
+  return (
+    <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm max-w-7xl mx-auto flex flex-col">
+      <div className="p-6 sm:p-8 border-b border-slate-200 bg-slate-50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+         <div>
+            <h2 className="text-xl font-black text-slate-800 uppercase tracking-widest mb-1">Project Architecture CMS</h2>
+            <p className="text-slate-500 text-sm">Select an existing project or inject a brand new architectural execution.</p>
+         </div>
+         
+         <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+            {isAddingNew ? (
+               <div className="flex flex-col sm:flex-row gap-2">
+                 <input 
+                    type="text"
+                    placeholder="Project Slug (e.g. miami-mansion)"
+                    value={newSlug}
+                    onChange={e => setNewSlug(e.target.value)}
+                    className="p-3 rounded-lg border-2 border-indigo-300 bg-white"
+                 />
+                 <button onClick={handleAddNew} className="px-4 py-3 bg-indigo-600 text-white rounded-lg font-bold">Create Grid Node</button>
+                 <button onClick={() => setIsAddingNew(false)} className="px-4 py-3 bg-red-100 text-red-600 rounded-lg font-bold">Cancel</button>
+               </div>
+            ) : (
+               <>
+                 <select 
+                    value={selectedSlug}
+                    onChange={(e) => setSelectedSlug(e.target.value)}
+                    className="w-full sm:w-auto min-w-[300px] p-3 rounded-lg border-2 border-slate-200 bg-white font-bold text-indigo-700"
+                 >
+                    {allSlugs.map((slug: string) => (
+                      <option key={slug} value={slug}>
+                         {slug}
+                      </option>
+                    ))}
+                 </select>
+                 <button onClick={() => setIsAddingNew(true)} className="px-6 py-3 bg-slate-900 text-white rounded-lg font-bold shadow-md hover:bg-slate-800 tracking-wide uppercase text-xs">
+                    + Add New Project
+                 </button>
+               </>
+            )}
+         </div>
+      </div>
+      
+      <div className="flex flex-col lg:flex-row">
+        <div className="w-full lg:w-64 border-b lg:border-b-0 lg:border-r border-slate-200 bg-slate-50/50 flex flex-row lg:flex-col shrink-0 overflow-x-auto lg:overflow-visible">
+          {tabs.map(tab => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`flex items-center justify-between py-4 sm:py-5 px-6 font-bold uppercase tracking-wider transition-all text-left whitespace-nowrap
+                ${activeTab === tab.id 
+                  ? "bg-white text-indigo-600 lg:border-r-[3px] border-indigo-600" 
+                  : "text-slate-500 hover:text-slate-800 hover:bg-slate-100"}
+              `}
+            >
+              <span>{tab.label}</span>
+            </button>
+          ))}
+        </div>
+        
+        <div className="flex-1 p-6 sm:p-10 bg-[#FBFBFB] overflow-y-auto max-h-[70vh]">
+          {activeTab === 'globals' ? (
+             <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                {globalContentFields.map((item: any) => (
+                   <ContentField
+                     key={item.key}
+                     item={item}
+                     value={edits[item.key] ?? ""}
+                     saving={saving[item.key]}
+                     saved={saved[item.key]}
+                     uploading={uploadingKey === item.key}
+                     onChange={(val: string) => setEdits((prev: any) => ({ ...prev, [item.key]: val }))}
+                     onSave={() => handleSave(item.key)}
+                     onImageUpload={(file: File) => handleImageUpload(item.key, file)}
+                   />
+                ))}
+             </div>
+          ) : (
+            <>
+               <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-6">
+                 {activeTab === 'hero' && (
+                    <>
+                       <CustomDropdown sysKey="division" label="Division / Market Sector" options={DIVISIONS} />
+                       <CustomDropdown sysKey="category" label="Service Category Type" options={CATEGORIES} />
+                       <CustomDropdown sysKey="location" label="Geographic Location Dropdown" options={LOCATIONS} />
+                    </>
+                 )}
+               </div>
+
+               <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                 {tabContent.map((item: any) => (
+                   <ContentField
+                     key={item.key}
+                     item={item}
+                     value={edits[item.key] ?? ""}
+                     saving={saving[item.key]}
+                     saved={saved[item.key]}
+                     uploading={uploadingKey === item.key}
+                     onChange={(val: string) => setEdits((prev: any) => ({ ...prev, [item.key]: val }))}
+                     onSave={() => handleSave(item.key)}
+                     onImageUpload={(file: File) => handleImageUpload(item.key, file)}
+                   />
+                 ))}
+               </div>
+            </>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

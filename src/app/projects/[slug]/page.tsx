@@ -19,8 +19,12 @@ import CTASection from "@/components/CTASection";
 import ImageMaskDefs from "@/components/ui/image-mask";
 import ProjectsSection from "@/components/ProjectsSection";
 
-// Generate all 8 master project routes natively at build time for extreme SEO performance
+import { getSortedProjects, hydrateProjectsWithCMS } from "@/lib/projectsData";
+import { getGlobalContent } from "@/app/layout";
+
+// Generate static params for optimal Next.js build performance
 export async function generateStaticParams() {
+  // For completely dynamic pages created later in CMS, Next.js 'dynamicParams' generates them on the fly if true (default)
   return Object.keys(masterProjects).map((slug) => ({
     slug: slug,
   }));
@@ -29,7 +33,10 @@ export async function generateStaticParams() {
 // Dynamically inject the SEO tags based on the target project
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const resolvedParams = await params;
-  const data = masterProjects[resolvedParams.slug];
+  const globalContent = await getGlobalContent();
+  const rawProjects = getSortedProjects();
+  const allProjects = hydrateProjectsWithCMS(rawProjects, globalContent);
+  const data = allProjects.find(p => p.slug === resolvedParams.slug);
 
   if (!data) return {};
 
@@ -41,7 +48,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = await params;
-  const data = masterProjects[resolvedParams.slug];
+  const globalContent = await getGlobalContent();
+  const rawProjects = getSortedProjects();
+  const allProjects = hydrateProjectsWithCMS(rawProjects, globalContent);
+  const data = allProjects.find(p => p.slug === resolvedParams.slug);
 
   // Failsafe 404
   if (!data) notFound();
@@ -60,14 +70,21 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       <ProjectTestimonial data={data} />
 
       {/* ── GEOGRAPHIC EXECUTION MAP ── */}
-      <ProjectMap data={data} />
+      <ProjectMap 
+         data={data} 
+         overrideTitle={globalContent.find(c => c.key === 'project_global_geographic_title')?.value} 
+      />
 
       {/* ── PROJECT CINEMATIC GALLERY ── */}
       <ProjectGallery data={data} />
 
       {/* ── RELATED PORTFOLIO CAROUSEL ── */}
       <div className="bg-[#111]">
-         <ProjectsSection />
+         <ProjectsSection 
+            overrideTitle={globalContent.find(c => c.key === 'project_global_footer_title')?.value}
+            overrideDesc={globalContent.find(c => c.key === 'project_global_footer_desc')?.value}
+            overrideCta={globalContent.find(c => c.key === 'project_global_footer_btn')?.value}
+         />
       </div>
 
       {/* ── GLOBAL 7-STAGE TRUST FUNNEL SEQUENCE ── */}

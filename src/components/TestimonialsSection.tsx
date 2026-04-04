@@ -95,7 +95,7 @@ export default function TestimonialsSection() {
              <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 mb-6">
                 <div className="flex items-center gap-3">
                   <div className="h-[2px] w-8 bg-[#F9A825]" />
-                  <span className="text-[#F9A825] text-xs font-black tracking-[0.4em] uppercase">{t("testimonials.badge_text")}</span>
+                  <span className="text-[#F9A825] text-xs font-black tracking-[0.4em] uppercase">{t("sect_testimonials.badge_text")}</span>
                 </div>
                 {/* Overall Google Review Badge */}
                 <div className="flex items-center gap-2.5 bg-white/5 px-3 py-1.5 rounded border border-white/10 w-fit backdrop-blur-sm">
@@ -105,17 +105,17 @@ export default function TestimonialsSection() {
                     <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
                     <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
                   </svg>
-                  <span className="text-white text-[13px] font-bold mt-px">{t("testimonials.rating_value") || "5.0"}</span>
+                  <span className="text-white text-[13px] font-bold mt-px">{t("sect_testimonials.rating_value") || "5.0"}</span>
                   <div className="flex gap-0.5">
                     {[...Array(5)].map((_, i) => (
                       <svg key={i} className="w-3.5 h-3.5 text-[#F9A825]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" /></svg>
                     ))}
                   </div>
-                  <span className="text-gray-400 text-[10px] uppercase tracking-wider font-bold ml-1 mt-0.5 whitespace-nowrap">{t("testimonials.reviews_count") || "84 Reviews"}</span>
+                  <span className="text-gray-400 text-[10px] uppercase tracking-wider font-bold ml-1 mt-0.5 whitespace-nowrap">{t("sect_testimonials.reviews_count") || "84 Reviews"}</span>
                 </div>
              </div>
              <h2 className="text-4xl sm:text-5xl lg:text-7xl font-black text-white leading-[1.05] tracking-tighter">
-                {t("testimonials.headline")}
+                {t("sect_testimonials.headline")}
              </h2>
           </div>
           

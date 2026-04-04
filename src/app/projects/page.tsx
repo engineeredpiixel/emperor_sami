@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { masterProjects, getSortedProjects } from "@/lib/projectsData";
+import { masterProjects, getSortedProjects, hydrateProjectsWithCMS } from "@/lib/projectsData";
+import { getGlobalContent } from "@/app/layout";
 import ProjectsClientGrid from "@/components/portfolio/ProjectsClientGrid";
 import ProjectsHero from "@/components/portfolio/ProjectsHero";
 import AboutSection from "@/components/AboutSection";
@@ -14,8 +15,10 @@ export const metadata: Metadata = {
   description: "Explore the apex of luxury custom home building across the Greater Toronto Area. Unrivaled structural supremacy and architectural elegance.",
 };
 
-export default function ProjectsMasterPage() {
-  const allProjects = getSortedProjects();
+export default async function ProjectsMasterPage() {
+  const globalContent = await getGlobalContent();
+  const rawProjects = getSortedProjects();
+  const allProjects = hydrateProjectsWithCMS(rawProjects, globalContent);
 
   return (
     <main className="flex-1 bg-[#FAF9F6] min-h-screen -mt-[130px]">
