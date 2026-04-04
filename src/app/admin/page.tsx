@@ -1678,8 +1678,8 @@ function ProjectInnerPagesEditor({ content, edits, saving, saved, uploadingKey, 
   const [addedSlugs, setAddedSlugs] = useState<string[]>([]);
   const allSlugs = Array.from(new Set([...staticProjects.map(p => p.slug), ...dbSlugs, ...addedSlugs]));
 
-  const [selectedSlug, setSelectedSlug] = useState<string>(allSlugs[0] || "");
-  const [stagedSlug, setStagedSlug] = useState<string>(allSlugs[0] || "");
+  const [selectedSlug, setSelectedSlug] = useState<string>("");
+  const [stagedSlug, setStagedSlug] = useState<string>("");
   const [newSlug, setNewSlug] = useState("");
   const [isAddingNew, setIsAddingNew] = useState(false);
   const [filterDivision, setFilterDivision] = useState<string>("All");
@@ -1719,10 +1719,33 @@ function ProjectInnerPagesEditor({ content, edits, saving, saved, uploadingKey, 
   }, [projectsMeta, filterDivision, filterCategory]);
 
   useEffect(() => {
-    if (filteredSlugs.length > 0 && !filteredSlugs.includes(stagedSlug)) {
-       setStagedSlug(filteredSlugs[0]);
+    if (filterDivision !== "All" || filterCategory !== "All") {
+       if (filteredSlugs.length > 0 && !filteredSlugs.includes(stagedSlug)) {
+          setStagedSlug(filteredSlugs[0]);
+       }
+    } else {
+       if (filteredSlugs.length > 0 && stagedSlug && !filteredSlugs.includes(stagedSlug)) {
+          setStagedSlug("");
+       }
     }
-  }, [filteredSlugs, stagedSlug]);
+  }, [filteredSlugs, stagedSlug, filterDivision, filterCategory]);
+
+  const supabase = createClient();
+  const handleDeleteProject = async (slugToDelete: string) => {
+    if (!slugToDelete) return;
+    if (!confirm(`Are you absolutely sure you want to delete ALL custom data for '${slugToDelete}'? This cannot be undone.`)) return;
+
+    const { error } = await supabase.from("site_content").delete().like("key", `project.${slugToDelete}.%`);
+    if (error) {
+       alert("Failed to delete from database: " + error.message);
+       return;
+    }
+
+    setAddedSlugs(prev => prev.filter(s => s !== slugToDelete));
+    if (selectedSlug === slugToDelete) setSelectedSlug("");
+    if (stagedSlug === slugToDelete) setStagedSlug("");
+    alert("Project database entries successfully deleted.");
+  };
 
   const handleAddNew = async () => {
     if (!newSlug) return;
@@ -1890,6 +1913,7 @@ function ProjectInnerPagesEditor({ content, edits, saving, saved, uploadingKey, 
                   onChange={(e) => setStagedSlug(e.target.value)}
                   className="flex-1 w-full p-3.5 rounded-lg border-2 border-indigo-200 bg-indigo-50/50 hover:bg-indigo-50 font-bold text-indigo-800 transition-colors cursor-pointer"
                >
+                  <option value="" disabled>-- Select a Project to Update --</option>
                   {filteredSlugs.map((slug: string) => (
                     <option key={slug} value={slug}>
                        {slug}
@@ -1898,16 +1922,26 @@ function ProjectInnerPagesEditor({ content, edits, saving, saved, uploadingKey, 
                </select>
                <button 
                   onClick={() => setSelectedSlug(stagedSlug)} 
-                  className="w-full sm:w-auto px-6 py-3.5 bg-indigo-600 text-white rounded-lg font-black shadow-md hover:bg-indigo-700 tracking-wider uppercase text-xs transition-colors shrink-0"
+                  disabled={!stagedSlug}
+                  className="w-full sm:w-auto px-6 py-3.5 bg-indigo-600 text-white rounded-lg font-black shadow-md hover:bg-indigo-700 disabled:bg-slate-300 disabled:cursor-not-allowed tracking-wider uppercase text-xs transition-colors shrink-0"
                >
                   Update Project
                </button>
+               {stagedSlug && (
+                  <button 
+                     onClick={() => handleDeleteProject(stagedSlug)} 
+                     className="w-full sm:w-auto px-4 py-3.5 bg-red-100 text-red-600 rounded-lg font-black shadow-md hover:bg-red-200 tracking-wider uppercase text-xs transition-colors shrink-0"
+                  >
+                     Delete
+                  </button>
+               )}
             </div>
          </div>
       </div>
       
-      <div className="flex flex-col lg:flex-row">
-        <div className="w-full lg:w-64 border-b lg:border-b-0 lg:border-r border-slate-200 bg-slate-50/50 flex flex-row lg:flex-col shrink-0 overflow-x-auto lg:overflow-visible">
+      {selectedSlug ? (
+        <div className="flex flex-col lg:flex-row">
+          <div className="w-full lg:w-64 border-b lg:border-b-0 lg:border-r border-slate-200 bg-slate-50/50 flex flex-row lg:flex-col shrink-0 overflow-x-auto lg:overflow-visible">
           {tabs.map(tab => (
             <button
               key={tab.id}
@@ -1973,6 +2007,15 @@ function ProjectInnerPagesEditor({ content, edits, saving, saved, uploadingKey, 
           )}
         </div>
       </div>
+      ) : (
+        <div className="p-12 text-center bg-slate-50 border-t border-slate-200 flex-1 flex flex-col items-center justify-center min-h-[300px]">
+          <div className="w-16 h-16 bg-slate-200 rounded-full flex items-center justify-center mb-4 shadow-sm">
+             <Search className="w-8 h-8 text-slate-400" />
+          </div>
+          <p className="text-slate-500 font-bold text-lg uppercase tracking-wide">Select a project to begin mapping</p>
+          <p className="text-slate-400 text-sm mt-2 max-w-md mx-auto">Use the dropdown menu to find an existing Project Node, or click '+ Add New Project' to inject a completely blank project architecture.</p>
+        </div>
+      )}
     </div>
   );
 }
