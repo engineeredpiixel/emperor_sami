@@ -61,7 +61,7 @@ export default function CommitmentSection({ hideButton = false }: { hideButton?:
     >
       {/* Background Texture Overlay */}
       <Image
-        src="/blueprint_bg_1774895613394.png"
+        src={t("about.promise.bg_img", "/blueprint_bg_1774895613394.png")}
         alt="Blueprint Background"
         fill
         className="object-cover opacity-10 pointer-events-none mix-blend-multiply"
