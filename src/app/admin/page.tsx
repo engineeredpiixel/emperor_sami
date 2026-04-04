@@ -1665,6 +1665,47 @@ function ProjectInnerPagesEditor({ content, edits, saving, saved, uploadingKey, 
   const [selectedSlug, setSelectedSlug] = useState<string>(allSlugs[0] || "");
   const [newSlug, setNewSlug] = useState("");
   const [isAddingNew, setIsAddingNew] = useState(false);
+  const [filterDivision, setFilterDivision] = useState<string>("All");
+  const [filterCategory, setFilterCategory] = useState<string>("All");
+
+  const projectsMeta = useMemo(() => {
+    return allSlugs.map(slug => {
+      const staticP = staticProjects.find(p => p.slug === slug);
+      const dbDivision = content.find((c: any) => c.key === `project.${slug}.division`)?.value;
+      const dbCategory = content.find((c: any) => c.key === `project.${slug}.category`)?.value;
+      return {
+         slug,
+         division: dbDivision || staticP?.division || "Unknown",
+         category: dbCategory || staticP?.category || "Unknown",
+      };
+    });
+  }, [allSlugs, staticProjects, content]);
+
+  const availableCategories = useMemo(() => {
+    let cats = new Set<string>();
+    projectsMeta.forEach(p => {
+       if (filterDivision === "All" || p.division === filterDivision) {
+          if (p.category && p.category !== "Unknown") {
+              cats.add(p.category);
+          }
+       }
+    });
+    return Array.from(cats).sort();
+  }, [projectsMeta, filterDivision]);
+
+  const filteredSlugs = useMemo(() => {
+    return projectsMeta.filter(p => {
+       if (filterDivision !== "All" && p.division !== filterDivision) return false;
+       if (filterCategory !== "All" && p.category !== filterCategory) return false;
+       return true;
+    }).map(p => p.slug);
+  }, [projectsMeta, filterDivision, filterCategory]);
+
+  useEffect(() => {
+    if (filteredSlugs.length > 0 && !filteredSlugs.includes(selectedSlug)) {
+       setSelectedSlug(filteredSlugs[0]);
+    }
+  }, [filteredSlugs, selectedSlug]);
 
   const handleAddNew = async () => {
     if (!newSlug) return;
@@ -1784,22 +1825,45 @@ function ProjectInnerPagesEditor({ content, edits, saving, saved, uploadingKey, 
                  <button onClick={() => setIsAddingNew(false)} className="px-4 py-3 bg-red-100 text-red-600 rounded-lg font-bold">Cancel</button>
                </div>
             ) : (
-               <>
-                 <select 
-                    value={selectedSlug}
-                    onChange={(e) => setSelectedSlug(e.target.value)}
-                    className="w-full sm:w-auto min-w-[300px] p-3 rounded-lg border-2 border-slate-200 bg-white font-bold text-indigo-700"
-                 >
-                    {allSlugs.map((slug: string) => (
-                      <option key={slug} value={slug}>
-                         {slug}
-                      </option>
-                    ))}
-                 </select>
-                 <button onClick={() => setIsAddingNew(true)} className="px-6 py-3 bg-slate-900 text-white rounded-lg font-bold shadow-md hover:bg-slate-800 tracking-wide uppercase text-xs">
-                    + Add New Project
-                 </button>
-               </>
+               <div className="flex flex-col items-end gap-2">
+                 <div className="flex flex-wrap items-center gap-2 justify-end">
+                    <span className="text-xs font-bold text-slate-400 uppercase tracking-widest hidden sm:inline-block">Filter By:</span>
+                    <select 
+                       value={filterDivision} 
+                       onChange={e => { setFilterDivision(e.target.value); setFilterCategory("All"); }}
+                       className="text-xs font-bold p-2 border-2 border-slate-200 rounded-lg bg-white text-slate-700 w-full sm:w-auto"
+                    >
+                       <option value="All">All Divisions</option>
+                       <option value="Residential">Residential</option>
+                       <option value="Commercial">Commercial</option>
+                    </select>
+
+                    <select 
+                       value={filterCategory} 
+                       onChange={e => setFilterCategory(e.target.value)}
+                       className="text-xs font-bold p-2 border-2 border-slate-200 rounded-lg bg-white text-slate-700 w-full sm:w-auto max-w-[200px]"
+                    >
+                       <option value="All">All Categories</option>
+                       {availableCategories.map(c => <option key={c} value={c}>{c}</option>)}
+                    </select>
+                 </div>
+                 <div className="flex flex-col sm:flex-row gap-2 w-full justify-end">
+                    <select 
+                       value={selectedSlug}
+                       onChange={(e) => setSelectedSlug(e.target.value)}
+                       className="w-full sm:w-auto min-w-[300px] p-3 rounded-lg border-2 border-indigo-200 bg-indigo-50 font-bold text-indigo-700"
+                    >
+                       {filteredSlugs.map((slug: string) => (
+                         <option key={slug} value={slug}>
+                            {slug}
+                         </option>
+                       ))}
+                    </select>
+                    <button onClick={() => setIsAddingNew(true)} className="px-6 py-3 bg-slate-900 text-white rounded-lg font-bold shadow-md hover:bg-slate-800 tracking-wide uppercase text-xs">
+                       + Add New Project
+                    </button>
+                 </div>
+               </div>
             )}
          </div>
       </div>
