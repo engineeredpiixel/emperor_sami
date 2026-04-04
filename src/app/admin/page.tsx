@@ -1250,21 +1250,30 @@ function MegaMenuTabbedEditor({ content, edits, saving, saved, uploadingKey, set
   const tabContent = content.filter((item: any) => currentFilter(item.key));
 
   const getSubGroup = (key: string) => {
-    if (key.includes('.title') && !key.includes('.sec') && !key.includes('.step')) return "General Info";
-    if (key.includes('.desc') && !key.includes('.step')) return "General Info";
-    if (key.includes('.sec1')) return "Column 1";
-    if (key.includes('.sec2')) return "Column 2";
-    if (key.includes('.sec3')) return "Column 3";
-    if (key.includes('.sec4')) return "Column 4";
-    if (key.includes('.step1')) return "Step 1";
-    if (key.includes('.step2')) return "Step 2";
-    if (key.includes('.step3')) return "Step 3";
-    return "General Info";
+    if (key.includes('.title') && !key.includes('.sec') && !key.includes('.step')) return "general";
+    if (key.includes('.desc') && !key.includes('.step')) return "general";
+    if (key.includes('.sec1')) return "sec1";
+    if (key.includes('.sec2')) return "sec2";
+    if (key.includes('.sec3')) return "sec3";
+    if (key.includes('.sec4')) return "sec4";
+    if (key.includes('.step1')) return "sec1"; // map steps 1-3 to sec1-sec3 for simplicity of logic
+    if (key.includes('.step2')) return "sec2";
+    if (key.includes('.step3')) return "sec3";
+    return "general";
+  };
+
+  const getGroupLabel = (groupId: string) => {
+    if (groupId === "general") return "General Info";
+    const titleMatch = tabContent.find((f: any) => f.key.includes(`.${groupId}.title`) || f.key.includes(`.step${groupId.replace('sec', '')}.title`));
+    if (titleMatch) {
+      return edits[titleMatch.key] || titleMatch.value || `Column ${groupId.replace('sec', '')}`;
+    }
+    return `Column ${groupId.replace('sec', '')}`;
   };
 
   const subGroups = (Array.from(new Set(tabContent.map((f: any) => getSubGroup(f.key)))) as string[]).sort((a, b) => {
-    if (a === "General Info") return -1;
-    if (b === "General Info") return 1;
+    if (a === "general") return -1;
+    if (b === "general") return 1;
     return a.localeCompare(b);
   });
 
@@ -1303,7 +1312,7 @@ function MegaMenuTabbedEditor({ content, edits, saving, saved, uploadingKey, set
                         currentSubGroup === group ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/20" : "bg-white border border-slate-200 text-slate-500 hover:border-indigo-300 hover:text-indigo-600"
                     }`}
                  >
-                   {group}
+                   {getGroupLabel(group)}
                  </button>
               ))}
            </div>
@@ -1316,7 +1325,7 @@ function MegaMenuTabbedEditor({ content, edits, saving, saved, uploadingKey, set
               <div key={group} className="relative">
                 <div className="flex items-center gap-4 mb-6">
                   <h3 className="text-slate-800 font-extrabold text-lg uppercase tracking-wider">
-                    {group}
+                    {getGroupLabel(group)}
                   </h3>
                   <div className="flex-1 h-[1px] bg-slate-200"></div>
                 </div>
