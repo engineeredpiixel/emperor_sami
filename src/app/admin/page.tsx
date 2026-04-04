@@ -183,9 +183,11 @@ export default function AdminDashboard() {
 
   const filteredContent = content.filter(
     (item) =>
-      searchQuery === "" ||
+      (searchQuery === "" ||
       item.label.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.key.toLowerCase().includes(searchQuery.toLowerCase())
+      item.key.toLowerCase().includes(searchQuery.toLowerCase())) &&
+      item.key !== "navbar.btn_book_strategy" &&
+      item.key !== "navbar.btn_view_services"
   );
 
   const currentSection = sidebarSections.find((s) => s.id === activeSection);
