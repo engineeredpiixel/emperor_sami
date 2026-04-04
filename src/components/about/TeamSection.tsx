@@ -3,26 +3,27 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState, useRef } from "react";
-import { masterProjects } from "@/lib/projectsData";
-import { useCMS } from "@/components/CMSProvider";
+import { useCMS, useHydratedProjects } from "@/components/CMSProvider";
+import { useMemo } from "react";
 
 export default function TeamSection() {
   const { t } = useCMS();
+  const hydratedProjects = useHydratedProjects();
   const [inView, setInView] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
   // Directly query the database for 1 flagship project per business pillar
-  const corePillars = [
+  const corePillars = useMemo(() => [
     "Custom Home Building",
     "Architectural Support",
     "Project Management",
     "Home Renovations",
     "Basement Finishing",
     "Exterior Improvements"
-  ];
+  ], []);
 
-  const showcaseData = corePillars.map(pillar => {
-    const project = Object.values(masterProjects).find(p => p.category === pillar);
+  const showcaseData = useMemo(() => corePillars.map(pillar => {
+    const project = hydratedProjects.find(p => p.category === pillar);
     return {
       pillar: pillar,
       title: project?.title || "Flagship Project",
@@ -30,7 +31,7 @@ export default function TeamSection() {
       image: project?.heroImage || "/portfolio_lakefront_mansion_1774904298419.png",
       location: project?.location || "Greater Toronto Area",
     };
-  });
+  }), [hydratedProjects, corePillars]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => {

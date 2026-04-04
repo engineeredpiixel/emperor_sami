@@ -2,24 +2,26 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState, useCallback } from "react";
-import { useCMS } from "@/components/CMSProvider";
+import { useCMS, useHydratedProjects } from "@/components/CMSProvider";
 
 import Link from "next/link";
-import { masterProjects } from "@/lib/projectsData";
-
-const testimonials = Object.values(masterProjects).slice(0, 10).map(p => ({
-  project: p.title,
-  name: p.testimonial.author,
-  title: p.testimonial.role || p.category,
-  text: p.testimonial.quote,
-  image: p.heroImage,
-  slug: p.slug
-}));
+import { useMemo } from "react";
 
 const NUM_PILLARS = 4;
 
 export default function TestimonialsSection() {
   const { t } = useCMS();
+  const hydratedProjects = useHydratedProjects();
+
+  const testimonials = useMemo(() => hydratedProjects.slice(0, 10).map(p => ({
+    project: p.title,
+    name: p.testimonial.author,
+    title: p.testimonial.role || p.category,
+    text: p.testimonial.quote,
+    image: p.heroImage,
+    slug: p.slug
+  })), [hydratedProjects]);
+
   const [visible, setVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 

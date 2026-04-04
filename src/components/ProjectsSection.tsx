@@ -2,19 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { CardCarousel } from "@/components/ui/card-carousel";
-import { useCMS } from "@/components/CMSProvider";
-
-import { masterProjects } from "@/lib/projectsData";
-
-// Slice the database at 20 projects to ensure absolute 60FPS hardware acceleration
-const projectImages = Object.values(masterProjects).slice(0, 20).map(p => ({
-   src: p.heroImage,
-   title: p.title,
-   category: p.category,
-   division: p.division,
-   location: p.location,
-   slug: p.slug
-}));
+import { useCMS, useHydratedProjects } from "@/components/CMSProvider";
+import { useMemo } from "react";
 
 export default function ProjectsSection({ 
   overrideTitle, 
@@ -26,6 +15,18 @@ export default function ProjectsSection({
   overrideCta?: string 
 }) {
   const { t } = useCMS();
+  const hydratedProjects = useHydratedProjects();
+
+  // Slice the database at 20 projects to ensure absolute 60FPS hardware acceleration
+  const projectImages = useMemo(() => hydratedProjects.slice(0, 20).map(p => ({
+     src: p.heroImage,
+     title: p.title,
+     category: p.category,
+     division: p.division,
+     location: p.location,
+     slug: p.slug
+  })), [hydratedProjects]);
+
   const [visible, setVisible] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);

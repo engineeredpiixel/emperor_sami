@@ -3,7 +3,7 @@
 import { useState, useEffect, ComponentType } from "react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
-import { useCMS } from "@/components/CMSProvider";
+import { useCMS, useHydratedProjects } from "@/components/CMSProvider";
 
 const Map = dynamic(() => import("pigeon-maps").then((m) => m.Map as ComponentType<any>), { ssr: false });
 const Overlay = dynamic(() => import("pigeon-maps").then((m) => m.Overlay as ComponentType<any>), { ssr: false });
@@ -28,28 +28,35 @@ const locationsData = [
   { name: "High Park, ON", slug: "high-park", lat: 43.6465, lng: -79.4637 }
 ];
 
-import { masterProjects, getSortedProjects } from "@/lib/projectsData";
-
-const projects = getSortedProjects().map((p, i) => ({
-  id: i,
-  category: p.category,
-  title: p.title,
-  address: p.location,
-  lat: p.lat,
-  lng: p.lng,
-  image: p.heroImage,
-  slug: p.slug,
-  size: p.metrics.sqft,
-  distance: Math.floor(Math.random() * 25) + 1,
-  recent: Math.floor(Math.random() * 100),
-}));
-
+import { useMemo } from "react";
 
 export default function ServiceAreaSection({ hideButton = false }: { hideButton?: boolean }) {
   const { t } = useCMS();
-  const [activeProject, setActiveProject] = useState(projects[0]);
+  const hydratedProjects = useHydratedProjects();
+
+  const projects = useMemo(() => hydratedProjects.map((p, i) => ({
+    id: i,
+    category: p.category,
+    title: p.title,
+    address: p.location,
+    lat: p.lat,
+    lng: p.lng,
+    image: p.heroImage,
+    slug: p.slug,
+    size: p.metrics.sqft,
+    distance: Math.floor(Math.random() * 25) + 1,
+    recent: Math.floor(Math.random() * 100),
+  })), [hydratedProjects]);
+
+  const [activeProject, setActiveProject] = useState(projects[0] || null);
   const [showPopup, setShowPopup] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    if (projects.length > 0 && !activeProject) {
+       setActiveProject(projects[0]);
+    }
+  }, [projects, activeProject]);
 
   useEffect(() => {
     setIsMounted(true);

@@ -3,12 +3,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { TerritoryType } from "@/lib/territoryData";
-import { masterProjects } from "@/lib/projectsData";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
+import { useHydratedProjects } from "@/components/CMSProvider";
 
 export default function LocationPortfolio({ data }: { data: TerritoryType }) {
   const containerRef = useRef<HTMLElement>(null);
   const [inView, setInView] = useState(false);
+  const hydratedProjects = useHydratedProjects();
 
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => {
@@ -19,16 +20,18 @@ export default function LocationPortfolio({ data }: { data: TerritoryType }) {
     return () => observer.disconnect();
   }, []);
 
-  // Filter the massive 41-project database to find ONLY projects belonging to this specific Territory
-  const localProjects = Object.values(masterProjects).filter((proj) => 
-     proj.location.toLowerCase().includes(data.name.toLowerCase().split(',')[0]) ||
-     proj.location.toLowerCase().includes(data.slug.toLowerCase().replace('-', ' '))
-  );
+  // Filter the database to find ONLY projects belonging to this specific Territory
+  const displayProjects = useMemo(() => {
+     const localProjects = hydratedProjects.filter((proj) => 
+        proj.location.toLowerCase().includes(data.name.toLowerCase().split(',')[0]) ||
+        proj.location.toLowerCase().includes(data.slug.toLowerCase().replace('-', ' '))
+     );
 
-  // If no exact matches are found (fallback safeguard), load 4 the highest-tier projects.
-  const displayProjects = localProjects.length > 0 
-    ? localProjects 
-    : Object.values(masterProjects).slice(0, 4);
+     // If no exact matches are found (fallback safeguard), load 4 the highest-tier projects.
+     return localProjects.length > 0 
+       ? localProjects 
+       : hydratedProjects.slice(0, 4);
+  }, [hydratedProjects, data]);
 
   return (
     <section ref={containerRef} className="bg-white py-32 relative overflow-hidden">

@@ -1,6 +1,7 @@
 "use client";
 
-import React, { createContext, useContext, ReactNode } from "react";
+import React, { createContext, useContext, ReactNode, useMemo } from "react";
+import { getSortedProjects, hydrateProjectsWithCMS } from "@/lib/projectsData";
 
 interface ContentItem {
   id: string;
@@ -56,4 +57,19 @@ export function useCMS() {
     throw new Error("useCMS must be used within a CMSProvider");
   }
   return context;
+}
+
+export function useHydratedProjects() {
+  const { content } = useCMS();
+  return useMemo(() => {
+    const rawStatics = getSortedProjects();
+    // Optimize: if content is completely empty (say during fallback or pre-fetch), just return raw statics
+    if (!content || content.length === 0) return rawStatics;
+    
+    // Create a dictionary for overrides specific to projects to speed up hydrateProjectsWithCMS
+    const projectOverrides = content.filter(c => c.key.startsWith("project."));
+    if (projectOverrides.length === 0) return rawStatics;
+
+    return hydrateProjectsWithCMS(rawStatics, content);
+  }, [content]);
 }
