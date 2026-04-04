@@ -63,11 +63,14 @@ export default function AdminDashboard() {
 
     
     setLoading(true);
-    const { data, error } = await supabase
-      .from("site_content")
-      .select("*")
-      .eq("section", activeSection)
-      .order("key");
+    let query = supabase.from("site_content").select("*");
+    if (activeSection === "page_services") {
+      query = query.or(`section.eq.${activeSection},key.ilike.%services.grid%`);
+    } else {
+      query = query.eq("section", activeSection);
+    }
+    
+    const { data, error } = await query.order("key");
 
     if (!error && data) {
       setContent(data as ContentItem[]);
@@ -1247,6 +1250,9 @@ function MegaMenuTabbedEditor({ content, edits, saving, saved, uploadingKey, set
     { id: 'commercial', label: 'Com Division', filter: (key: string) => key.includes('nav.mega.com') },
     { id: 'how', label: 'How it Works', filter: (key: string) => key.includes('nav.mega.how') }
   ];
+
+  // Need to ensure the main content is passed down correctly, even if section was mislabeled in DB
+  // This component is only used inside activeSection === 'nav_mega'
 
   const currentFilter = tabs.find(t => t.id === activeTab)?.filter || (() => true);
   const tabContent = content.filter((item: any) => currentFilter(item.key));
