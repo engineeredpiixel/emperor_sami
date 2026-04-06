@@ -2041,6 +2041,102 @@ function ProjectInnerPagesEditor({ content, edits, saving, saved, uploadingKey, 
       );
   };
 
+  const downloadTemplate = () => {
+    const headers = [
+      'slug', 'division', 'category', 'location', 'title', 'heroImage', 
+      'metrics_sqft', 'metrics_timeline', 'metrics_scope', 
+      'challenge_headline', 'challenge_desc', 'solution_headline', 'solution_desc', 
+      'testimonial_quote', 'testimonial_author', 'testimonial_role', 
+      'gallery_1', 'gallery_2', 'gallery_3', 'gallery_4'
+    ];
+    const csvContent = "data:text/csv;charset=utf-8," + headers.join(",");
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "projects_bulk_template.csv");
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  };
+
+  const handleBulkUpload = async (e: any) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = async (event) => {
+      try {
+        const text = event.target?.result as string;
+        const arr: any[][] = [];
+        let quote = false;
+        let c = 0;
+        for (let row = 0, col = 0; c < text.length; c++) {
+          let cc = text[c], nc = text[c+1];
+          arr[row] = arr[row] || [];
+          arr[row][col] = arr[row][col] || '';
+          if (cc == '"' && quote && nc == '"') { arr[row][col] += cc; ++c; continue; }
+          if (cc == '"') { quote = !quote; continue; }
+          if (cc == ',' && !quote) { ++col; continue; }
+          if (cc == '\r' && nc == '\n' && !quote) { ++row; col = 0; ++c; continue; }
+          if (cc == '\n' && !quote) { ++row; col = 0; continue; }
+          if (cc == '\r' && !quote) { ++row; col = 0; continue; }
+          arr[row][col] += cc;
+        }
+
+        if (arr.length < 2) {
+          alert('CSV format seems empty or invalid');
+          return;
+        }
+
+        const headers = arr[0].map((h: string) => h.trim());
+        const slugIdx = headers.indexOf('slug');
+        if (slugIdx === -1) {
+          alert('CSV must contain a "slug" column');
+          return;
+        }
+
+        const toUpsert: any[] = [];
+        for (let i = 1; i < arr.length; i++) {
+          const row = arr[i];
+          if (row.length < headers.length && row.length === 1 && !row[0]) continue;
+          const slugItem = row[slugIdx]?.trim();
+          if (!slugItem) continue;
+          const cleanSlug = slugItem.toLowerCase().trim().replace(/[^a-z0-9-]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+
+          headers.forEach((header: string, colIdx: number) => {
+            if (header === 'slug') return;
+            const val = row[colIdx];
+            if (val && val.trim() !== '') {
+               toUpsert.push({
+                 section: "page_projects_inner",
+                 key: `project.${cleanSlug}.${header}`,
+                 value: val,
+                 type: (header.includes('timeline') || header.includes('scope') || header.includes('desc') || header.includes('quote')) ? 'textarea' : (header.includes('Image') || header.includes('gallery_')) ? 'image' : 'text',
+                 label: `Bulk Upload ${header}`
+               });
+            }
+          });
+        }
+
+        if (toUpsert.length > 0) {
+           const { error } = await supabase.from('site_content').upsert(toUpsert, { onConflict: 'key' });
+           if (error) {
+              alert('Failed to upload bulk items: ' + error.message);
+           } else {
+              alert(`Successfully bulk uploaded ${toUpsert.length} fields across ${arr.length - 1} projects.`);
+              window.location.reload();
+           }
+        } else {
+           alert("No valid fields found to upload.");
+        }
+      } catch (err: any) {
+        alert("Error parsing CSV: " + err.message);
+      }
+      e.target.value = null;
+    };
+    reader.readAsText(file);
+  };
+
   return (
     <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm max-w-7xl mx-auto flex flex-col">
       <div className="p-6 sm:p-8 border-b border-slate-200 bg-slate-50 flex flex-col xl:flex-row items-start justify-between gap-6">
@@ -2049,21 +2145,32 @@ function ProjectInnerPagesEditor({ content, edits, saving, saved, uploadingKey, 
             <p className="text-slate-500 text-sm mb-4">Select an existing project or inject a brand new architectural execution.</p>
             
             {isAddingNew ? (
-               <div className="flex flex-col sm:flex-row gap-2 mt-2 p-4 bg-indigo-50 border border-indigo-100 rounded-xl">
+               <div className="flex flex-col sm:flex-row gap-2 mt-2 p-4 bg-indigo-50 border border-indigo-100 rounded-xl overflow-hidden">
                  <input 
                     type="text"
                     placeholder="Project Name (e.g. Miami Mansion)"
                     value={newSlug}
                     onChange={e => setNewSlug(e.target.value)}
-                    className="p-3 rounded-lg border-2 border-indigo-300 bg-white font-medium text-sm flex-1"
+                    className="p-3 rounded-lg border-2 border-indigo-300 bg-white font-medium text-sm flex-1 w-full"
                  />
-                 <button onClick={handleAddNew} className="px-6 py-3 bg-indigo-600 text-white rounded-lg font-bold text-sm hover:bg-indigo-700">Create Project</button>
-                 <button onClick={() => setIsAddingNew(false)} className="px-4 py-3 bg-white border border-slate-300 text-slate-600 rounded-lg font-bold text-sm hover:bg-slate-50">Cancel</button>
+                 <button onClick={handleAddNew} className="px-6 py-3 w-full sm:w-auto bg-indigo-600 text-white rounded-lg font-bold text-sm hover:bg-indigo-700">Create</button>
+                 <button onClick={() => setIsAddingNew(false)} className="px-4 py-3 w-full sm:w-auto bg-white border border-slate-300 text-slate-600 rounded-lg font-bold text-sm hover:bg-slate-50">Cancel</button>
                </div>
             ) : (
-               <button onClick={() => setIsAddingNew(true)} className="self-start px-6 py-3 bg-slate-900 text-white rounded-lg font-bold shadow-md hover:bg-slate-800 tracking-wide uppercase text-xs transition-all">
-                  + Add New Project
-               </button>
+               <div className="flex flex-col gap-3 mt-2 self-start w-full md:w-auto">
+                 <button onClick={() => setIsAddingNew(true)} className="px-6 py-3 bg-slate-900 text-white rounded-lg font-bold shadow-md hover:bg-slate-800 tracking-wide uppercase text-xs transition-all w-full text-center flex justify-center">
+                    + Add Single Project
+                 </button>
+                 <div className="flex flex-col sm:flex-row gap-2">
+                   <button onClick={downloadTemplate} className="w-full sm:w-auto px-4 py-3 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-lg font-bold hover:bg-emerald-100 tracking-wide uppercase text-xs transition-all">
+                      CSV Template
+                   </button>
+                   <label className="w-full sm:w-auto px-4 py-3 bg-emerald-600 text-white rounded-lg font-bold hover:bg-emerald-700 tracking-wide uppercase text-xs transition-all cursor-pointer shadow-md text-center">
+                      Bulk Upload (CSV)
+                      <input type="file" accept=".csv" onChange={handleBulkUpload} className="hidden" />
+                   </label>
+                 </div>
+               </div>
             )}
          </div>
          
