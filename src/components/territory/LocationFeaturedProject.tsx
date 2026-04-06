@@ -3,10 +3,9 @@
 import Image from "next/image";
 import { TerritoryType } from "@/lib/territoryData";
 import { useEffect, useRef, useState } from "react";
-import { useCMS } from "@/components/CMSProvider";
+import { getSortedProjects } from "@/lib/projectsData";
 
 export default function LocationFeaturedProject({ slug, fallback }: { slug: string, fallback: TerritoryType }) {
-  const { t } = useCMS();
   const [scrollY, setScrollY] = useState(0);
   const sectionRef = useRef<HTMLElement>(null);
   const [isInView, setIsInView] = useState(false);
@@ -28,11 +27,15 @@ export default function LocationFeaturedProject({ slug, fallback }: { slug: stri
 
   if (!fallback?.project) return null;
 
-  const title = t(`territory.${slug}.projectTitle`, fallback.project.title);
-  const category = t(`territory.${slug}.projectCategory`, fallback.project.category);
-  const image = t(`territory.${slug}.projectImage`, fallback.project.image);
-  const scope = t(`territory.${slug}.projectScope`, fallback.project.scope);
-  const timeline = t(`territory.${slug}.projectTimeline`, fallback.project.timeline);
+  const allProjects = getSortedProjects();
+  const locationProjects = allProjects.filter(p => p.location.toLowerCase().includes(fallback.name.toLowerCase()));
+  const matchedProject = locationProjects.find(p => p.category === fallback.project.category) || locationProjects[0];
+
+  const title = matchedProject ? matchedProject.title : fallback.project.title;
+  const category = matchedProject ? matchedProject.category : fallback.project.category;
+  const image = matchedProject ? matchedProject.heroImage : fallback.project.image;
+  const scope = matchedProject ? matchedProject.metrics.scope : fallback.project.scope;
+  const timeline = matchedProject ? matchedProject.metrics.timeline : fallback.project.timeline;
 
   return (
     <section ref={sectionRef} className="relative w-full overflow-hidden bg-[#111] py-32 border-b border-white/5">

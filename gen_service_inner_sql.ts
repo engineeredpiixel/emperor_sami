@@ -47,13 +47,7 @@ for (const slug in territoryData) {
   }
 
   // Project Section
-  if (data.project) {
-    values.push(`($$territory.${slug}.projectTitle$$, $$${section}$$, $$text$$, $$${data.name} Featured Project Title$$, $$${data.project.title}$$)`);
-    values.push(`($$territory.${slug}.projectCategory$$, $$${section}$$, $$text$$, $$${data.name} Featured Project Category$$, $$${data.project.category}$$)`);
-    values.push(`($$territory.${slug}.projectImage$$, $$${section}$$, $$image$$, $$${data.name} Featured Project Image$$, $$${data.project.image}$$)`);
-    values.push(`($$territory.${slug}.projectScope$$, $$${section}$$, $$text$$, $$${data.name} Featured Project Scope$$, $$${data.project.scope}$$)`);
-    values.push(`($$territory.${slug}.projectTimeline$$, $$${section}$$, $$text$$, $$${data.name} Featured Project Timeline$$, $$${data.project.timeline}$$)`);
-  }
+  // (Featured projects are now pulled directly from the projects data engine instead of the CMS)
 
   // Portfolio Section
   values.push(`($$territory.${slug}.portfolioTitle$$, $$${section}$$, $$text$$, $$${data.name} Portfolio Title$$, $$LOCAL PORTFOLIO.$$)`);

@@ -1637,7 +1637,6 @@ function ServiceAreaInnerPagesEditor({ content, edits, saving, saved, uploadingK
   const getSubGroup = (key: string) => {
     if (key.includes('.hero')) return 'Hero Section';
     if (key.includes('.bylaw')) return 'Bureaucratic Supremacy';
-    if (key.includes('.project')) return 'Featured Project';
     if (key.includes('.portfolio')) return 'Local Portfolio';
     return 'General UI Settings';
   };
