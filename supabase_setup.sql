@@ -26,6 +26,14 @@ CREATE POLICY "Authenticated update access"
   ON public.site_content FOR UPDATE
   USING (auth.role() = 'authenticated');
 
+CREATE POLICY "Authenticated insert access"
+  ON public.site_content FOR INSERT
+  WITH CHECK (auth.role() = 'authenticated');
+
+CREATE POLICY "Authenticated delete access"
+  ON public.site_content FOR DELETE
+  USING (auth.role() = 'authenticated');
+
 -- 3. Auto-update timestamp trigger
 CREATE OR REPLACE FUNCTION update_updated_at()
 RETURNS TRIGGER AS $$
