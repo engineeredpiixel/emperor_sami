@@ -7,10 +7,13 @@ import dynamic from "next/dynamic";
 const Map = dynamic(() => import("pigeon-maps").then((m) => m.Map as ComponentType<any>), { ssr: false });
 const Overlay = dynamic(() => import("pigeon-maps").then((m) => m.Overlay as ComponentType<any>), { ssr: false });
 
+import { useCMS } from "@/components/CMSProvider";
+
 export default function ProjectMap({ data, overrideTitle }: { data: ProjectType, overrideTitle?: string }) {
   const containerRef = useRef<HTMLElement>(null);
   const [inView, setInView] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const { t } = useCMS();
 
   useEffect(() => {
     setIsMounted(true);
@@ -29,17 +32,16 @@ export default function ProjectMap({ data, overrideTitle }: { data: ProjectType,
         {/* Narrative Side */}
         <div className={`w-full md:w-5/12 flex flex-col transition-all duration-1000 ${inView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'}`}>
            <div className="flex items-center gap-3 mb-6">
-              <span className="text-[#D8A02A] text-xs font-black tracking-[0.4em] uppercase">{overrideTitle || "Geographic Node"}</span>
+              <span className="text-[#D8A02A] text-xs font-black tracking-[0.4em] uppercase">{overrideTitle || t('project_global_geographic_badge', 'Geographic Node')}</span>
               <div className="h-[1px] w-12 bg-[#D8A02A]" />
            </div>
            
-           <h2 className="text-4xl sm:text-5xl font-black text-white tracking-tighter uppercase leading-[0.95] mb-6">
-              Execution <br />
-              <span className="text-gray-500">Radius.</span>
-           </h2>
+           <h2 className="text-4xl sm:text-5xl font-black text-white tracking-tighter uppercase leading-[0.95] mb-6"
+               dangerouslySetInnerHTML={{ __html: t('project_global_geographic_title', 'Execution <br /><span class="text-gray-500">Radius.</span>') }}
+           />
            
            <p className="text-gray-400 leading-relaxed font-bold sm:text-lg mb-8">
-              This masterwork is located in <span className="text-white">{data.location}</span>. Every neighborhood holds its own distinct topographical and municipal challenges. Emperor Sami guarantees 100% compliance and absolute structural dominance regardless of the postal code.
+              This masterwork is located in <span className="text-white">{data.location}</span>. {t('project_global_geographic_desc', 'Every neighborhood holds its own distinct topographical and municipal challenges. Emperor Sami guarantees 100% compliance and absolute structural dominance regardless of the postal code.')}
            </p>
 
            <div className="bg-white/5 backdrop-blur-md p-6 border border-white/10 rounded-sm">
