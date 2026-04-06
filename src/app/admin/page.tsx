@@ -1962,7 +1962,7 @@ function ProjectInnerPagesEditor({ content, edits, saving, saved, uploadingKey, 
         <div className="flex-1 p-6 sm:p-10 bg-[#FBFBFB] overflow-y-auto max-h-[70vh]">
           {activeTab === 'globals' ? (
              <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-                {globalContentFields.map((item: any) => (
+                {globalContentFields.filter(g => !(g.key.includes('_btn') && (g.key.includes('constraint') || g.key.includes('tactical')))).map((item: any) => (
                    <ContentField
                      key={item.key}
                      item={item}
@@ -1986,6 +1986,22 @@ function ProjectInnerPagesEditor({ content, edits, saving, saved, uploadingKey, 
                        <CustomDropdown sysKey="category" label="Service Category Type" options={CATEGORIES} />
                        <CustomDropdown sysKey="location" label="Geographic Location Dropdown" options={LOCATIONS} />
                     </>
+                 )}
+                 {activeTab === 'solution' && (
+                    globalContentFields.filter(g => g.key.includes('_btn') && (g.key.includes('constraint') || g.key.includes('tactical'))).map((item: any) => (
+                      <ContentField
+                         key={item.key}
+                         item={item}
+                         value={edits[item.key] ?? ""}
+                         saving={saving[item.key]}
+                         saved={saved[item.key]}
+                         uploading={uploadingKey === item.key}
+                         placeholder={item.placeholder}
+                         onChange={(val: string) => setEdits((prev: any) => ({ ...prev, [item.key]: val }))}
+                         onSave={() => handleSave(item.key, item)}
+                         onImageUpload={(file: File) => handleImageUpload(item.key, file, item)}
+                      />
+                    ))
                  )}
                </div>
 
