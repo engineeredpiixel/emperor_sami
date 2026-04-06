@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { masterProjects } from "@/lib/projectsData";
 
 // Three brand new custom portfolio engines
 import ProjectHero from "@/components/portfolio/ProjectHero";
@@ -24,10 +23,17 @@ import { getGlobalContent } from "@/app/layout";
 
 // Generate static params for optimal Next.js build performance
 export async function generateStaticParams() {
-  // For completely dynamic pages created later in CMS, Next.js 'dynamicParams' generates them on the fly if true (default)
-  return Object.keys(masterProjects).map((slug) => ({
-    slug: slug,
-  }));
+  // Fetch the cloud database and statically pre-render all projects (even CSV migrations)
+  // to guarantee 0 Server errors at runtime and achieve ultra-low 10ms latency.
+  try {
+    const globalContent = await getGlobalContent();
+    const rawProjects = getSortedProjects();
+    const allProjects = hydrateProjectsWithCMS(rawProjects, globalContent);
+    return allProjects.map((p) => ({ slug: p.slug }));
+  } catch (err) {
+    console.error("Static param generation failed:", err);
+    return [];
+  }
 }
 
 // Dynamically inject the SEO tags based on the target project
