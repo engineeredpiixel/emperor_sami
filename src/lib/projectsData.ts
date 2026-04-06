@@ -218,10 +218,21 @@ export const hydrateProjectsWithCMS = (staticProjects: ProjectType[], globalCont
   newSlugs.forEach(slug => {
     const over = overrides[slug];
     
-    // Look up lat/lng based on location if possible, otherwise default Toronto
-    const locData = LOCATIONS.find(l => l.name === over.location);
-    const lat = locData?.baseLat || 43.65107;
-    const lng = locData?.baseLng || -79.347015;
+    // Look up lat/lng based on substring match (e.g., "Oakville, ON" matches "Oakville")
+    const locationName = over.location || "Toronto";
+    const locData = LOCATIONS.find(l => locationName.toLowerCase().includes(l.name.toLowerCase()));
+    
+    // Deterministic jitter based on slug to scatter pins perfectly across the city mapping
+    let jitter1 = 0, jitter2 = 0;
+    for (let i = 0; i < slug.length; i++) {
+        jitter1 += slug.charCodeAt(i) * (i + 1);
+        jitter2 += slug.charCodeAt(i) * (slug.length - i);
+    }
+    const latOffset = ((jitter1 % 100) / 100) * 0.08 - 0.04;
+    const lngOffset = ((jitter2 % 100) / 100) * 0.12 - 0.06;
+
+    const lat = (locData?.baseLat || 43.65107) + latOffset;
+    const lng = (locData?.baseLng || -79.347015) + lngOffset;
 
     clonedProjects.push({
       slug,
