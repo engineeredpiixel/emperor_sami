@@ -45,48 +45,48 @@ const LOCATIONS = [
 ];
 
 const CATEGORY_GALLERIES: Record<string, string[]> = {
-  "New Construction": ["/optimized_v2/gal_res_custom_1.webp", "/optimized_v2/gal_res_custom_2.webp"],
-  "Custom Design": ["/optimized_v2/gal_res_custom_1.webp", "/optimized_v2/gal_res_custom_2.webp"],
-  "Quality Materials": ["/optimized_v2/gal_res_custom_1.webp", "/optimized_v2/gal_res_custom_2.webp"],
-  "Turnkey Solutions": ["/optimized_v2/gal_res_custom_1.webp", "/optimized_v2/gal_res_custom_2.webp"],
+  "New Construction": ["https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_res_custom_1.webp", "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_res_custom_2.webp"],
+  "Custom Design": ["https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_res_custom_1.webp", "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_res_custom_2.webp"],
+  "Quality Materials": ["https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_res_custom_1.webp", "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_res_custom_2.webp"],
+  "Turnkey Solutions": ["https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_res_custom_1.webp", "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_res_custom_2.webp"],
   
-  "Kitchen Remodeling": ["/optimized_v2/gal_res_reno_1.webp", "/optimized_v2/gal_res_reno_2.webp"],
-  "Bathroom Remodeling": ["/optimized_v2/gal_res_reno_1.webp", "/optimized_v2/gal_res_reno_2.webp"],
-  "Room Additions": ["/optimized_v2/gal_res_reno_1.webp", "/optimized_v2/gal_res_reno_2.webp"],
-  "Whole Home Renovations": ["/optimized_v2/gal_res_reno_1.webp", "/optimized_v2/gal_res_reno_2.webp"],
-  "Open Concepts": ["/optimized_v2/gal_res_reno_1.webp", "/optimized_v2/gal_res_reno_2.webp"],
+  "Kitchen Remodeling": ["https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_res_reno_1.webp", "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_res_reno_2.webp"],
+  "Bathroom Remodeling": ["https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_res_reno_1.webp", "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_res_reno_2.webp"],
+  "Room Additions": ["https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_res_reno_1.webp", "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_res_reno_2.webp"],
+  "Whole Home Renovations": ["https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_res_reno_1.webp", "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_res_reno_2.webp"],
+  "Open Concepts": ["https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_res_reno_1.webp", "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_res_reno_2.webp"],
   
-  "Home Theaters": ["/optimized_v2/gal_res_base_1.webp", "/optimized_v2/gal_res_base_2.webp"],
-  "Guest Suites": ["/optimized_v2/gal_res_base_1.webp", "/optimized_v2/gal_res_base_2.webp"],
-  "Recreation Rooms": ["/optimized_v2/gal_res_base_1.webp", "/optimized_v2/gal_res_base_2.webp"],
+  "Home Theaters": ["https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_res_base_1.webp", "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_res_base_2.webp"],
+  "Guest Suites": ["https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_res_base_1.webp", "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_res_base_2.webp"],
+  "Recreation Rooms": ["https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_res_base_1.webp", "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_res_base_2.webp"],
   
-  "Decks & Porches": ["/optimized_v2/gal_res_ext_1.webp", "/optimized_v2/gal_res_ext_2.webp"],
-  "Roofing": ["/optimized_v2/gal_res_ext_1.webp", "/optimized_v2/gal_res_ext_2.webp"],
-  "Siding": ["/optimized_v2/gal_res_ext_1.webp", "/optimized_v2/gal_res_ext_2.webp"],
-  "Windows & Doors": ["/optimized_v2/gal_res_ext_1.webp", "/optimized_v2/gal_res_ext_2.webp"],
-  "Fence Installation": ["/optimized_v2/gal_res_ext_1.webp", "/optimized_v2/gal_res_ext_2.webp"],
+  "Decks & Porches": ["https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_res_ext_1.webp", "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_res_ext_2.webp"],
+  "Roofing": ["https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_res_ext_1.webp", "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_res_ext_2.webp"],
+  "Siding": ["https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_res_ext_1.webp", "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_res_ext_2.webp"],
+  "Windows & Doors": ["https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_res_ext_1.webp", "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_res_ext_2.webp"],
+  "Fence Installation": ["https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_res_ext_1.webp", "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_res_ext_2.webp"],
 
-  "Ground-Up Construction": ["/optimized_v2/gal_com_const_1.webp", "/optimized_v2/gal_com_const_2.webp"],
-  "Design-Build Services": ["/optimized_v2/gal_com_const_1.webp", "/optimized_v2/gal_com_const_2.webp"],
-  "Structural Material Sourcing": ["/optimized_v2/gal_com_const_1.webp", "/optimized_v2/gal_com_const_2.webp"],
-  "Turnkey Facility Solutions": ["/optimized_v2/gal_com_const_1.webp", "/optimized_v2/gal_com_const_2.webp"],
+  "Ground-Up Construction": ["https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_com_const_1.webp", "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_com_const_2.webp"],
+  "Design-Build Services": ["https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_com_const_1.webp", "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_com_const_2.webp"],
+  "Structural Material Sourcing": ["https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_com_const_1.webp", "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_com_const_2.webp"],
+  "Turnkey Facility Solutions": ["https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_com_const_1.webp", "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_com_const_2.webp"],
   
-  "Tenant Build-Outs": ["/optimized_v2/gal_com_remo_1.webp", "/optimized_v2/gal_com_remo_2.webp"],
-  "Vanilla Shell Finish": ["/optimized_v2/gal_com_remo_1.webp", "/optimized_v2/gal_com_remo_2.webp"],
-  "Office Space Modernization": ["/optimized_v2/gal_com_remo_1.webp", "/optimized_v2/gal_com_remo_2.webp"],
-  "ADA Compliance Retrofitting": ["/optimized_v2/gal_com_remo_1.webp", "/optimized_v2/gal_com_remo_2.webp"],
-  "Adaptive Reuse Conversions": ["/optimized_v2/gal_com_remo_1.webp", "/optimized_v2/gal_com_remo_2.webp"],
+  "Tenant Build-Outs": ["https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_com_remo_1.webp", "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_com_remo_2.webp"],
+  "Vanilla Shell Finish": ["https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_com_remo_1.webp", "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_com_remo_2.webp"],
+  "Office Space Modernization": ["https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_com_remo_1.webp", "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_com_remo_2.webp"],
+  "ADA Compliance Retrofitting": ["https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_com_remo_1.webp", "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_com_remo_2.webp"],
+  "Adaptive Reuse Conversions": ["https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_com_remo_1.webp", "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_com_remo_2.webp"],
   
-  "Executive Suite Construction": ["/optimized_v2/gal_com_int_1.webp", "/optimized_v2/gal_com_int_2.webp"],
-  "Breakroom & Cafeteria Builds": ["/optimized_v2/gal_com_int_1.webp", "/optimized_v2/gal_com_int_2.webp"],
-  "Acoustic Partitioning": ["/optimized_v2/gal_com_int_1.webp", "/optimized_v2/gal_com_int_2.webp"],
+  "Executive Suite Construction": ["https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_com_int_1.webp", "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_com_int_2.webp"],
+  "Breakroom & Cafeteria Builds": ["https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_com_int_1.webp", "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_com_int_2.webp"],
+  "Acoustic Partitioning": ["https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_com_int_1.webp", "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_com_int_2.webp"],
   
-  "Commercial Roofing Systems": ["/optimized_v2/gal_com_ext_1.webp", "/optimized_v2/gal_com_ext_2.webp"],
-  "Architectural Facade Upgrades": ["/optimized_v2/gal_com_ext_1.webp", "/optimized_v2/gal_com_ext_2.webp"],
-  "Storefront Glazing & Entry": ["/optimized_v2/gal_com_ext_1.webp", "/optimized_v2/gal_com_ext_2.webp"],
-  "Perimeter Security Fencing": ["/optimized_v2/gal_com_ext_1.webp", "/optimized_v2/gal_com_ext_2.webp"],
+  "Commercial Roofing Systems": ["https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_com_ext_1.webp", "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_com_ext_2.webp"],
+  "Architectural Facade Upgrades": ["https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_com_ext_1.webp", "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_com_ext_2.webp"],
+  "Storefront Glazing & Entry": ["https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_com_ext_1.webp", "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_com_ext_2.webp"],
+  "Perimeter Security Fencing": ["https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_com_ext_1.webp", "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_com_ext_2.webp"],
   
-  "Default": ["/optimized_v2/gal_com_const_1.webp", "/optimized_v2/gal_res_custom_1.webp"]
+  "Default": ["https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_com_const_1.webp", "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/gal_res_custom_1.webp"]
 };
 
 // 10 Distinct High-End Residential Execution Templates
@@ -231,7 +231,7 @@ export const hydrateProjectsWithCMS = (staticProjects: ProjectType[], globalCont
       location: over.location || "Toronto",
       lat,
       lng,
-      heroImage: over.heroImage || "/optimized_v2/hero_res_custom.webp",
+      heroImage: over.heroImage || "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/hero_res_custom.webp",
       metrics: {
         sqft: over.metrics_sqft || "Custom",
         timeline: over.metrics_timeline || "Custom",

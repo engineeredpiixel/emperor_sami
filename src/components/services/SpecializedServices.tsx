@@ -7,22 +7,22 @@ const specializations = [
   {
     topic: "Structural Glass Engineering",
     desc: "Uninterrupted vistas and multi-story glass facades. We utilize advanced curtain wall systems allowing natural light to sweep aggressively through open-concept architecture. It's not just a window; it's a structural masterpiece.",
-    img: "/portfolio_structural_glass_1774904353242.png"
+    img: "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/base_assets/portfolio_structural_glass_1774904353242.png"
   },
   {
     topic: "Smart Home & Theatre Integration",
     desc: "Every Emperor Sami home is pre-wired with military-grade fiber optics, integrating seamless control over climate, security, automated blackout shades, and subterranean 8K screening rooms into a single iPad.",
-    img: "/custom_home_interior_1774895577855.png"
+    img: "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/base_assets/custom_home_interior_1774895577855.png"
   },
   {
     topic: "Radiant Heat & Hardscaping",
     desc: "Winter ceases to exist on an Emperor estate. We install commercial-grade radiant heated driveways, snow-melt systems, and bespoke architectural concrete hardscaping.",
-    img: "/portfolio_architectural_concrete_1774904384443.png"
+    img: "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/base_assets/portfolio_architectural_concrete_1774904384443.png"
   },
   {
     topic: "Heritage Material Replication",
     desc: "Building in historic Toronto requires absolute perfection. We source century-old reclaimed materials, authentic limestone, and custom millwork to preserve legacy while housing a completely modern superstructure inside.",
-    img: "/portfolio_marble_foyer_1774904369119.png"
+    img: "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/base_assets/portfolio_marble_foyer_1774904369119.png"
   }
 ];
 

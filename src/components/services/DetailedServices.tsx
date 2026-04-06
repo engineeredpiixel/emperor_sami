@@ -9,28 +9,28 @@ const coreServices = [
     cat: "Architecture",
     title: "Custom Home Building",
     desc: "We command the entire architectural cycle, forging visionary concept designs into breathtaking million-dollar estates. Uncompromised structural integrity strictly aligned with Toronto's elite zoning codes.",
-    img: "/portfolio_bespoke_exterior_1774904336356.png"
+    img: "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/base_assets/portfolio_bespoke_exterior_1774904336356.png"
   },
   {
     id: "02",
     cat: "Renovation",
     title: "Structural Gut & Extend",
     desc: "Master-level heritage restorations and full-property expansions. We seamlessly integrate cutting-edge modern luxury into legacy foundations without disrupting the neighborhood aesthetic.",
-    img: "/portfolio_modern_renovation_1774904319283.png"
+    img: "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/base_assets/portfolio_modern_renovation_1774904319283.png"
   },
   {
     id: "03",
     cat: "Engineering",
     title: "Executive Basements",
     desc: "Transforming subterranean concrete into high-yield luxury square footage. Think automated wine cellars, sound-isolated theaters, and private wellness spas.",
-    img: "/custom_home_interior_1774895577855.png"
+    img: "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/base_assets/custom_home_interior_1774895577855.png"
   },
   {
     id: "04",
     cat: "Logistics",
     title: "Project Management",
     desc: "The hallmark of Emperor Sami. Zero-anxiety execution. We handle the brutal logistics—master tradesmen, aggressive city permits, and absolute timeline enforcement.",
-    img: "/card_project_management_1774895647508.png"
+    img: "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/base_assets/card_project_management_1774895647508.png"
   }
 ];
 

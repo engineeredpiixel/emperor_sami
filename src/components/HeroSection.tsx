@@ -134,7 +134,7 @@ export default function HeroSection() {
       {/* ── LAYER 1: The Ambient Blueprint Architecture (Base Layer) ── */}
       <div className="absolute inset-0 z-0 bg-[#020202]">
         <Image
-          src={getImage("hero.bg_image") || "/blueprint_bg_1774895613394.png"}
+          src={getImage("hero.bg_image") || "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/base_assets/blueprint_bg_1774895613394.png"}
           alt="Emperor Sami Group architectural blueprint"
           fill
           sizes="(max-width: 768px) 100vw, 100vw"
@@ -158,7 +158,7 @@ export default function HeroSection() {
         }}
       >
         <Image
-          src={getImage("hero.reveal_image") || "/custom_home_exterior_1774895595441.png"}
+          src={getImage("hero.reveal_image") || "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/base_assets/custom_home_exterior_1774895595441.png"}
           alt="Revealed Luxury Masterpiece"
           fill
           sizes="(max-width: 768px) 100vw, 100vw"

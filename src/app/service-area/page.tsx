@@ -31,7 +31,7 @@ function ServiceAreaHero() {
          {/* Background Engine */}
          <div className="absolute inset-0 z-0">
             <Image 
-               src={t('servicearea.hero_image', '/luxury-cityscape-service-area.png')} 
+               src={t('servicearea.hero_image', 'https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/base_assets/luxury-cityscape-service-area.png')} 
                alt="Toronto Skyline"
                fill
                priority

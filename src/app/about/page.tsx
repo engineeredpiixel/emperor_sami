@@ -27,9 +27,9 @@ export default async function AboutPage() {
 
   // Pull edge-cached images for instant preloading
   const getImg = (key: string, fallback: string) => content.find((c: any) => c.key === key)?.value || fallback;
-  const img1 = getImg('about.hero.shard.1.img', '/portfolio_lakefront_mansion_1774904298419.png');
-  const img2 = getImg('about.hero.shard.2.img', '/custom_home_interior_1774895577855.png');
-  const img3 = getImg('about.hero.shard.3.img', '/portfolio_bespoke_exterior_1774904336356.png');
+  const img1 = getImg('about.hero.shard.1.img', 'https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/base_assets/portfolio_lakefront_mansion_1774904298419.png');
+  const img2 = getImg('about.hero.shard.2.img', 'https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/base_assets/custom_home_interior_1774895577855.png');
+  const img3 = getImg('about.hero.shard.3.img', 'https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/base_assets/portfolio_bespoke_exterior_1774904336356.png');
 
   // Preload the massive Hero Tectonic Shards instantly for <1.3s FCP hit
   preload(img1, { as: 'image', fetchPriority: 'high' });

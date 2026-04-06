@@ -3,23 +3,23 @@ import { ServiceContentType } from "./servicesDataTypes";
 export const residentialServicesData: Record<string, ServiceContentType> = {};
 
 const RESIDENTIAL_SERVICES_MAP = [
-  { slug: "new-construction", title: "New Construction", imgUrl: "/optimized_v2/hero_res_new_construction.webp" },
-  { slug: "custom-design", title: "Custom Design", imgUrl: "/optimized_v2/hero_res_custom_design.webp" },
-  { slug: "quality-materials", title: "Quality Materials", imgUrl: "/optimized_v2/hero_res_quality_materials.webp" },
-  { slug: "turnkey-solutions", title: "Turnkey Solutions", imgUrl: "/optimized_v2/hero_res_turnkey.webp" },
-  { slug: "kitchen-remodeling", title: "Kitchen Remodeling", imgUrl: "/optimized_v2/hero_res_kitchen.webp" },
-  { slug: "bathroom-remodeling", title: "Bathroom Remodeling", imgUrl: "/optimized_v2/hero_res_bathroom.webp" },
-  { slug: "room-additions", title: "Room Additions", imgUrl: "/optimized_v2/hero_res_room_additions.webp" },
-  { slug: "whole-home-renovations", title: "Whole Home Renovations", imgUrl: "/optimized_v2/hero_res_whole_home.webp" },
-  { slug: "open-concepts", title: "Open Concepts", imgUrl: "/optimized_v2/hero_res_open_concept.webp" },
-  { slug: "home-theaters", title: "Home Theaters", imgUrl: "/optimized_v2/hero_res_home_theater.webp" },
-  { slug: "guest-suites", title: "Guest Suites", imgUrl: "/optimized_v2/hero_res_guest_suite.webp" },
-  { slug: "recreation-rooms", title: "Recreation Rooms", imgUrl: "/optimized_v2/hero_res_recreation.webp" },
-  { slug: "decks-porches", title: "Decks & Porches", imgUrl: "/optimized_v2/hero_res_decks.webp" },
-  { slug: "roofing", title: "Roofing", imgUrl: "/optimized_v2/hero_res_roofing.webp" },
-  { slug: "siding", title: "Siding", imgUrl: "/optimized_v2/hero_res_siding.webp" },
-  { slug: "windows-doors", title: "Windows & Doors", imgUrl: "/optimized_v2/hero_res_windows.webp" },
-  { slug: "fence-installation", title: "Fence Installation", imgUrl: "/optimized_v2/hero_res_fence.webp" }
+  { slug: "new-construction", title: "New Construction", imgUrl: "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/hero_res_new_construction.webp" },
+  { slug: "custom-design", title: "Custom Design", imgUrl: "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/hero_res_custom_design.webp" },
+  { slug: "quality-materials", title: "Quality Materials", imgUrl: "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/hero_res_quality_materials.webp" },
+  { slug: "turnkey-solutions", title: "Turnkey Solutions", imgUrl: "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/hero_res_turnkey.webp" },
+  { slug: "kitchen-remodeling", title: "Kitchen Remodeling", imgUrl: "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/hero_res_kitchen.webp" },
+  { slug: "bathroom-remodeling", title: "Bathroom Remodeling", imgUrl: "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/hero_res_bathroom.webp" },
+  { slug: "room-additions", title: "Room Additions", imgUrl: "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/hero_res_room_additions.webp" },
+  { slug: "whole-home-renovations", title: "Whole Home Renovations", imgUrl: "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/hero_res_whole_home.webp" },
+  { slug: "open-concepts", title: "Open Concepts", imgUrl: "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/hero_res_open_concept.webp" },
+  { slug: "home-theaters", title: "Home Theaters", imgUrl: "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/hero_res_home_theater.webp" },
+  { slug: "guest-suites", title: "Guest Suites", imgUrl: "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/hero_res_guest_suite.webp" },
+  { slug: "recreation-rooms", title: "Recreation Rooms", imgUrl: "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/hero_res_recreation.webp" },
+  { slug: "decks-porches", title: "Decks & Porches", imgUrl: "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/hero_res_decks.webp" },
+  { slug: "roofing", title: "Roofing", imgUrl: "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/hero_res_roofing.webp" },
+  { slug: "siding", title: "Siding", imgUrl: "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/hero_res_siding.webp" },
+  { slug: "windows-doors", title: "Windows & Doors", imgUrl: "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/hero_res_windows.webp" },
+  { slug: "fence-installation", title: "Fence Installation", imgUrl: "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/hero_res_fence.webp" }
 ];
 
 RESIDENTIAL_SERVICES_MAP.forEach((item, i) => {

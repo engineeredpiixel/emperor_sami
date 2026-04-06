@@ -137,7 +137,7 @@ export default function AboutSection() {
 
   const finalStats = dynamicStats.length > 0 ? dynamicStats : defaultStats;
 
-  const aboutImage = getImage("about.image") || "/custom_home_interior_1774895577855.png";
+  const aboutImage = getImage("about.image") || "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/base_assets/custom_home_interior_1774895577855.png";
 
   return (
     <section

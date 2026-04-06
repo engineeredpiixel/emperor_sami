@@ -7,7 +7,7 @@ import { useCMS } from "@/components/CMSProvider";
 const generateShards = (t: any) => [
   {
     id: 1,
-    image: t('about.hero.shard.1.img', "/portfolio_lakefront_mansion_1774904298419.png"),
+    image: t('about.hero.shard.1.img', "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/base_assets/portfolio_lakefront_mansion_1774904298419.png"),
     subtitle: t('about.hero.shard.1.subtitle', "Architectural Supremacy"),
     title: t('about.hero.shard.1.title', "The Foundation"),
     defaultClip: "polygon(0% 0%, 34% 0%, 22% 100%, 0% 100%)",
@@ -16,7 +16,7 @@ const generateShards = (t: any) => [
   },
   {
     id: 2,
-    image: t('about.hero.shard.2.img', "/custom_home_interior_1774895577855.png"),
+    image: t('about.hero.shard.2.img', "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/base_assets/custom_home_interior_1774895577855.png"),
     subtitle: t('about.hero.shard.2.subtitle', "Uncompromising Physics"),
     title: t('about.hero.shard.2.title', "The Structure"),
     defaultClip: "polygon(35% 0%, 67% 0%, 55% 100%, 23% 100%)",
@@ -25,7 +25,7 @@ const generateShards = (t: any) => [
   },
   {
     id: 3,
-    image: t('about.hero.shard.3.img', "/portfolio_bespoke_exterior_1774904336356.png"),
+    image: t('about.hero.shard.3.img', "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/base_assets/portfolio_bespoke_exterior_1774904336356.png"),
     subtitle: t('about.hero.shard.3.subtitle', "High Fashion Luxury"),
     title: t('about.hero.shard.3.title', "The Aesthetic"),
     defaultClip: "polygon(68% 0%, 100% 0%, 100% 100%, 56% 100%)",

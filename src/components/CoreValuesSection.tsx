@@ -9,25 +9,25 @@ const defaultCommitments = [
     id: "01",
     title: "Project Management",
     description: "Total oversight from initial architectural drafting to final executive walkthrough. We manage every permit, master contractor, and logistical hurdle so your luxury building experience remains completely unburdened.",
-    image: "/card_project_management_1774895647508.png",
+    image: "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/base_assets/card_project_management_1774895647508.png",
   },
   {
     id: "02",
     title: "Financial Precision",
     description: "Unprecedented financial transparency and ironclad scheduling. We engineer our timeline with military precision to ensure your absolute custom estate is delivered exactly when promised, without compromise.",
-    image: "/card_budget_guarantee_1774895665774.png",
+    image: "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/base_assets/card_budget_guarantee_1774895665774.png",
   },
   {
     id: "03",
     title: "Elite Custom Quality",
     description: "We source globally for premium architectural materials and employ only master craftsmen. Our obsession with structural perfection and high-end finishes guarantees a legacy-tier home built to endure.",
-    image: "/card_elite_quality_1774895683555.png",
+    image: "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/base_assets/card_elite_quality_1774895683555.png",
   },
   {
     id: "04",
     title: "Licensed Execution",
     description: "Fully certified, comprehensively insured general contractors operating at the absolute highest tier of safety compliance. Genuine peace of mind engineered directly into the foundation of your investment.",
-    image: "/card_safety_compliant_1774895701318.png",
+    image: "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/base_assets/card_safety_compliant_1774895701318.png",
   }
 ];
 
@@ -40,10 +40,10 @@ export default function CoreValuesSection() {
   const commitments = useMemo(() => {
     const list = [];
     const defaultImages = [
-      "/card_project_management_1774895647508.png",
-      "/card_budget_guarantee_1774895665774.png",
-      "/card_elite_quality_1774895683555.png",
-      "/card_safety_compliant_1774895701318.png"
+      "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/base_assets/card_project_management_1774895647508.png",
+      "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/base_assets/card_budget_guarantee_1774895665774.png",
+      "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/base_assets/card_elite_quality_1774895683555.png",
+      "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/base_assets/card_safety_compliant_1774895701318.png"
     ];
 
     for (let i = 1; i <= 4; i++) {

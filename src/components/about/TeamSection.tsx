@@ -28,7 +28,7 @@ export default function TeamSection() {
       pillar: pillar,
       title: project?.title || "Flagship Project",
       slug: project?.slug || "#",
-      image: project?.heroImage || "/portfolio_lakefront_mansion_1774904298419.png",
+      image: project?.heroImage || "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/base_assets/portfolio_lakefront_mansion_1774904298419.png",
       location: project?.location || "Greater Toronto Area",
     };
   }), [hydratedProjects, corePillars]);

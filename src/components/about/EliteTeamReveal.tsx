@@ -15,7 +15,7 @@ export default function EliteTeamReveal() {
       firstName: t(`about.team.${id}.fname`, ''),
       lastName: t(`about.team.${id}.lname`, ''),
       role: t(`about.team.${id}.role`, ''),
-      image: t(`about.team.${id}.img`, `/team_${id}.png`),
+      image: t(`about.team.${id}.img`, `https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/base_assets/team_${id}.png`),
       description: t(`about.team.${id}.desc`, '')
     }));
   }, [t]);

@@ -234,7 +234,7 @@ export default function ServiceAreaSection({ hideButton = false }: { hideButton?
                          >
                             {/* Pin Container */}
                             <div className={`w-9 h-9 rounded-md border-2 overflow-hidden shadow-xl ${isActive ? 'border-[#F9A825] shadow-[#F9A825]/40' : 'border-gray-900/80 shadow-black/30'} group-hover:border-[#F9A825] group-hover:shadow-[0_0_15px_rgba(249,168,37,0.5)] transition-all`}>
-                               <Image src="/custom_home_exterior_1774895595441.png" fill className="object-cover" alt="Emperor Sami Group Marker" />
+                               <Image src="https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/base_assets/custom_home_exterior_1774895595441.png" fill className="object-cover" alt="Emperor Sami Group Marker" />
                             </div>
                             {/* Pin Point */}
                             <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-4 h-4" style={{ clipPath: 'polygon(50% 100%, 0 0, 100% 0)' }}>

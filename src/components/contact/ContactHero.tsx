@@ -98,7 +98,7 @@ export default function ContactHero() {
       >
         {/* The 100% Color Architectural Reality */}
         <Image 
-          src={getImage("contactpage.hero_img") || "/contact-dynamic-hero.png"} 
+          src={getImage("contactpage.hero_img") || "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/base_assets/contact-dynamic-hero.png"} 
           alt="Architectural Reality" 
           fill 
           className="object-cover pointer-events-none brightness-105 contrast-125"

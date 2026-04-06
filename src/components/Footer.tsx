@@ -24,7 +24,7 @@ export default function Footer() {
       {/* Stunning Luxury Home Background Overlay */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <Image 
-          src="/footer_luxury_bg.png" 
+          src="https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/base_assets/footer_luxury_bg.png" 
           alt="Emperor Sami Luxury Background" 
           fill 
           sizes="100vw"
@@ -40,7 +40,7 @@ export default function Footer() {
           {/* Left: Image Block */}
           <Link href="/about#team" className="block w-full md:w-1/2 relative min-h-[160px] sm:min-h-[180px] group flex items-end rounded-md overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.4)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_25px_60px_rgba(0,0,0,0.5)] cursor-pointer">
             <Image 
-              src={getImage("footer.banner_img") || "/luxury_architect_team.png"} 
+              src={getImage("footer.banner_img") || "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/base_assets/luxury_architect_team.png"} 
               alt="Emperor Sami Group Expert" 
               fill 
               sizes="(max-width: 768px) 100vw, 50vw"

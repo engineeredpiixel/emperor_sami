@@ -28,7 +28,7 @@ export default function ServicesHero() {
         }}
       >
         <Image 
-          src={t('services.hero_img', '/portfolio_architectural_concrete_1774904384443.png')}
+          src={t('services.hero_img', 'https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/base_assets/portfolio_architectural_concrete_1774904384443.png')}
           alt="Emperor Sami High-End Architecture"
           fill
           className="object-cover grayscale-[30%]"

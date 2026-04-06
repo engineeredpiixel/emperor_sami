@@ -7,7 +7,7 @@ export default function ProjectsHero() {
   const { t } = useCMS();
 
   // Using fallbacks directly inside the component mapping for safety before the DB seed runs
-  const heroImage = t("page_projects.heroImage") || "/projects-master-hero.png";
+  const heroImage = t("page_projects.heroImage") || "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/base_assets/projects-master-hero.png";
   const kicker = t("page_projects.kicker") || "Emperor Sami Group";
   const titleLine1 = t("page_projects.titleLine1") || "Master";
   const titleLine2 = t("page_projects.titleLine2") || "Portfolio.";

@@ -11,7 +11,7 @@ export default function EliteEnclaves() {
       subtitle: t("servicearea.rc1_subtitle", "The Heritage Core"),
       title: t("servicearea.rc1_title", "Rosedale & Forest Hill"),
       desc: t("servicearea.rc1_desc", "Executing flawless underpinning and surgical extensions without breaching Toronto's absolutely strictest historic brickwork and preservation protocols. We safely gut century-old skeletons and install modern superstructures inside."),
-      image: t("servicearea.rc1_img", "/portfolio_modern_renovation_1774904319283.png"),
+      image: t("servicearea.rc1_img", "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/base_assets/portfolio_modern_renovation_1774904319283.png"),
       stat: t("servicearea.rc1_stat", "Heritage Preservation")
     },
     {
@@ -19,7 +19,7 @@ export default function EliteEnclaves() {
       subtitle: t("servicearea.rc2_subtitle", "The Billionaires Row"),
       title: t("servicearea.rc2_title", "Bridle Path & Hoggs Hollow"),
       desc: t("servicearea.rc2_desc", "Building isolated, multi-generational fortress compounds featuring massive subterranean amenities (saunas, theaters) and aggressive, custom iron perimeter gating. Absolute privacy and uncompromising scale."),
-      image: t("servicearea.rc2_img", "/portfolio_lakefront_mansion_1774904298419.png"),
+      image: t("servicearea.rc2_img", "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/base_assets/portfolio_lakefront_mansion_1774904298419.png"),
       stat: t("servicearea.rc2_stat", "Maximum Footprint Yield")
     },
     {
@@ -27,7 +27,7 @@ export default function EliteEnclaves() {
       subtitle: t("servicearea.rc3_subtitle", "The Suburban Estates"),
       title: t("servicearea.rc3_title", "King City, Vaughan, Aurora"),
       desc: t("servicearea.rc3_desc", "Unlocking massive multi-acre framing capacities, executing commercial-scale heated driveways, independent guest houses, and expansive rear-lot structural hardscaping layouts."),
-      image: t("servicearea.rc3_img", "/portfolio_architectural_concrete_1774904384443.png"),
+      image: t("servicearea.rc3_img", "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/base_assets/portfolio_architectural_concrete_1774904384443.png"),
       stat: t("servicearea.rc3_stat", "Multi-Acre Mastery")
     },
     {
@@ -35,7 +35,7 @@ export default function EliteEnclaves() {
       subtitle: t("servicearea.rc4_subtitle", "The Lakeshore Properties"),
       title: t("servicearea.rc4_title", "Oakville & Mississauga"),
       desc: t("servicearea.rc4_desc", "Expertly navigating Conservation Authorities and strict waterfront setbacks to engineer ultra-modern structural glass villas with uninterrupted views and rigorous moisture-control systems."),
-      image: t("servicearea.rc4_img", "/portfolio_structural_glass_1774904353242.png"),
+      image: t("servicearea.rc4_img", "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/base_assets/portfolio_structural_glass_1774904353242.png"),
       stat: t("servicearea.rc4_stat", "Waterfront Engineering")
     }
   ];
