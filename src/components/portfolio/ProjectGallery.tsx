@@ -41,7 +41,7 @@ export default function ProjectGallery({ data }: { data: ProjectType }) {
                      src={imgSrc} 
                      alt={`${data.title} Phase ${i + 1}`} 
                      fill 
-                     className="object-cover transition-transform duration-[2s] group-hover:scale-110 opacity-70 group-hover:opacity-100 grayscale hover:grayscale-0 pointer-events-none"
+                     className="object-cover transition-transform duration-[2s] group-hover:scale-110 opacity-90 group-hover:opacity-100 pointer-events-none"
                   />
                   {/* Subtle Border Glow */}
                   <div className="absolute inset-0 border border-white/5 group-hover:border-[#D8A02A]/20 transition-colors duration-700 pointer-events-none" />
