@@ -1499,7 +1499,7 @@ function ServicesTabbedEditor({ content, edits, saving, saved, uploadingKey, set
         )}
 
         <div className="p-6 sm:p-10 bg-[#FBFBFB] overflow-y-auto space-y-12">
-          {subGroups.filter(g => activeTab === 'ui_text' || g === currentSubGroup).map((group) => {
+          {subGroups.filter(g => g === currentSubGroup).map((group) => {
             const groupFields = tabContent.filter((f: any) => getSubGroup(f.key) === group);
             return (
               <div key={group} className="relative">
