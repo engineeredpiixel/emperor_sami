@@ -21,18 +21,17 @@ export const metadata: Metadata = {
   description: "Conquering the Greater Toronto Area's most elite zoning laws. Master-crafted execution in Bridle Path, Rosedale, Oakville, and King City.",
 };
 
-export default function ServiceAreaPage() {
-  return (
-    <main className="flex-1 bg-[#111] min-h-screen -mt-[130px]">
-      <ImageMaskDefs />
+import { CMSProvider, useCMS } from "@/components/CMSProvider";
 
-      {/* ── MASSIVE CINEMATIC CITYSCAPE HERO ── */}
+function ServiceAreaHero() {
+  const { t } = useCMS();
+  return (
       <section className="relative w-full h-[70vh] min-h-[500px] pt-[130px] flex flex-col items-center justify-center overflow-hidden border-b-8 border-b-white/5">
          
          {/* Background Engine */}
          <div className="absolute inset-0 z-0">
             <Image 
-               src="/luxury-cityscape-service-area.png" 
+               src={t('servicearea.hero_image', '/luxury-cityscape-service-area.png')} 
                alt="Toronto Skyline"
                fill
                priority
@@ -46,21 +45,32 @@ export default function ServiceAreaPage() {
             
             <div className="flex items-center gap-4 mb-6">
                 <div className="h-[2px] w-12 bg-white" />
-                <span className="text-white text-[10px] md:text-sm font-black tracking-[0.5em] uppercase">Jurisdictional Conquest</span>
+                <span className="text-white text-[10px] md:text-sm font-black tracking-[0.5em] uppercase">{t('servicearea.hero_tagline', 'Jurisdictional Conquest')}</span>
                 <div className="hidden sm:block h-[2px] w-12 bg-[#D8A02A]" />
             </div>
 
             <h1 className="text-white text-5xl sm:text-6xl md:text-8xl lg:text-[7rem] font-black tracking-tighter uppercase leading-[0.95] drop-shadow-2xl mb-8">
-               Territorial <br /> 
-               <span className="text-[#D8A02A] italic pr-4">Dominance.</span>
+               {t('servicearea.hero_title_1', 'Territorial')} <br /> 
+               <span className="text-[#D8A02A] italic pr-4">{t('servicearea.hero_title_2', 'Dominance.')}</span>
             </h1>
 
             <p className="text-gray-300 font-bold max-w-2xl text-base md:text-xl tracking-widest uppercase leading-[1.6]">
-               We do not just construct estates. We surgically navigate and conquer the strict municipal bureaucracy of Toronto's most elite zoning jurisdictions.
+               {t('servicearea.hero_description', "We do not just construct estates. We surgically navigate and conquer the strict municipal bureaucracy of Toronto's most elite zoning jurisdictions.")}
             </p>
 
          </div>
       </section>
+  )
+}
+
+export default function ServiceAreaPage() {
+  return (
+    <main className="flex-1 bg-[#111] min-h-screen -mt-[130px]">
+      <ImageMaskDefs />
+      <CMSProvider section="page_service_area">
+
+         {/* ── MASSIVE CINEMATIC CITYSCAPE HERO ── */}
+         <ServiceAreaHero />
 
       {/* ── THE INTERACTIVE GTA MAP ── */}
       <div className="bg-white">
@@ -99,6 +109,7 @@ export default function ServiceAreaPage() {
       {/* 7. The Ultimate CTA Push */ }
       <CTASection />
 
+      </CMSProvider>
     </main>
   );
 }

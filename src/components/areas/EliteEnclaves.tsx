@@ -1,43 +1,45 @@
 "use client";
 
 import Image from "next/image";
-
-const enclaves = [
-  {
-    id: "01",
-    subtitle: "The Heritage Core",
-    title: "Rosedale & Forest Hill",
-    desc: "Executing flawless underpinning and surgical extensions without breaching Toronto's absolutely strictest historic brickwork and preservation protocols. We safely gut century-old skeletons and install modern superstructures inside.",
-    image: "/portfolio_modern_renovation_1774904319283.png",
-    stat: "Heritage Preservation"
-  },
-  {
-    id: "02",
-    subtitle: "The Billionaires Row",
-    title: "Bridle Path & Hoggs Hollow",
-    desc: "Building isolated, multi-generational fortress compounds featuring massive subterranean amenities (saunas, theaters) and aggressive, custom iron perimeter gating. Absolute privacy and uncompromising scale.",
-    image: "/portfolio_lakefront_mansion_1774904298419.png",
-    stat: "Maximum Footprint Yield"
-  },
-  {
-    id: "03",
-    subtitle: "The Suburban Estates",
-    title: "King City, Vaughan, Aurora",
-    desc: "Unlocking massive multi-acre framing capacities, executing commercial-scale heated driveways, independent guest houses, and expansive rear-lot structural hardscaping layouts.",
-    image: "/portfolio_architectural_concrete_1774904384443.png",
-    stat: "Multi-Acre Mastery"
-  },
-  {
-    id: "04",
-    subtitle: "The Lakeshore Properties",
-    title: "Oakville & Mississauga",
-    desc: "Expertly navigating Conservation Authorities and strict waterfront setbacks to engineer ultra-modern structural glass villas with uninterrupted views and rigorous moisture-control systems.",
-    image: "/portfolio_structural_glass_1774904353242.png",
-    stat: "Waterfront Engineering"
-  }
-];
+import { useCMS } from "@/components/CMSProvider";
 
 export default function EliteEnclaves() {
+  const { t } = useCMS();
+  const enclaves = [
+    {
+      id: "01",
+      subtitle: t("servicearea.rc1_subtitle", "The Heritage Core"),
+      title: t("servicearea.rc1_title", "Rosedale & Forest Hill"),
+      desc: t("servicearea.rc1_desc", "Executing flawless underpinning and surgical extensions without breaching Toronto's absolutely strictest historic brickwork and preservation protocols. We safely gut century-old skeletons and install modern superstructures inside."),
+      image: t("servicearea.rc1_img", "/portfolio_modern_renovation_1774904319283.png"),
+      stat: t("servicearea.rc1_stat", "Heritage Preservation")
+    },
+    {
+      id: "02",
+      subtitle: t("servicearea.rc2_subtitle", "The Billionaires Row"),
+      title: t("servicearea.rc2_title", "Bridle Path & Hoggs Hollow"),
+      desc: t("servicearea.rc2_desc", "Building isolated, multi-generational fortress compounds featuring massive subterranean amenities (saunas, theaters) and aggressive, custom iron perimeter gating. Absolute privacy and uncompromising scale."),
+      image: t("servicearea.rc2_img", "/portfolio_lakefront_mansion_1774904298419.png"),
+      stat: t("servicearea.rc2_stat", "Maximum Footprint Yield")
+    },
+    {
+      id: "03",
+      subtitle: t("servicearea.rc3_subtitle", "The Suburban Estates"),
+      title: t("servicearea.rc3_title", "King City, Vaughan, Aurora"),
+      desc: t("servicearea.rc3_desc", "Unlocking massive multi-acre framing capacities, executing commercial-scale heated driveways, independent guest houses, and expansive rear-lot structural hardscaping layouts."),
+      image: t("servicearea.rc3_img", "/portfolio_architectural_concrete_1774904384443.png"),
+      stat: t("servicearea.rc3_stat", "Multi-Acre Mastery")
+    },
+    {
+      id: "04",
+      subtitle: t("servicearea.rc4_subtitle", "The Lakeshore Properties"),
+      title: t("servicearea.rc4_title", "Oakville & Mississauga"),
+      desc: t("servicearea.rc4_desc", "Expertly navigating Conservation Authorities and strict waterfront setbacks to engineer ultra-modern structural glass villas with uninterrupted views and rigorous moisture-control systems."),
+      image: t("servicearea.rc4_img", "/portfolio_structural_glass_1774904353242.png"),
+      stat: t("servicearea.rc4_stat", "Waterfront Engineering")
+    }
+  ];
+
   return (
     <section className="bg-[#FAF9F6] pt-32 pb-64 w-full relative">
       <div className="max-w-[1200px] mx-auto px-6 lg:px-12">
@@ -47,15 +49,15 @@ export default function EliteEnclaves() {
           <div className="max-w-2xl">
             <div className="flex items-center gap-3 mb-6">
               <div className="h-[2px] w-8 bg-[#D8A02A]" />
-              <span className="text-[#D8A02A] text-xs font-black tracking-[0.4em] uppercase">Regional Dominance</span>
+              <span className="text-[#D8A02A] text-xs font-black tracking-[0.4em] uppercase">{t("servicearea.regional_badge", "Regional Dominance")}</span>
             </div>
             <h2 className="text-4xl sm:text-6xl md:text-7xl leading-[1.05] font-black tracking-tighter uppercase text-[#111]">
-              The Elite <br className="hidden sm:block" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-gray-300">Enclaves.</span>
+              {t("servicearea.regional_title_1", "The Elite")} <br className="hidden sm:block" />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-gray-300">{t("servicearea.regional_title_2", "Enclaves.")}</span>
             </h2>
           </div>
           <p className="text-sm sm:text-[15px] font-medium text-gray-500 max-w-sm uppercase tracking-widest leading-relaxed">
-            Every neighborhood requires entirely different execution strategies. We have conquered them all.
+            {t("servicearea.regional_desc", "Every neighborhood requires entirely different execution strategies. We have conquered them all.")}
           </p>
         </div>
 

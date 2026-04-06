@@ -1,28 +1,30 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-
-const expertise = [
-  {
-    icon: "legal",
-    title: "Committee of Adjustment",
-    desc: "Achieving major footprint expansions in Toronto requires navigating the C of A. We secure complex variances for height, side-yard setbacks, and gross floor areas that average builders abandon.",
-  },
-  {
-    icon: "conservation",
-    title: "Conservation Authorities",
-    desc: "Building near Oakville or King City waterfronts involves strict TRCA and Halton conservation laws. We engineer retaining walls and drainage systems that instantly clear environmental impact reviews.",
-  },
-  {
-    icon: "heritage",
-    title: "Heritage Preservation",
-    desc: "Rosedale and Annex estates demand Historical Board approvals. We flawlessly match century-old masonry and execute permitted structural lifts without violating neighborhood heritage facades.",
-  }
-];
+import { useCMS } from "@/components/CMSProvider";
 
 export default function ZoningExpertise() {
+  const { t } = useCMS();
   const containerRef = useRef<HTMLElement>(null);
   const [inView, setInView] = useState(false);
+
+  const expertise = [
+    {
+      icon: "legal",
+      title: t("servicearea.bureau_item1_title", "Committee of Adjustment"),
+      desc: t("servicearea.bureau_item1_desc", "Achieving major footprint expansions in Toronto requires navigating the C of A. We secure complex variances for height, side-yard setbacks, and gross floor areas that average builders abandon."),
+    },
+    {
+      icon: "conservation",
+      title: t("servicearea.bureau_item2_title", "Conservation Authorities"),
+      desc: t("servicearea.bureau_item2_desc", "Building near Oakville or King City waterfronts involves strict TRCA and Halton conservation laws. We engineer retaining walls and drainage systems that instantly clear environmental impact reviews."),
+    },
+    {
+      icon: "heritage",
+      title: t("servicearea.bureau_item3_title", "Heritage Preservation"),
+      desc: t("servicearea.bureau_item3_desc", "Rosedale and Annex estates demand Historical Board approvals. We flawlessly match century-old masonry and execute permitted structural lifts without violating neighborhood heritage facades."),
+    }
+  ];
 
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => {
@@ -45,20 +47,20 @@ export default function ZoningExpertise() {
         <div className={`w-full md:w-5/12 transition-all duration-1000 ${inView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'}`}>
            <div className="flex items-center gap-4 mb-6">
               <div className="h-[2px] w-12 bg-white/20" />
-              <span className="text-white/40 text-xs font-black tracking-[0.4em] uppercase">Bureaucratic Supremacy</span>
+              <span className="text-white/40 text-xs font-black tracking-[0.4em] uppercase">{t("servicearea.bureau_badge", "Bureaucratic Supremacy")}</span>
            </div>
            
            <h2 className="text-5xl sm:text-6xl md:text-7xl font-black text-white tracking-tighter uppercase leading-[0.95] mb-8 drop-shadow-lg">
-              Conquering <br className="hidden lg:block" />
-              <span className="text-[#D8A02A]">The Red Tape.</span>
+              {t("servicearea.bureau_title_1", "Conquering")} <br className="hidden lg:block" />
+              <span className="text-[#D8A02A]">{t("servicearea.bureau_title_2", "The Red Tape.")}</span>
            </h2>
            
            <p className="text-gray-400 leading-relaxed font-medium sm:text-lg max-w-md border-l-[3px] border-[#D8A02A] pl-6 mb-12">
-              The greatest threat to a multi-million-dollar build is not the structural engineering—it is the municipal bureaucracy. Our internal legal and architectural teams ruthlessly navigate Toronto's most aggressively regulated zones so your timeline never stalls.
+              {t("servicearea.bureau_desc", "The greatest threat to a multi-million-dollar build is not the structural engineering\u2014it is the municipal bureaucracy. Our internal legal and architectural teams ruthlessly navigate Toronto's most aggressively regulated zones so your timeline never stalls.")}
            </p>
 
            <div className="inline-flex items-center gap-4 border border-white/10 bg-white/5 py-4 px-6 font-mono text-sm tracking-widest text-[#D8A02A] uppercase font-bold">
-              <span>Zero Zoning Denials</span>
+              <span>{t("servicearea.bureau_pulse_txt", "Zero Zoning Denials")}</span>
               <div className="w-1.5 h-1.5 rounded-full bg-[#D8A02A] animate-pulse" />
            </div>
         </div>

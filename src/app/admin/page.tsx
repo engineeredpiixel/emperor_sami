@@ -451,6 +451,17 @@ export default function AdminDashboard() {
               handleSave={handleSave}
               handleImageUpload={handleImageUpload}
             />
+          ) : activeSection === "page_service_area" ? (
+            <ServiceAreaTabbedEditor
+              content={filteredContent}
+              edits={edits}
+              saving={saving}
+              saved={saved}
+              uploadingKey={uploadingKey}
+              setEdits={setEdits}
+              handleSave={handleSave}
+              handleImageUpload={handleImageUpload}
+            />
           ) : activeSection === "page_service_inner" ? (
             <ServiceInnerPagesEditor
               content={filteredContent}
@@ -1528,6 +1539,72 @@ function ServicesTabbedEditor({ content, edits, saving, saved, uploadingKey, set
             );
           })}
         </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Service Area Sub-Router ────────────────────────────────────────
+function ServiceAreaTabbedEditor({ content, edits, saving, saved, uploadingKey, setEdits, handleSave, handleImageUpload }: any) {
+  const getSubGroup = (key: string) => {
+    if (key.includes('hero_')) return 'Hero Section';
+    if (key.includes('bureau_')) return 'Bureaucratic Supremacy';
+    if (key.includes('rc') || key.includes('regional')) return 'Regional Dominance';
+    if (key.includes('map') || key.includes('headline') || key.includes('description') || key.includes('badge_text')) return 'Maps Section';
+    return 'General UI Settings';
+  };
+
+  const subGroups = (Array.from(new Set(content.map((f: any) => getSubGroup(f.key)))) as string[]).sort((a, b) => a.localeCompare(b));
+  const [currentSubGroup, setCurrentSubGroup] = useState<string | null>(subGroups[0] || null);
+
+  return (
+    <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm max-w-7xl mx-auto flex flex-col">
+      {/* Tabs Header */}
+      {subGroups.length > 1 && (
+        <div className="p-4 border-b border-slate-200 bg-slate-50 flex gap-2 overflow-x-auto custom-scrollbar shrink-0">
+          {subGroups.map(group => (
+            <button 
+              key={group}
+              onClick={() => setCurrentSubGroup(group)}
+              className={`px-4 py-2 rounded-full text-[11px] font-bold uppercase tracking-wider transition-all whitespace-nowrap ${
+                  currentSubGroup === group ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/20" : "bg-white border border-slate-200 text-slate-500 hover:border-indigo-300 hover:text-indigo-600"
+              }`}
+            >
+              {group}
+            </button>
+          ))}
+        </div>
+      )}
+      {/* Content Area */}
+      <div className="p-6 sm:p-10 bg-[#FBFBFB] overflow-y-auto space-y-12 max-h-[80vh]">
+        {subGroups.filter(g => !currentSubGroup || g === currentSubGroup).map((group) => {
+          const groupFields = content.filter((f: any) => getSubGroup(f.key) === group);
+          return (
+            <div key={group} className="relative">
+              <div className="flex items-center gap-4 mb-6">
+                <h3 className="text-slate-800 font-extrabold text-lg uppercase tracking-wider">
+                  {group}
+                </h3>
+                <div className="flex-1 h-[1px] bg-slate-200"></div>
+              </div>
+              <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                {groupFields.map((item: any) => (
+                  <ContentField
+                    key={item.key}
+                    item={item}
+                    value={edits[item.key] ?? ""}
+                    saving={saving[item.key]}
+                    saved={saved[item.key]}
+                    uploading={uploadingKey === item.key}
+                    onChange={(val: string) => setEdits((prev: any) => ({ ...prev, [item.key]: val }))}
+                    onSave={() => handleSave(item.key)}
+                    onImageUpload={(file: File) => handleImageUpload(item.key, file)}
+                  />
+                ))}
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
