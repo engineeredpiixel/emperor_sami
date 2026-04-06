@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { TerritoryType } from "@/lib/territoryData";
 import { useEffect, useRef, useState, useMemo } from "react";
-import { useHydratedProjects } from "@/components/CMSProvider";
+import { useHydratedProjects, useCMS } from "@/components/CMSProvider";
 
 export default function LocationPortfolio({ slug, fallback }: { slug: string, fallback: TerritoryType }) {
   const { t } = useCMS();
