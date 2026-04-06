@@ -1413,10 +1413,11 @@ function MegaMenuTabbedEditor({ content, edits, saving, saved, uploadingKey, set
 function ServicesTabbedEditor({ content, edits, saving, saved, uploadingKey, setEdits, handleSave, handleImageUpload }: any) {
   const [activeTab, setActiveTab] = useState("ui_text");
 
+  const commercialSlugs = ['ground-up-construction', 'design-build', 'material-sourcing', 'tenant-build', 'vanilla-shell', 'office-modern', 'ada-compliance', 'adaptive-reuse', 'executive-suites', 'cafeteria-builds', 'acoustic-part', 'commercial-roofing', 'facade-upgrades', 'storefront-glazing', 'security-fencing'];
   const tabs = [
     { id: 'ui_text', label: 'Grid UI Strings', filter: (key: string) => key.includes('services.grid') },
-    { id: 'res_cards', label: 'Residential Cards', filter: (key: string) => !key.includes('services.grid') && !key.includes('.card.title') && !['ground', 'design', 'material', 'tenant', 'vanilla', 'office', 'ada', 'adaptive', 'executive', 'cafeteria', 'acoustic', 'commercial', 'facade', 'storefront', 'security'].some(sub => key.includes(sub)) },
-    { id: 'com_cards', label: 'Commercial Cards', filter: (key: string) => !key.includes('services.grid') && !key.includes('.card.title') && ['ground', 'design', 'material', 'tenant', 'vanilla', 'office', 'ada', 'adaptive', 'executive', 'cafeteria', 'acoustic', 'commercial', 'facade', 'storefront', 'security'].some(sub => key.includes(sub)) }
+    { id: 'res_cards', label: 'Residential Cards', filter: (key: string) => !key.includes('services.grid') && !key.includes('.card.title') && (!commercialSlugs.some(sub => key.includes(sub)) || key.includes('turnkey-solutions')) },
+    { id: 'com_cards', label: 'Commercial Cards', filter: (key: string) => !key.includes('services.grid') && !key.includes('.card.title') && (commercialSlugs.some(sub => key.includes(sub)) || key.includes('turnkey-solutions')) }
   ];
 
   const currentFilter = tabs.find(t => t.id === activeTab)?.filter || (() => true);
@@ -1425,17 +1426,19 @@ function ServicesTabbedEditor({ content, edits, saving, saved, uploadingKey, set
   const getSubGroup = (key: string) => {
     if (key.includes('services.grid')) return "Grid Display Labels";
     
-    // RESIDENTIAL GROUPS
-    if (['new-construction', 'custom-design', 'quality-materials', 'turnkey-solutions'].some(sub => key.includes(sub))) return "Custom Home Building";
-    if (['kitchen-remodeling', 'bathroom-remodeling', 'room-additions', 'whole-home-renovations'].some(sub => key.includes(sub))) return "Home Renovations";
-    if (['open-concepts', 'home-theaters', 'guest-suites', 'recreation-rooms'].some(sub => key.includes(sub))) return "Basement Finishing";
-    if (['decks-porches', 'roofing', 'siding', 'windows-doors', 'fence-installation'].some(sub => key.includes(sub))) return "Exterior Improvements";
-    
-    // COMMERCIAL GROUPS
-    if (['ground-up-construction', 'design-build', 'material-sourcing'].some(sub => key.includes(sub)) || (key.includes('turnkey-solutions') && activeTab === 'com_cards')) return "Commercial Construction";
-    if (['tenant-build-outs', 'vanilla-shell-finish', 'office-modernization', 'ada-compliance'].some(sub => key.includes(sub))) return "Commercial Remodeling";
-    if (['adaptive-reuse', 'executive-suites', 'cafeteria-builds', 'acoustic-partitioning'].some(sub => key.includes(sub))) return "Interior Optimization";
-    if (['commercial-roofing', 'facade-upgrades', 'storefront-glazing', 'security-fencing'].some(sub => key.includes(sub))) return "Exterior & Security";
+    if (activeTab === 'res_cards') {
+      if (['new-construction', 'custom-design', 'quality-materials', 'turnkey-solutions'].some(sub => key.includes(sub))) return "Custom Home Building";
+      if (['kitchen-remodeling', 'bathroom-remodeling', 'room-additions', 'whole-home-renovations'].some(sub => key.includes(sub))) return "Home Renovations";
+      if (['open-concepts', 'home-theaters', 'guest-suites', 'recreation-rooms'].some(sub => key.includes(sub))) return "Basement Finishing";
+      if (['decks-porches', 'roofing', 'siding', 'windows-doors', 'fence-installation'].some(sub => key.includes(sub))) return "Exterior Improvements";
+    }
+
+    if (activeTab === 'com_cards') {
+      if (['ground-up-construction', 'design-build', 'material-sourcing', 'turnkey-solutions'].some(sub => key.includes(sub))) return "Commercial Construction";
+      if (['tenant-build-outs', 'vanilla-shell-finish', 'office-modernization', 'ada-compliance'].some(sub => key.includes(sub))) return "Commercial Remodeling";
+      if (['adaptive-reuse', 'executive-suites', 'cafeteria-builds', 'acoustic-partitioning'].some(sub => key.includes(sub))) return "Interior Optimization";
+      if (['commercial-roofing', 'facade-upgrades', 'storefront-glazing', 'security-fencing'].some(sub => key.includes(sub))) return "Exterior & Security";
+    }
     
     const slugParts = key.split('.');
     if (slugParts.length > 0) {
