@@ -95,7 +95,7 @@ export default function AboutHero() {
                   }}
                >
                   {/* The Image inside the Mask */}
-                  <Image 
+                  <Image quality={95} 
                      src={shard.image}
                      alt={shard.title}
                      fill

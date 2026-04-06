@@ -24,7 +24,7 @@ export default function LocationHero({ slug, fallback }: { slug: string, fallbac
       
       {/* ── PARALLAX ENGINE ── */}
       <div className="absolute inset-0 z-0">
-         <Image 
+         <Image quality={95} 
             src={heroImg} 
             alt={`Location Context in ${fallback.name}`}
             fill

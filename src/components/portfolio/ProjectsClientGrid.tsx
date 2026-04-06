@@ -125,7 +125,7 @@ export default function ProjectsClientGrid({ initialProjects }: { initialProject
                >
                   {/* Image Block */}
                   <div className="w-full h-[320px] relative overflow-hidden bg-[#111]">
-                     <Image 
+                     <Image quality={95} 
                         src={proj.heroImage}
                         alt={proj.title}
                         fill

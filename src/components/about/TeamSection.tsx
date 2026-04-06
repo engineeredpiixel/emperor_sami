@@ -85,7 +85,7 @@ export default function TeamSection() {
                         <div className="w-[1px] h-[200%] bg-white absolute top-1/2 -rotate-[65deg]" />
                      </div>
 
-                     <Image 
+                     <Image quality={95} 
                         src={exec.image}
                         alt={exec.title}
                         fill

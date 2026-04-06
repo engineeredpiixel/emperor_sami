@@ -11,7 +11,7 @@ export default function CTASection() {
   return (
     <section className="relative w-full h-[420px] sm:h-[460px] lg:h-[260px] overflow-hidden group cursor-pointer z-10">
       {/* Background Image */}
-      <Image
+      <Image quality={95}
         src={bgImage}
         fill
         className="object-cover transition-transform duration-[3s] group-hover:scale-105"

@@ -9,7 +9,7 @@ export default function ProjectHero({ data }: { data: ProjectType }) {
       
       {/* ── PARALLAX BACKBONE ── */}
       <div className="absolute inset-0 z-0">
-         <Image 
+         <Image quality={95} 
             src={data.heroImage} 
             alt={`Emperor Sami - ${data.title}`}
             fill

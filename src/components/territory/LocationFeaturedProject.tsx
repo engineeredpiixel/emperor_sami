@@ -56,7 +56,7 @@ export default function LocationFeaturedProject({ slug, fallback }: { slug: stri
                   className="absolute inset-x-0 w-[120%] h-[120%] -left-[10%] -top-[10%] z-0 pointer-events-none"
                   style={{ transform: `translateY(${(scrollY - (sectionRef.current?.offsetTop || 0)) * 0.15}px)` }}
                >
-                  <Image 
+                  <Image quality={95} 
                      src={image} 
                      alt={title} 
                      fill 

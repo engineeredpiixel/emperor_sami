@@ -16,7 +16,7 @@ export default function ProjectsHero() {
   return (
     <section className="relative w-full overflow-hidden">
          <div className="absolute top-0 left-0 w-full h-[65vh] min-h-[550px] z-0">
-             <Image 
+             <Image quality={95} 
                 src={heroImage}
                 alt="Architectural Masterpiece"
                 fill

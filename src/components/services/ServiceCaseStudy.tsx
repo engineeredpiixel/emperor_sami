@@ -39,7 +39,7 @@ export default function ServiceCaseStudy({ data, projectUrl, projectImage }: { d
          className="absolute inset-0 z-0 scale-110 pointer-events-none"
          style={{ transform: `translateY(${(scrollY - (sectionRef.current?.offsetTop || 0)) * 0.3}px)` }}
       >
-         <Image 
+         <Image quality={95} 
             src={projectImage || data.image} 
             alt={data.title} 
             fill 

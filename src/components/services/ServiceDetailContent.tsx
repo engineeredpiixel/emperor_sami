@@ -11,7 +11,7 @@ export default function ServiceDetailContent({ data }: { data: ServiceContentTyp
         {/* ── STICKY LEFT COLUMN (Image) ── */}
         <div className="w-full lg:w-5/12 xl:w-1/2">
            <div className="sticky top-32 w-full aspect-square md:aspect-[4/3] lg:aspect-[4/5] overflow-hidden rounded-xl shadow-2xl bg-gray-100">
-              <Image 
+              <Image quality={95} 
                 src={data.capabilityImage} 
                 alt={`${data.heroTitle} Capability Overview`} 
                 fill 

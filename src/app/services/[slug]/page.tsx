@@ -74,7 +74,7 @@ export default async function ServicePage(props: { params: Promise<{ slug: strin
       
       {/* ── ISOLATED SERVICE HERO ── */}
       <section className="relative w-full h-[60vh] min-h-[400px] pt-20 flex items-center justify-center bg-[#0a0a0a] overflow-hidden">
-         <Image 
+         <Image quality={95} 
             src={data.heroImage} 
             alt={data.heroTitle} 
             fill 

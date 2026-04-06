@@ -76,7 +76,7 @@ export default function LocationPortfolio({ slug, fallback }: { slug: string, fa
                     className={`relative group overflow-hidden bg-[#111] ${spanClass} transition-all duration-[1.2s] ease-[0.19,1,0.22,1] cursor-pointer ${inView ? 'opacity-100 translate-y-0 filter-none' : 'opacity-0 translate-y-24 blur-sm'}`}
                     style={{ transitionDelay: `${i * 150}ms` }}
                  >
-                    <Image 
+                    <Image quality={95} 
                        src={proj.heroImage} 
                        alt={proj.title}
                        fill

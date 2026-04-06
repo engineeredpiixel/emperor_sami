@@ -252,7 +252,7 @@ export default function TestimonialsSection() {
                                   className="absolute top-0 h-full max-w-none"
                                   style={{ width: `${NUM_PILLARS * 100}%`, left: `-${col * 100}%` }}
                                 >
-                                   <Image 
+                                   <Image quality={95} 
                                       src={test.image} 
                                       alt="High-End Custom Home" 
                                       fill 

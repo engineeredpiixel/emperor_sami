@@ -166,7 +166,7 @@ export default function AboutSection() {
                 ref={shard1Ref}
                 className="absolute inset-0 overflow-hidden z-10 [clip-path:polygon(0_0,100%_0,50%_50%)]"
               >
-                <Image src={aboutImage} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" alt="Custom Home Architecture" />
+                <Image quality={95} src={aboutImage} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" alt="Custom Home Architecture" />
                 <div ref={shadow1Ref} className="absolute inset-x-0 bottom-[50%] h-[40px] bg-gradient-to-t from-black/90 via-black/40 to-transparent pointer-events-none" />
               </div>
 
@@ -175,7 +175,7 @@ export default function AboutSection() {
                 ref={shard2Ref}
                 className="absolute inset-0 overflow-hidden z-20 [clip-path:polygon(100%_0,100%_100%,50%_50%)]"
               >
-                <Image src={aboutImage} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" alt="Custom Home Construction" />
+                <Image quality={95} src={aboutImage} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" alt="Custom Home Construction" />
                 <div ref={shadow2Ref} className="absolute inset-y-0 left-[50%] w-[40px] bg-gradient-to-r from-black/90 via-black/40 to-transparent pointer-events-none" />
               </div>
 
@@ -184,7 +184,7 @@ export default function AboutSection() {
                 ref={shard3Ref}
                 className="absolute inset-0 overflow-hidden z-10 [clip-path:polygon(100%_100%,0_100%,50%_50%)]"
               >
-                <Image src={aboutImage} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" alt="Luxury Foundation Design" />
+                <Image quality={95} src={aboutImage} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" alt="Luxury Foundation Design" />
                 <div ref={shadow3Ref} className="absolute inset-x-0 top-[50%] h-[40px] bg-gradient-to-b from-black/90 via-black/40 to-transparent pointer-events-none" />
               </div>
 
@@ -193,7 +193,7 @@ export default function AboutSection() {
                 ref={shard4Ref}
                 className="absolute inset-0 overflow-hidden z-20 [clip-path:polygon(0_100%,0_0,50%_50%)]"
               >
-                <Image src={aboutImage} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" alt="Architectural Blueprint Overlay" />
+                <Image quality={95} src={aboutImage} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" alt="Architectural Blueprint Overlay" />
                 <div ref={shadow4Ref} className="absolute inset-y-0 right-[50%] w-[40px] bg-gradient-to-l from-black/90 via-black/40 to-transparent pointer-events-none" />
               </div>
 

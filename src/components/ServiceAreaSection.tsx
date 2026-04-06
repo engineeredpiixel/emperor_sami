@@ -175,7 +175,7 @@ export default function ServiceAreaSection({ hideButton = false }: { hideButton?
                       className={`flex flex-col sm:flex-row gap-4 p-3 rounded-md cursor-pointer transition-all duration-300 border-2 ${activeProject.id === proj.id ? 'border-[#F9A825] bg-gray-50 shadow-sm' : 'border-transparent hover:border-gray-100 hover:bg-gray-50'}`}
                     >
                        <div className="relative w-full sm:w-28 aspect-video sm:aspect-square rounded-md overflow-hidden shrink-0">
-                          <Image src={proj.image} fill className="object-cover" alt={proj.title} />
+                          <Image quality={95} src={proj.image} fill className="object-cover" alt={proj.title} />
                        </div>
                        <div className="flex flex-col justify-center py-1">
                           <span className="bg-[#F9A825] text-[#1a1209] text-[10px] sm:text-xs font-bold px-2.5 py-1 rounded-sm w-fit mb-2">
@@ -234,7 +234,7 @@ export default function ServiceAreaSection({ hideButton = false }: { hideButton?
                          >
                             {/* Pin Container */}
                             <div className={`w-9 h-9 rounded-md border-2 overflow-hidden shadow-xl ${isActive ? 'border-[#F9A825] shadow-[#F9A825]/40' : 'border-gray-900/80 shadow-black/30'} group-hover:border-[#F9A825] group-hover:shadow-[0_0_15px_rgba(249,168,37,0.5)] transition-all`}>
-                               <Image src="https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/base_assets/custom_home_exterior_1774895595441.png" fill className="object-cover" alt="Emperor Sami Group Marker" />
+                               <Image quality={95} src="https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/base_assets/custom_home_exterior_1774895595441.png" fill className="object-cover" alt="Emperor Sami Group Marker" />
                             </div>
                             {/* Pin Point */}
                             <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-4 h-4" style={{ clipPath: 'polygon(50% 100%, 0 0, 100% 0)' }}>
@@ -269,7 +269,7 @@ export default function ServiceAreaSection({ hideButton = false }: { hideButton?
 
                           {/* Image */}
                           <div className="w-full relative h-[120px] rounded-sm overflow-hidden shrink-0 border border-white/10">
-                             <Image src={activeProject.image} fill className="object-cover" alt={activeProject.title} />
+                             <Image quality={95} src={activeProject.image} fill className="object-cover" alt={activeProject.title} />
                           </div>
                           
                           {/* Address & Badge */}

@@ -37,7 +37,7 @@ export default function ProjectGallery({ data }: { data: ProjectType }) {
                   className={`relative w-[85vw] sm:w-[450px] lg:w-[600px] h-[400px] sm:h-[500px] lg:h-[600px] shrink-0 snap-center bg-[#0a0a0a] rounded-sm overflow-hidden group cursor-default transition-all duration-[1000ms] ${inView ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'}`}
                   style={{ transitionDelay: `${i * 150}ms` }}
                >
-                  <Image 
+                  <Image quality={95} 
                      src={imgSrc} 
                      alt={`${data.title} Phase ${i + 1}`} 
                      fill 

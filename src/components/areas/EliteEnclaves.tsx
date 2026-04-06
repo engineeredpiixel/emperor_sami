@@ -95,7 +95,7 @@ export default function EliteEnclaves() {
                  {/* Right Image Half */}
                  <div className="w-full md:w-1/2 relative min-h-[300px] md:min-h-full">
                     <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#111] via-transparent to-transparent pointer-events-none w-1/4" />
-                    <Image 
+                    <Image quality={95} 
                        src={enclave.image} 
                        alt={enclave.title}
                        fill

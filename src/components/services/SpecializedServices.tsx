@@ -69,7 +69,7 @@ export default function SpecializedServices() {
                style={{ transitionDelay: `${i * 150}ms` }}
             >
                {/* Background Mask */}
-               <Image src={spec.img} alt={spec.topic} fill className="object-cover scale-110 group-hover/spec:scale-100 transition-transform duration-[1.5s] ease-[0.16,1,0.3,1] opacity-50 grayscale group-hover/spec:grayscale-0 group-hover/spec:opacity-70 mix-blend-luminosity group-hover/spec:mix-blend-normal" />
+               <Image quality={95} src={spec.img} alt={spec.topic} fill className="object-cover scale-110 group-hover/spec:scale-100 transition-transform duration-[1.5s] ease-[0.16,1,0.3,1] opacity-50 grayscale group-hover/spec:grayscale-0 group-hover/spec:opacity-70 mix-blend-luminosity group-hover/spec:mix-blend-normal" />
                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent opacity-90 transition-opacity duration-700 group-hover/spec:opacity-60" />
 
                {/* UI Plaque */}

@@ -115,7 +115,7 @@ export default function CoreValuesSection() {
                          ${isActive ? '[clip-path:inset(0_0_0_0)] opacity-100 scale-100' : '[clip-path:inset(50%_0_50%_0)] opacity-0 scale-[1.03]'}
                       `}
                    >
-                      <Image 
+                      <Image quality={95} 
                          src={com.image} 
                          alt={com.title} 
                          fill 

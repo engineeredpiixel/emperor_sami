@@ -80,7 +80,7 @@ export default function EliteTeamReveal() {
                      <div className={`absolute inset-0 z-20 bg-black/80 backdrop-blur-sm transition-opacity duration-[1.5s] ease-[0.19,1,0.22,1] pointer-events-none ${isActive ? 'opacity-0' : 'opacity-100'}`} />
 
                      {/* IMAGE AESTHETICS */}
-                     <Image 
+                     <Image quality={95} 
                         src={member.image} 
                         alt={member.lastName}
                         fill

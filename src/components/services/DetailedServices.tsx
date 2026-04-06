@@ -67,7 +67,7 @@ export default function DetailedServices() {
               
               {/* Background Plate */}
               <div className={`absolute inset-0 transition-transform duration-1000 pointer-events-none ${isActive ? 'scale-100' : 'scale-110 opacity-70'}`}>
-                <Image src={service.img} alt={service.title} fill className="object-cover" />
+                <Image quality={95} src={service.img} alt={service.title} fill className="object-cover" />
                 <div className={`absolute inset-0 transition-opacity duration-700 ${isActive ? 'bg-gradient-to-t from-black/95 via-black/40 to-transparent' : 'bg-black/60'}`} />
               </div>
 
