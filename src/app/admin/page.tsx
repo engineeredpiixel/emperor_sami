@@ -1789,6 +1789,8 @@ function ProjectInnerPagesEditor({ content, edits, saving, saved, uploadingKey, 
     { key: 'project_global_footer_desc', type: 'textarea', label: 'Featured Projects Description', staticFallback: "A curated selection of our most prestigious residential and commercial projects" },
     { key: 'project_global_footer_btn', type: 'text', label: 'Portfolio Button Text', staticFallback: "View Complete Portfolio" },
     { key: 'project_global_geographic_title', type: 'text', label: 'Geographic Node Map Title', staticFallback: "Geographic Node" },
+    { key: 'project_global_constraint_btn', type: 'text', label: 'Constraint Analysis Badge', staticFallback: "Constraint Analysis" },
+    { key: 'project_global_tactical_btn', type: 'text', label: 'Tactical Solution Badge', staticFallback: "Tactical Solution" },
   ];
 
   // Fake inject to show in UI

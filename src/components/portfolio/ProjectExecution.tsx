@@ -3,9 +3,12 @@
 import { ProjectType } from "@/lib/projectsData";
 import { useEffect, useRef, useState } from "react";
 
+import { useCMS } from "@/components/CMSProvider";
+
 export default function ProjectExecution({ data }: { data: ProjectType }) {
   const containerRef = useRef<HTMLElement>(null);
   const [inView, setInView] = useState(false);
+  const { t } = useCMS();
 
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => {
@@ -24,7 +27,7 @@ export default function ProjectExecution({ data }: { data: ProjectType }) {
         {/* ── THE STRUCTURAL CHALLENGE ── */}
         <div className="flex flex-col">
            <div className="flex items-center gap-3 mb-8">
-              <span className="bg-[#111] text-[#D8A02A] px-3 py-1 rounded-sm text-[10px] font-black tracking-[0.3em] uppercase">Constraint Analysis</span>
+              <span className="bg-[#111] text-[#D8A02A] px-3 py-1 rounded-sm text-[10px] font-black tracking-[0.3em] uppercase">{t('project_global_constraint_btn', 'Constraint Analysis')}</span>
               <div className="h-[2px] w-12 bg-[#111]" />
            </div>
            
@@ -44,7 +47,7 @@ export default function ProjectExecution({ data }: { data: ProjectType }) {
            <div className="absolute top-1/2 left-1/2 w-[1px] h-[150%] bg-[#D8A02A]/10 -rotate-45 pointer-events-none" />
 
            <div className="flex items-center gap-3 mb-8">
-              <span className="bg-[#D8A02A] text-[#111] px-3 py-1 rounded-sm text-[10px] font-black tracking-[0.3em] uppercase">Tactical Solution</span>
+              <span className="bg-[#D8A02A] text-[#111] px-3 py-1 rounded-sm text-[10px] font-black tracking-[0.3em] uppercase">{t('project_global_tactical_btn', 'Tactical Solution')}</span>
               <div className="h-[2px] w-12 bg-[#D8A02A]" />
            </div>
            
