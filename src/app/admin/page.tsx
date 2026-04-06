@@ -1415,8 +1415,8 @@ function ServicesTabbedEditor({ content, edits, saving, saved, uploadingKey, set
 
   const tabs = [
     { id: 'ui_text', label: 'Grid UI Strings', filter: (key: string) => key.includes('services.grid') },
-    { id: 'res_cards', label: 'Residential Cards', filter: (key: string) => !key.includes('services.grid') && !['ground', 'design', 'material', 'tenant', 'vanilla', 'office', 'ada', 'adaptive', 'executive', 'cafeteria', 'acoustic', 'commercial', 'facade', 'storefront', 'security'].some(sub => key.includes(sub)) },
-    { id: 'com_cards', label: 'Commercial Cards', filter: (key: string) => !key.includes('services.grid') && ['ground', 'design', 'material', 'tenant', 'vanilla', 'office', 'ada', 'adaptive', 'executive', 'cafeteria', 'acoustic', 'commercial', 'facade', 'storefront', 'security'].some(sub => key.includes(sub)) }
+    { id: 'res_cards', label: 'Residential Cards', filter: (key: string) => !key.includes('services.grid') && !key.includes('.card.title') && !['ground', 'design', 'material', 'tenant', 'vanilla', 'office', 'ada', 'adaptive', 'executive', 'cafeteria', 'acoustic', 'commercial', 'facade', 'storefront', 'security'].some(sub => key.includes(sub)) },
+    { id: 'com_cards', label: 'Commercial Cards', filter: (key: string) => !key.includes('services.grid') && !key.includes('.card.title') && ['ground', 'design', 'material', 'tenant', 'vanilla', 'office', 'ada', 'adaptive', 'executive', 'cafeteria', 'acoustic', 'commercial', 'facade', 'storefront', 'security'].some(sub => key.includes(sub)) }
   ];
 
   const currentFilter = tabs.find(t => t.id === activeTab)?.filter || (() => true);
