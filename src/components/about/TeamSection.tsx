@@ -12,15 +12,15 @@ export default function TeamSection() {
   const [inView, setInView] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
-  // Directly query the database for 1 flagship project per business pillar
+  // Directly query the database for 1 flagship project per business pillar, pulling pillar definitions from CMS
   const corePillars = useMemo(() => [
-    "Custom Home Building",
-    "Architectural Support",
-    "Project Management",
-    "Home Renovations",
-    "Basement Finishing",
-    "Exterior Improvements"
-  ], []);
+    t("about.apex.pillar.1", "Custom Home Building"),
+    t("about.apex.pillar.2", "Architectural Support"),
+    t("about.apex.pillar.3", "Project Management"),
+    t("about.apex.pillar.4", "Home Renovations"),
+    t("about.apex.pillar.5", "Basement Finishing"),
+    t("about.apex.pillar.6", "Exterior Improvements")
+  ], [t]);
 
   const showcaseData = useMemo(() => corePillars.map((pillar, idx) => {
     // Try to find a matching category project, otherwise systematically grab a unique project to guarantee visual diversity
