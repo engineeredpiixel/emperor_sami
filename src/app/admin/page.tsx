@@ -1812,6 +1812,7 @@ function ProjectInnerPagesEditor({ content, edits, saving, saved, uploadingKey, 
     { id: 'metrics', label: 'Final Execution Metrics', filter: (k: string) => k.includes('.metrics_') },
     { id: 'solution', label: 'Constraint / Solutions', filter: (k: string) => k.includes('.challenge_') || k.includes('.solution_') },
     { id: 'testimonial', label: 'Reviews', filter: (k: string) => k.includes('.testimonial_') },
+    { id: 'geographic', label: 'Geographic Map', filter: () => false },
     { id: 'gallery', label: 'Final Execution Gallery', filter: (k: string) => k.includes('.gallery_') },
     { id: 'globals', label: 'Global Page Settings', filter: () => false } // custom renderer
   ];
@@ -1964,7 +1965,7 @@ function ProjectInnerPagesEditor({ content, edits, saving, saved, uploadingKey, 
         <div className="flex-1 p-6 sm:p-10 bg-[#FBFBFB] overflow-y-auto max-h-[70vh]">
           {activeTab === 'globals' ? (
              <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-                {globalContentFields.filter(g => !(g.key.includes('_btn') && (g.key.includes('constraint') || g.key.includes('tactical')))).map((item: any) => (
+                {globalContentFields.filter(g => !(g.key.includes('_btn') && (g.key.includes('constraint') || g.key.includes('tactical'))) && !g.key.includes('project_global_geographic_')).map((item: any) => (
                    <ContentField
                      key={item.key}
                      item={item}
@@ -1991,6 +1992,22 @@ function ProjectInnerPagesEditor({ content, edits, saving, saved, uploadingKey, 
                  )}
                  {activeTab === 'solution' && (
                     globalContentFields.filter(g => g.key.includes('_btn') && (g.key.includes('constraint') || g.key.includes('tactical'))).map((item: any) => (
+                      <ContentField
+                         key={item.key}
+                         item={item}
+                         value={edits[item.key] ?? ""}
+                         saving={saving[item.key]}
+                         saved={saved[item.key]}
+                         uploading={uploadingKey === item.key}
+                         placeholder={item.placeholder}
+                         onChange={(val: string) => setEdits((prev: any) => ({ ...prev, [item.key]: val }))}
+                         onSave={() => handleSave(item.key, item)}
+                         onImageUpload={(file: File) => handleImageUpload(item.key, file, item)}
+                      />
+                    ))
+                 )}
+                 {activeTab === 'geographic' && (
+                    globalContentFields.filter(g => g.key.includes('project_global_geographic_')).map((item: any) => (
                       <ContentField
                          key={item.key}
                          item={item}
