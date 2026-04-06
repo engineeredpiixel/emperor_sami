@@ -1785,9 +1785,6 @@ function ProjectInnerPagesEditor({ content, edits, saving, saved, uploadingKey, 
 
   // Global settings for projects
   const globalKeys = [
-    { key: 'project_global_footer_title', type: 'text', label: 'Featured Projects Title', staticFallback: "Featured Projects" },
-    { key: 'project_global_footer_desc', type: 'textarea', label: 'Featured Projects Description', staticFallback: "A curated selection of our most prestigious residential and commercial projects" },
-    { key: 'project_global_footer_btn', type: 'text', label: 'Portfolio Button Text', staticFallback: "View Complete Portfolio" },
     { key: 'project_global_geographic_badge', type: 'text', label: 'Geographic Map Badge', staticFallback: "Geographic Node" },
     { key: 'project_global_geographic_title', type: 'text', label: 'Geographic Map Title', staticFallback: "Execution Radius." },
     { key: 'project_global_geographic_desc', type: 'textarea', label: 'Geographic Map Description', staticFallback: "Every neighborhood holds its own distinct topographical and municipal challenges. Emperor Sami guarantees 100% compliance and absolute structural dominance regardless of the postal code." },
@@ -1813,8 +1810,7 @@ function ProjectInnerPagesEditor({ content, edits, saving, saved, uploadingKey, 
     { id: 'solution', label: 'Constraint / Solutions', filter: (k: string) => k.includes('.challenge_') || k.includes('.solution_') },
     { id: 'testimonial', label: 'Reviews', filter: (k: string) => k.includes('.testimonial_') },
     { id: 'geographic', label: 'Geographic Map', filter: () => false },
-    { id: 'gallery', label: 'Final Execution Gallery', filter: (k: string) => k.includes('.gallery_') },
-    { id: 'globals', label: 'Global Page Settings', filter: () => false } // custom renderer
+    { id: 'gallery', label: 'Final Execution Gallery', filter: (k: string) => k.includes('.gallery_') }
   ];
 
   const [activeTab, setActiveTab] = useState(tabs[0].id);
@@ -1963,24 +1959,6 @@ function ProjectInnerPagesEditor({ content, edits, saving, saved, uploadingKey, 
         </div>
         
         <div className="flex-1 p-6 sm:p-10 bg-[#FBFBFB] overflow-y-auto max-h-[70vh]">
-          {activeTab === 'globals' ? (
-             <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-                {globalContentFields.filter(g => !(g.key.includes('_btn') && (g.key.includes('constraint') || g.key.includes('tactical'))) && !g.key.includes('project_global_geographic_')).map((item: any) => (
-                   <ContentField
-                     key={item.key}
-                     item={item}
-                     value={edits[item.key] ?? ""}
-                     saving={saving[item.key]}
-                     saved={saved[item.key]}
-                     uploading={uploadingKey === item.key}
-                     placeholder={item.placeholder}
-                     onChange={(val: string) => setEdits((prev: any) => ({ ...prev, [item.key]: val }))}
-                     onSave={() => handleSave(item.key, item)}
-                     onImageUpload={(file: File) => handleImageUpload(item.key, file, item)}
-                   />
-                ))}
-             </div>
-          ) : (
             <>
                <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-6">
                  {activeTab === 'hero' && (
@@ -2041,7 +2019,6 @@ function ProjectInnerPagesEditor({ content, edits, saving, saved, uploadingKey, 
                  ))}
                </div>
             </>
-          )}
         </div>
       </div>
       ) : (
