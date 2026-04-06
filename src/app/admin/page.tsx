@@ -2129,6 +2129,19 @@ function ProjectInnerPagesEditor({ content, edits, saving, saved, uploadingKey, 
                      Delete
                   </button>
                )}
+               {selectedSlug && (
+                  <button 
+                     onClick={() => {
+                        setSelectedSlug("");
+                        setStagedSlug("");
+                        setFilterDivision("All");
+                        setFilterCategory("All");
+                     }}
+                     className="w-full sm:w-auto px-4 py-3.5 bg-slate-200 text-slate-700 rounded-lg font-black shadow-md hover:bg-slate-300 tracking-wider uppercase text-xs transition-colors shrink-0"
+                  >
+                     Reset
+                  </button>
+               )}
             </div>
          </div>
       </div>
