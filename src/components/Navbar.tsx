@@ -61,17 +61,11 @@ export default function Navbar() {
   if (['/login', '/forgot-password', '/reset-password'].includes(pathname) || pathname?.startsWith('/admin')) return null;
 
   return (
-    <>
-      {/* ═══ TOP UTILITY BAR ═══
-          - Scroll > 50px → translateY(-100%)  (hidden)
-          - Scroll ≤ 50px → translateY(0)      (visible)  */}
+    <div className="sticky top-[-48px] w-full z-[9999] bg-transparent">
+      {/* ═══ TOP UTILITY BAR ═══ */}
       <div
         ref={topBarRef}
-        style={transitionStyle}
-        className={`bg-white border-b border-gray-100 w-full relative z-[9998] ${scrolled
-          ? "-translate-y-full opacity-0 pointer-events-none h-0 overflow-hidden"
-          : "translate-y-0 opacity-100 h-12"
-          }`}
+        className="bg-white border-b border-gray-100 w-full relative z-[9998] h-12"
       >
         <div className="flex items-center h-12 px-8 sm:px-12 lg:px-20 xl:px-28 relative">
           {/* Glowing accent line */}
@@ -129,19 +123,8 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* ═══ PRIMARY NAVIGATION BAR ═══
-          - Scroll > 50px → position:fixed, top:0, z-index:9999
-          - Scroll ≤ 50px → position:relative                    */}
-      <div
-        style={{
-          ...transitionStyle,
-          zIndex: 9999,
-          position: scrolled ? "fixed" : "relative",
-          top: 0,
-          left: 0,
-          right: 0,
-        }}
-      >
+      {/* ═══ PRIMARY NAVIGATION BAR ═══ */}
+      <div className="relative w-full z-[9999]">
         <nav
           style={transitionStyle}
           className="bg-[#111111]/60 backdrop-blur-xl border border-white/10 mx-8 sm:mx-12 lg:mx-20 xl:mx-28 relative"
@@ -468,10 +451,6 @@ export default function Navbar() {
         </nav>
       </div>
 
-      {/* ═══ CLS PREVENTION SPACER ═══
-          When navbar goes fixed, this spacer occupies its original
-          80px height so content below doesn't jump up.            */}
-      {scrolled && <div className="h-20" aria-hidden="true" />}
-    </>
+    </div>
   );
 }
