@@ -164,7 +164,7 @@ export default function AllServicesGrid() {
               <div className="flex items-center gap-3 mb-6">
                 <div className="h-[2px] w-8 bg-[#F9A825]" />
                 <span className="text-[#F9A825] text-xs font-black tracking-[0.4em] uppercase">
-                   Division I
+                   {t('services.div1_tag', 'Division I')}
                 </span>
               </div>
               <h2 className="text-5xl sm:text-6xl lg:text-7xl leading-[1.05] font-black tracking-tighter uppercase text-[#111]">
@@ -173,7 +173,7 @@ export default function AllServicesGrid() {
               </h2>
             </div>
             <div className={`hidden lg:block text-gray-400 font-mono text-[10px] uppercase tracking-[0.3em] max-w-sm leading-relaxed pb-4 transition-all duration-1000 delay-200 will-change-transform ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-              Focusing on bespoke, luxury single-family property development and comprehensive multi-family environments. Hover to draft.
+              {t('services.div1_desc', 'Focusing on bespoke, luxury single-family property development and comprehensive multi-family environments. Hover to draft.')}
             </div>
           </div>
           
@@ -187,7 +187,7 @@ export default function AllServicesGrid() {
               <div className="flex items-center gap-3 mb-6">
                 <div className="h-[2px] w-8 bg-[#F9A825]" />
                 <span className="text-[#F9A825] text-xs font-black tracking-[0.4em] uppercase">
-                   Division II
+                   {t('services.div2_tag', 'Division II')}
                 </span>
               </div>
               <h2 className="text-5xl sm:text-6xl lg:text-7xl leading-[1.05] font-black tracking-tighter uppercase text-[#111]">
@@ -196,7 +196,7 @@ export default function AllServicesGrid() {
               </h2>
             </div>
             <div className="hidden lg:block text-gray-400 font-mono text-[10px] uppercase tracking-[0.3em] max-w-sm leading-relaxed pb-4">
-              Projecting vast scalability, strict compliance, and ROI-driven execution specifically engineered for B2B. Hover to draft.
+              {t('services.div2_desc', 'Projecting vast scalability, strict compliance, and ROI-driven execution specifically engineered for B2B. Hover to draft.')}
             </div>
           </div>
           

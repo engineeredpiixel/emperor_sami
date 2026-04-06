@@ -1414,10 +1414,10 @@ function ServicesTabbedEditor({ content, edits, saving, saved, uploadingKey, set
   const [activeTab, setActiveTab] = useState("ui_text");
 
   const commercialSlugs = ['ground-up-construction', 'design-build', 'material-sourcing', 'tenant-build', 'vanilla-shell', 'office-modern', 'ada-compliance', 'adaptive-reuse', 'executive-suites', 'cafeteria-builds', 'acoustic-part', 'commercial-roofing', 'facade-upgrades', 'storefront-glazing', 'security-fencing'];
-  const isUiText = (key: string) => key.includes('services.grid') || ['services.badge_text', 'services.headline', 'services.description'].includes(key);
+  const isUiText = (key: string) => key.includes('services.grid') || key.startsWith('services.');
   
   const tabs = [
-    { id: 'ui_text', label: 'Grid UI Strings', filter: (key: string) => isUiText(key) },
+    { id: 'ui_text', label: 'General / Hero Settings', filter: (key: string) => isUiText(key) },
     { id: 'res_cards', label: 'Residential Cards', filter: (key: string) => !isUiText(key) && !key.includes('.card.title') && (!commercialSlugs.some(sub => key.includes(sub)) || key.includes('turnkey-solutions')) },
     { id: 'com_cards', label: 'Commercial Cards', filter: (key: string) => !isUiText(key) && !key.includes('.card.title') && (commercialSlugs.some(sub => key.includes(sub)) || key.includes('turnkey-solutions')) }
   ];
@@ -1426,7 +1426,9 @@ function ServicesTabbedEditor({ content, edits, saving, saved, uploadingKey, set
   const tabContent = content.filter((item: any) => currentFilter(item.key));
 
   const getSubGroup = (key: string) => {
-    if (key.includes('services.grid') || ['services.badge_text', 'services.headline', 'services.description'].includes(key)) return "Grid Display Labels";
+    if (key.includes('services.hero')) return "Hero Banner Elements";
+    if (key.includes('services.div')) return "Division Header Texts";
+    if (key.includes('services.grid') || key.startsWith('services.')) return "Grid Display Labels";
     
     if (activeTab === 'res_cards') {
       if (['new-construction', 'custom-design', 'quality-materials', 'turnkey-solutions'].some(sub => key.includes(sub))) return "Custom Home Building";
