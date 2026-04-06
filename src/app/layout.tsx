@@ -112,6 +112,7 @@ export default async function RootLayout({
     >
       <body className="min-h-full flex flex-col overflow-x-clip w-full max-w-[100vw]" suppressHydrationWarning>
         <script
+          suppressHydrationWarning
           nonce={nonce}
           dangerouslySetInnerHTML={{
             __html: `
