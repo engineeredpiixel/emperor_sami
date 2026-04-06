@@ -22,8 +22,12 @@ export default function TeamSection() {
     "Exterior Improvements"
   ], []);
 
-  const showcaseData = useMemo(() => corePillars.map(pillar => {
-    const project = hydratedProjects.find(p => p.category === pillar);
+  const showcaseData = useMemo(() => corePillars.map((pillar, idx) => {
+    // Try to find a matching category project, otherwise systematically grab a unique project to guarantee visual diversity
+    const project = hydratedProjects.find(p => p.category.toLowerCase().includes(pillar.toLowerCase().split(' ')[0])) 
+                    || hydratedProjects[idx * 12] 
+                    || hydratedProjects[idx];
+                    
     return {
       pillar: pillar,
       title: project?.title || "Flagship Project",
