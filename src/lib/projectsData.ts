@@ -120,73 +120,7 @@ const COMMERCIAL_TEMPLATES = [
 export const masterProjects: Record<string, ProjectType> = {};
 
 // ── THE PROCEDURAL GENERATOR ENGINE ──
-// This wildly powerful loop merges 40 Services x 3 Locations to yield 120 distinct items.
-
-let globalCounter = 0;
-
-function generateProjectsForService(serviceKey: string, serviceTitle: string, serviceImage: string, isResidential: boolean) {
-  const templates = isResidential ? RESIDENTIAL_TEMPLATES : COMMERCIAL_TEMPLATES;
-  
-  LOCATIONS.slice(0, 3).forEach((loc, i) => {
-    // Generate a unique, realistic-sounding title. e.g. "Toronto Custom Home Building" or "The Oakville High-End Renovations"
-    // We add slight variation to the names to make it sound premium
-    const titlePrefixes = ["The", "", `${loc.name} Elite`, "Strategic", "Premium"];
-    const prefix = titlePrefixes[i % titlePrefixes.length];
-    const finalTitle = `${prefix ? prefix + " " : ""}${loc.name} ${serviceTitle}`.trim();
-    
-    // Create a deterministic unique slug
-    const finalSlug = `${loc.name.toLowerCase().replace(/ /g, '-')}-${serviceKey}-exec-${i}`;
-    
-    // Pick the highly detailed template based on index so it cycles flawlessly
-    const template = templates[i % templates.length];
-    
-    // Explicit 1-to-1 WebP mapping for all 297 total unique project iterations
-    const locNameLower = loc.name.toLowerCase();
-    const uniqueHeroImage = `/optimized_v2/prj_${locNameLower}_${serviceKey}_hero.webp`;
-    const uniqueGallery = [
-      `/optimized_v2/prj_${locNameLower}_${serviceKey}_gal1.webp`,
-      `/optimized_v2/prj_${locNameLower}_${serviceKey}_gal2.webp`
-    ];
-
-    // Add a microscopic randomization to the lat/lng so the 210 map markers don't overlap exactly
-    // A 0.05 variation is roughly a few kilometers across the city
-    const seed = (globalCounter * 0.013) % 0.05;
-    const offsetLat = loc.baseLat + (i % 2 === 0 ? seed : -seed);
-    const offsetLng = loc.baseLng + (i % 3 === 0 ? seed : -seed);
-
-    masterProjects[finalSlug] = {
-      slug: finalSlug,
-      title: finalTitle,
-      category: serviceTitle, // Strictly matching the Dropdowns
-      division: isResidential ? "Residential" : "Commercial",
-      location: `${loc.name}, Greater Toronto Area`,
-      lat: offsetLat,
-      lng: offsetLng,
-      heroImage: uniqueHeroImage, // Strictly 1-to-1 unique 2K Pexels integration
-      metrics: template.metrics,
-      challenge: template.challenge,
-      solution: template.solution,
-      testimonial: {
-         ...template.testimonial,
-         // Append the city dynamically to make the testimonials feel incredibly localized
-         role: `${loc.name} ${template.testimonial.role}` 
-      },
-      gallery: uniqueGallery
-    };
-
-    globalCounter++;
-  });
-}
-
-// 1. Process 24 Residential Services
-Object.entries(residentialServicesData).forEach(([slug, data]) => {
-  generateProjectsForService(slug, data.heroTitle, data.heroImage, true);
-});
-
-// 2. Process 16 Commercial Services
-Object.entries(commercialServicesData).forEach(([slug, data]) => {
-  generateProjectsForService(slug, data.heroTitle, data.heroImage, false);
-});
+// Data is now 100% CMS Driven via CSV Bulk Uploads. Local procedural generation has been removed.
 
 // Priority Core Filter
 const PRIORITY_FOCUS = [
