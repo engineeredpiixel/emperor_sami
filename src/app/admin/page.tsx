@@ -462,6 +462,17 @@ export default function AdminDashboard() {
               handleSave={handleSave}
               handleImageUpload={handleImageUpload}
             />
+          ) : activeSection === "page_service_area_inner" ? (
+            <ServiceAreaInnerPagesEditor
+              content={filteredContent}
+              edits={edits}
+              saving={saving}
+              saved={saved}
+              uploadingKey={uploadingKey}
+              setEdits={setEdits}
+              handleSave={handleSave}
+              handleImageUpload={handleImageUpload}
+            />
           ) : activeSection === "page_service_inner" ? (
             <ServiceInnerPagesEditor
               content={filteredContent}
@@ -1592,6 +1603,105 @@ function ServiceAreaTabbedEditor({ content, edits, saving, saved, uploadingKey, 
                   <ContentField
                     key={item.key}
                     item={item}
+                    value={edits[item.key] ?? ""}
+                    saving={saving[item.key]}
+                    saved={saved[item.key]}
+                    uploading={uploadingKey === item.key}
+                    onChange={(val: string) => setEdits((prev: any) => ({ ...prev, [item.key]: val }))}
+                    onSave={() => handleSave(item.key)}
+                    onImageUpload={(file: File) => handleImageUpload(item.key, file)}
+                  />
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// ─── Service Area Inner Pages Sub-Router ──────────────────────────────────
+function ServiceAreaInnerPagesEditor({ content, edits, saving, saved, uploadingKey, setEdits, handleSave, handleImageUpload }: any) {
+  const LOCATIONS = [
+    "richmond-hill", "oakville", "vaughan", "king-city", "kleinburg",
+    "forest-hill", "bridle-path", "rosedale", "high-park", "mississauga",
+    "toronto", "markham", "etobicoke", "north-york", "aurora"
+  ];
+
+  const [selectedSlug, setSelectedSlug] = useState<string>(LOCATIONS[0]);
+
+  // Filter content just for the selected location
+  const slugContent = content.filter((c: any) => c.key.startsWith(`territory.${selectedSlug}.`));
+
+  const getSubGroup = (key: string) => {
+    if (key.includes('.hero')) return 'Hero Section';
+    if (key.includes('.bylaw')) return 'Bureaucratic Supremacy';
+    if (key.includes('.project')) return 'Featured Project';
+    if (key.includes('.portfolio')) return 'Local Portfolio';
+    return 'General UI Settings';
+  };
+
+  const subGroups = (Array.from(new Set(slugContent.map((f: any) => getSubGroup(f.key)))) as string[]).sort((a, b) => a.localeCompare(b));
+  const [currentSubGroup, setCurrentSubGroup] = useState<string | null>(subGroups[0] || null);
+
+  return (
+    <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm max-w-7xl mx-auto flex flex-col">
+      {/* Top Header Selector */}
+      <div className="p-6 sm:p-8 border-b border-slate-200 bg-slate-50 flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div>
+          <h2 className="text-xl font-black text-slate-800 uppercase tracking-wide">Area Details Editor</h2>
+          <p className="text-sm text-slate-500 mt-1">
+            Select a location to inject localized overrides for the respective inner page.
+          </p>
+        </div>
+        <select 
+          className="w-full sm:w-64 appearance-none outline-none border border-slate-200 bg-white rounded-xl px-5 py-3 text-sm font-bold text-slate-800 shadow-sm cursor-pointer hover:border-indigo-300 focus:ring-2 focus:ring-indigo-100 transition-all"
+          value={selectedSlug}
+          onChange={(e) => setSelectedSlug(e.target.value)}
+        >
+          {LOCATIONS.map(loc => (
+            <option key={loc} value={loc}>
+              {loc.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Tabs Header */}
+      {subGroups.length > 1 && (
+        <div className="px-6 py-4 border-b border-slate-200 bg-white flex gap-2 overflow-x-auto custom-scrollbar shrink-0">
+          {subGroups.map(group => (
+            <button 
+              key={group}
+              onClick={() => setCurrentSubGroup(group)}
+              className={`px-4 py-2 rounded-full text-[11px] font-bold uppercase tracking-wider transition-all whitespace-nowrap ${
+                  currentSubGroup === group ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/20" : "bg-slate-50 border border-slate-200 text-slate-500 hover:border-indigo-300 hover:text-indigo-600"
+              }`}
+            >
+              {group}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {/* Content Area */}
+      <div className="p-6 sm:p-10 bg-[#FBFBFB] overflow-y-auto space-y-12 max-h-[75vh]">
+        {subGroups.filter(g => !currentSubGroup || g === currentSubGroup).map((group) => {
+          const groupFields = slugContent.filter((f: any) => getSubGroup(f.key) === group);
+          return (
+            <div key={group} className="relative">
+              <div className="flex items-center gap-4 mb-6">
+                <h3 className="text-slate-800 font-extrabold text-lg uppercase tracking-wider">
+                  {group}
+                </h3>
+                <div className="flex-1 h-[1px] bg-slate-200"></div>
+              </div>
+              <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                {groupFields.map((item: any) => (
+                  <ContentField
+                    key={item.key}
+                    item={{...item, label: item.key.split('.').pop()}} // Make label look cleanly localized
                     value={edits[item.key] ?? ""}
                     saving={saving[item.key]}
                     saved={saved[item.key]}

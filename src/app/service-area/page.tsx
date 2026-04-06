@@ -67,8 +67,6 @@ export default function ServiceAreaPage() {
   return (
     <main className="flex-1 bg-[#111] min-h-screen -mt-[130px]">
       <ImageMaskDefs />
-      <CMSProvider section="page_service_area">
-
          {/* ── MASSIVE CINEMATIC CITYSCAPE HERO ── */}
          <ServiceAreaHero />
 
@@ -109,7 +107,6 @@ export default function ServiceAreaPage() {
       {/* 7. The Ultimate CTA Push */ }
       <CTASection />
 
-      </CMSProvider>
     </main>
   );
 }

@@ -51,16 +51,16 @@ export default async function TerritoryPage({ params }: { params: Promise<{ slug
       <ImageMaskDefs />
 
       {/* ── LOCATION DYNAMIC HEADER ── */}
-      <LocationHero data={data} />
+      <LocationHero slug={resolvedParams.slug} fallback={data} />
 
       {/* ── LOCATION BYLAWS ── */}
-      <RegionalBylaws data={data} />
+      <RegionalBylaws slug={resolvedParams.slug} fallback={data} />
 
       {/* ── LOCATION SPOTLIGHT PROJECT ── */}
-      <LocationFeaturedProject data={data} />
+      <LocationFeaturedProject slug={resolvedParams.slug} fallback={data} />
 
       {/* ── LOCATION MASONRY PORTFOLIO ── */}
-      <LocationPortfolio data={data} />
+      <LocationPortfolio slug={resolvedParams.slug} fallback={data} />
 
       {/* ── GLOBAL 7-STAGE TRUST FUNNEL SEQUENCE ── */}
       <CommitmentSection />

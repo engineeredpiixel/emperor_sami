@@ -2,8 +2,10 @@
 
 import { TerritoryType } from "@/lib/territoryData";
 import { useEffect, useRef, useState } from "react";
+import { useCMS } from "@/components/CMSProvider";
 
-export default function RegionalBylaws({ data }: { data: TerritoryType }) {
+export default function RegionalBylaws({ slug, fallback }: { slug: string, fallback: TerritoryType }) {
+  const { t } = useCMS();
   const containerRef = useRef<HTMLElement>(null);
   const [inView, setInView] = useState(false);
 
@@ -15,6 +17,22 @@ export default function RegionalBylaws({ data }: { data: TerritoryType }) {
     if (containerRef.current) observer.observe(containerRef.current);
     return () => observer.disconnect();
   }, []);
+
+  const superTitle = t(`territory.${slug}.bylawsSuperTitle`, 'RED TAPE ELIMINATION');
+  const title1 = t(`territory.${slug}.bylawsTitle1`, 'CONQUERING');
+  const title2 = t(`territory.${slug}.bylawsTitle2`, 'LOCAL BYLAWS.');
+  const desc = t(`territory.${slug}.bylawsDesc`, `You cannot engineer a multi-million dollar estate in ${fallback.name} without navigating its strict municipal bureaucracy. We guarantee 100% permit clearance by pre-emptively solving ${fallback.name}'s hardest zoning restrictions.`);
+
+  const bylaws = [
+     {
+        title: t(`territory.${slug}.bylaw1Title`, fallback.bylawFocus[0]?.title || ''),
+        desc: t(`territory.${slug}.bylaw1Desc`, fallback.bylawFocus[0]?.desc || '')
+     },
+     {
+        title: t(`territory.${slug}.bylaw2Title`, fallback.bylawFocus[1]?.title || ''),
+        desc: t(`territory.${slug}.bylaw2Desc`, fallback.bylawFocus[1]?.desc || '')
+     }
+  ].filter(b => b.title);
 
   return (
     <section ref={containerRef} className="bg-[#FAF9F6] py-32 relative overflow-hidden">
@@ -28,24 +46,24 @@ export default function RegionalBylaws({ data }: { data: TerritoryType }) {
         <div className={`w-full max-w-4xl text-center flex flex-col items-center mb-20 transition-all duration-1000 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
            <div className="flex items-center gap-4 mb-6">
               <div className="h-[2px] w-8 sm:w-16 bg-[#D8A02A]" />
-              <span className="text-[#111] text-[10px] md:text-sm font-black tracking-[0.4em] uppercase">Red Tape Elimination</span>
+              <span className="text-[#111] text-[10px] md:text-sm font-black tracking-[0.4em] uppercase">{superTitle}</span>
               <div className="h-[2px] w-8 sm:w-16 bg-[#D8A02A]" />
            </div>
            
            <h2 className="text-4xl sm:text-6xl md:text-7xl font-black text-[#111] tracking-tighter uppercase leading-[0.95] mb-8">
-              Conquering <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-500 to-gray-300">Local Bylaws.</span>
+              {title1} <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-500 to-gray-300">{title2}</span>
            </h2>
            
            <p className="text-gray-600 leading-relaxed font-bold sm:text-xl max-w-2xl">
-              You cannot engineer a multi-million dollar estate in {data.name} without navigating its strict municipal bureaucracy. We guarantee 100% permit clearance by pre-emptively solving {data.name}'s hardest zoning restrictions.
+              {desc}
            </p>
 
         </div>
 
         {/* REGIONAL BYLAW MATRIX */}
         <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-           {data.bylawFocus.map((focus, i) => (
+           {bylaws.map((focus, i) => (
               <div 
                  key={i}
                  className={`group relative flex flex-col bg-white p-10 sm:p-14 border border-gray-200 shadow-xl overflow-hidden cursor-default transition-all duration-700 hover:-translate-y-2 hover:shadow-2xl ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-24'}`}

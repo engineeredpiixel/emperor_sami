@@ -6,7 +6,8 @@ import { TerritoryType } from "@/lib/territoryData";
 import { useEffect, useRef, useState, useMemo } from "react";
 import { useHydratedProjects } from "@/components/CMSProvider";
 
-export default function LocationPortfolio({ data }: { data: TerritoryType }) {
+export default function LocationPortfolio({ slug, fallback }: { slug: string, fallback: TerritoryType }) {
+  const { t } = useCMS();
   const containerRef = useRef<HTMLElement>(null);
   const [inView, setInView] = useState(false);
   const hydratedProjects = useHydratedProjects();
@@ -23,15 +24,22 @@ export default function LocationPortfolio({ data }: { data: TerritoryType }) {
   // Filter the database to find ONLY projects belonging to this specific Territory
   const displayProjects = useMemo(() => {
      const localProjects = hydratedProjects.filter((proj) => 
-        proj.location.toLowerCase().includes(data.name.toLowerCase().split(',')[0]) ||
-        proj.location.toLowerCase().includes(data.slug.toLowerCase().replace('-', ' '))
+        proj.location.toLowerCase().includes(fallback.name.toLowerCase().split(',')[0]) ||
+        proj.location.toLowerCase().includes(fallback.slug.toLowerCase().replace('-', ' '))
      );
 
      // If no exact matches are found (fallback safeguard), load 4 the highest-tier projects.
      return localProjects.length > 0 
        ? localProjects 
        : hydratedProjects.slice(0, 4);
-  }, [hydratedProjects, data]);
+  }, [hydratedProjects, fallback]);
+
+  const portfolioTitle = t(`territory.${slug}.portfolioTitle`, 'LOCAL PORTFOLIO.');
+  const portfolioDesc = t(`territory.${slug}.portfolioDesc`, `A curated selection of ${displayProjects.length} high-tier architectural executions across ${fallback.name}.`);
+
+  const titleWords = portfolioTitle.split(' ');
+  const p1 = titleWords.length > 1 ? titleWords.slice(0, titleWords.length - 1).join(' ') : portfolioTitle;
+  const p2 = titleWords.length > 1 ? titleWords[titleWords.length - 1] : '';
 
   return (
     <section ref={containerRef} className="bg-white py-32 relative overflow-hidden">
@@ -41,15 +49,15 @@ export default function LocationPortfolio({ data }: { data: TerritoryType }) {
             <div>
                <div className="flex items-center gap-3 mb-4">
                   <div className="h-[2px] w-8 bg-[#D8A02A]" />
-                  <span className="text-[#D8A02A] text-xs font-black tracking-[0.4em] uppercase">{data.name} Masterworks</span>
+                  <span className="text-[#D8A02A] text-xs font-black tracking-[0.4em] uppercase">{fallback.name} Masterworks</span>
                </div>
                <h2 className="text-4xl sm:text-5xl md:text-6xl font-black text-[#111] tracking-tighter uppercase leading-[1.05]">
-                  Local <br />
-                  <span className="text-gray-400">Portfolio.</span>
+                  {p1} <br />
+                  {p2 && <span className="text-gray-400">{p2}</span>}
                </h2>
             </div>
             <p className="max-w-xs text-sm font-bold text-gray-500 uppercase tracking-widest leading-relaxed">
-               A curated selection of {displayProjects.length} high-tier architectural executions across {data.name}.
+               {portfolioDesc}
             </p>
         </div>
 
