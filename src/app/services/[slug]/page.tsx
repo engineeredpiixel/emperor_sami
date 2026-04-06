@@ -110,7 +110,7 @@ export default async function ServicePage(props: { params: Promise<{ slug: strin
       <ServiceCaseStudy 
         data={data.caseStudy} 
         projectUrl={`/projects/toronto-${params.slug}-exec-0`} 
-        projectImage={`/optimized_v2/prj_toronto_${params.slug}_hero.webp`} 
+        projectImage={`https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/optimized_v2/prj_toronto_${params.slug}_hero.webp`} 
       />
 
       {/* ── THE SERVICE OBJECTION OVERCOMER ── */}
