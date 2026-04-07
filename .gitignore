@@ -43,3 +43,9 @@ next-env.d.ts
 
 # Temporary generated files
 /tmp/
+
+# Script debug output files
+cms_images.txt
+db_inj_log.txt
+sidebar.json
+sidebar_output.txt
