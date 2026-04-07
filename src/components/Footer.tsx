@@ -24,7 +24,7 @@ export default function Footer() {
       {/* Stunning Luxury Home Background Overlay */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <Image quality={95} 
-          src="https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/base_assets/footer_luxury_bg.png" 
+          src={getImage("footer.bg_image") || "https://tlmsotvucwrudumpktgr.supabase.co/storage/v1/object/public/images/base_assets/footer_luxury_bg.png"}
           alt="Emperor Sami Luxury Background" 
           fill 
           sizes="100vw"
