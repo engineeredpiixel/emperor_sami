@@ -4,11 +4,15 @@ import { useEffect, useRef, useState } from "react";
 import { residentialServicesData } from "@/lib/servicesDataResidential";
 import { commercialServicesData } from "@/lib/servicesDataCommercial";
 import { useCMS } from "@/components/CMSProvider";
+import { createClient } from "@/utils/supabase/client";
 
 export default function ContactSection() {
   const { t } = useCMS();
   const [visible, setVisible] = useState(false);
   const [isOpened, setIsOpened] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+  const [isSent, setIsSent] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -27,6 +31,35 @@ export default function ContactSection() {
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (isSending) return;
+    setIsSending(true);
+    const form = formRef.current;
+    if (!form) return;
+    const supabase = createClient();
+    const data = {
+      source: 'homepage_contact',
+      full_name: (form.querySelector('[aria-label="Your Name"]') as HTMLInputElement)?.value || '',
+      email: (form.querySelector('[aria-label="Your Email"]') as HTMLInputElement)?.value || '',
+      phone: (form.querySelector('[aria-label="Your Phone"]') as HTMLInputElement)?.value || '',
+      project_location: (form.querySelector('[aria-label="Project Location"]') as HTMLInputElement)?.value || '',
+      allocation_range: (form.querySelector('[aria-label="Select Project Range"]') as HTMLSelectElement)?.value || '',
+      service_scope: (form.querySelector('[aria-label="Select a Service"]') as HTMLSelectElement)?.value || '',
+      consultation_date: (form.querySelector('[aria-label="Select Consultation Date"]') as HTMLInputElement)?.value || '',
+      preferred_time: (form.querySelector('[aria-label="Select a Time"]') as HTMLSelectElement)?.value || '',
+      message: (form.querySelector('[aria-label="Message details"]') as HTMLTextAreaElement)?.value || '',
+      status: 'new',
+    };
+    const { error } = await supabase.from('leads').insert(data);
+    if (!error) {
+      setIsSent(true);
+      form.reset();
+      setTimeout(() => setIsSent(false), 5000);
+    }
+    setIsSending(false);
   };
 
   return (
@@ -179,7 +212,8 @@ export default function ContactSection() {
 
               {/* THE ACTUAL FORM (The Payload) */}
               <form 
-                 onSubmit={(e) => { e.preventDefault(); console.log('Form Captured!'); }}
+                 ref={formRef}
+                 onSubmit={handleSubmit}
                  className={`bg-[#F1F1F1] p-8 sm:p-10 pb-32 sm:pb-10 w-full relative z-10 flex flex-col gap-4 border-2 border-white shadow-[inset_0_0_40px_rgba(0,0,0,0.05)] transition-all duration-[1.5s] delay-[400ms] ease-[0.25,1,0.5,1]
                    ${isOpened ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-[0.96] translate-y-8 pointer-events-none"}`}
               >
@@ -312,9 +346,10 @@ export default function ContactSection() {
 
                 <button
                   type="submit"
-                  className="w-full flex items-center justify-center bg-[#D8A02A] hover:bg-[#C28C22] text-white font-bold text-[17px] py-[18px] transition-all hover:shadow-[0_10px_20px_rgba(216,160,42,0.4)] mt-2 hover:-translate-y-1"
+                  disabled={isSending}
+                  className="w-full flex items-center justify-center bg-[#D8A02A] hover:bg-[#C28C22] disabled:opacity-60 text-white font-bold text-[17px] py-[18px] transition-all hover:shadow-[0_10px_20px_rgba(216,160,42,0.4)] mt-2 hover:-translate-y-1"
                 >
-                  {t("contact.button_text") || "Send Message"}
+                  {isSent ? '✓ Message Sent!' : isSending ? 'Sending...' : (t("contact.button_text") || "Send Message")}
                 </button>
 
               </form>

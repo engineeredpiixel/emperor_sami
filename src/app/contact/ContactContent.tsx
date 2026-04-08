@@ -6,6 +6,7 @@ import { useState, useEffect, useRef } from "react";
 import { residentialServicesData } from "@/lib/servicesDataResidential";
 import { commercialServicesData } from "@/lib/servicesDataCommercial";
 import { useCMS } from "@/components/CMSProvider";
+import { createClient } from "@/utils/supabase/client";
 
 export default function ContactPage() {
   const [isMounted, setIsMounted] = useState(false);
@@ -32,9 +33,32 @@ export default function ContactPage() {
     }
   }, []);
 
-  const handleDeploy = (e: React.FormEvent) => {
+  const handleDeploy = async (e: React.FormEvent) => {
     e.preventDefault();
     if (isSubmitting || isSealed || isFlying) return;
+
+    // Grab form values
+    const form = formRef.current;
+    const supabase = createClient();
+    if (form) {
+      const data = {
+        source: 'contact_page',
+        full_name: (form.querySelector('#name') as HTMLInputElement)?.value || '',
+        email: (form.querySelector('#email') as HTMLInputElement)?.value || '',
+        phone: (form.querySelector('#phone') as HTMLInputElement)?.value || '',
+        project_location: (form.querySelector('#location') as HTMLInputElement)?.value || '',
+        allocation_range: (form.querySelector('#budget') as HTMLSelectElement)?.value || '',
+        service_scope: (form.querySelector('#service') as HTMLSelectElement)?.value || '',
+        consultation_date: (form.querySelector('#date') as HTMLInputElement)?.value || '',
+        preferred_time: (form.querySelector('#time') as HTMLSelectElement)?.value || '',
+        message: (form.querySelector('#scope') as HTMLTextAreaElement)?.value || '',
+        status: 'new',
+      };
+      // Save to CRM — fire and forget (animation still plays even if save fails)
+      supabase.from('leads').insert(data).then(({ error }) => {
+        if (error) console.error('CRM save error:', error.message);
+      });
+    }
 
     // 1. The Letter Slides deep into the Envelope
     setIsSubmitting(true);

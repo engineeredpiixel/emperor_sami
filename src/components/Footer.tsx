@@ -4,9 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCMS } from "@/components/CMSProvider";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
+import { createClient } from "@/utils/supabase/client";
 
 export default function Footer() {
   const { t, getImage } = useCMS();
+  const [subEmail, setSubEmail] = useState('');
+  const [subState, setSubState] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
   const scrollToTop = () => {
     if (typeof window !== "undefined") {
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -65,22 +69,38 @@ export default function Footer() {
             </p>
             
             {/* Input Form */}
-            <form className="flex flex-col lg:flex-row gap-0 w-full" onSubmit={(e) => e.preventDefault()}>
+            <form className="flex flex-col lg:flex-row gap-0 w-full" onSubmit={async (e) => {
+              e.preventDefault();
+              if (subState === 'sending' || subState === 'sent') return;
+              setSubState('sending');
+              const supabase = createClient();
+              const { error } = await supabase.from('subscribers').insert({ email: subEmail });
+              if (!error) {
+                setSubState('sent');
+                setSubEmail('');
+                setTimeout(() => setSubState('idle'), 5000);
+              } else {
+                setSubState(error.code === '23505' ? 'sent' : 'error'); // 23505 = already subscribed
+                setTimeout(() => setSubState('idle'), 4000);
+              }
+            }}>
               <input
                 type="email"
-                placeholder={t("footer.cta_placeholder") || "Your Email Address.."}
+                value={subEmail}
+                onChange={e => setSubEmail(e.target.value)}
+                placeholder={subState === 'sent' ? 'You\'re subscribed!' : subState === 'error' ? 'Try again...' : (t("footer.cta_placeholder") || "Your Email Address..")}
                 aria-label="Your Email Address"
                 required
-                className="flex-1 bg-black/10 border-none text-[#111111] placeholder-[#4a3512] px-5 py-4 focus:outline-none focus:bg-black/15 transition-all font-medium text-[15px] outline-none"
+                disabled={subState === 'sending' || subState === 'sent'}
+                className="flex-1 bg-black/10 border-none text-[#111111] placeholder-[#4a3512] px-5 py-4 focus:outline-none focus:bg-black/15 transition-all font-medium text-[15px] outline-none disabled:opacity-60"
               />
               <button
                 type="submit"
-                className="bg-white text-[#111] hover:bg-gray-100 font-bold uppercase tracking-widest text-[14px] px-8 py-4 whitespace-nowrap transition-colors flex items-center justify-center"
+                disabled={subState === 'sending' || subState === 'sent'}
+                className="bg-white text-[#111] hover:bg-gray-100 disabled:opacity-60 font-bold uppercase tracking-widest text-[14px] px-8 py-4 whitespace-nowrap transition-colors flex items-center justify-center"
               >
-                {t("footer.cta_button") || "SUBSCRIBE"}
-                <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
+                {subState === 'sent' ? '✓ DONE' : subState === 'sending' ? '...' : (t("footer.cta_button") || "SUBSCRIBE")}
+                {subState === 'idle' && <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>}
               </button>
             </form>
           </div>

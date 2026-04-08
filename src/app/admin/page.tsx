@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { ChevronDown, Search, Menu, LogOut, Loader2, Save, UploadCloud } from "lucide-react";
 import { getSortedProjects } from "@/lib/projectsData";
+import { LeadsCRM, SubscribersCRM } from "@/components/admin/CRMViews";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface ContentItem {
@@ -321,7 +322,11 @@ export default function AdminDashboard() {
               <h1 className="text-slate-900 font-extrabold text-xl tracking-tight flex items-center gap-2">
                 <span>{currentSection?.icon}</span> {currentSection?.label || "Select Section"}
               </h1>
-              <p className="text-slate-500 text-xs font-medium mt-0.5">{filteredContent.length} active database fields</p>
+              <p className="text-slate-500 text-xs font-medium mt-0.5">
+                {activeSection === 'crm_leads' || activeSection === 'crm_subscribers'
+                  ? 'Live CRM data from Supabase'
+                  : `${filteredContent.length} active database fields`}
+              </p>
             </div>
           </div>
           
@@ -495,6 +500,10 @@ export default function AdminDashboard() {
               handleSave={handleSave}
               handleImageUpload={handleImageUpload}
             />
+          ) : activeSection === "crm_leads" ? (
+            <LeadsCRM />
+          ) : activeSection === "crm_subscribers" ? (
+            <SubscribersCRM />
           ) : (
             <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 max-w-7xl mx-auto">
               {filteredContent.map((item) => (
