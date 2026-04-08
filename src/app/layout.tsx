@@ -3,10 +3,11 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { headers } from "next/headers";
 import { CMSProvider } from "@/components/CMSProvider";
 import { unstable_cache } from "next/cache";
 import { createClient } from "@supabase/supabase-js";
+
+export const revalidate = 60; // 60 Second ISR Cache Window
 
 // Create a static client for global read-only CMS fetches
 const getStaticSupabase = () => createClient(
@@ -98,10 +99,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Read cryptographic nonce from Edge Middleware (defaults to empty in static environments)
-  const headersList = await headers();
-  const nonce = headersList.get("x-nonce") || undefined;
-
   // Fetch global CMS content (instantly from cache)
   const siteContent = await getGlobalContent();
 
@@ -113,7 +110,6 @@ export default async function RootLayout({
       <body className="min-h-full flex flex-col overflow-x-clip w-full max-w-[100vw]" suppressHydrationWarning>
         <script
           suppressHydrationWarning
-          nonce={nonce}
           dangerouslySetInnerHTML={{
             __html: `
               if (typeof window !== 'undefined' && window.trustedTypes && window.trustedTypes.createPolicy) {

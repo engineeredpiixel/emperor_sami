@@ -54,7 +54,7 @@ export default function ContactHero() {
         {/* Architectural CAD Blueprint (Pristine Light) */}
         <div className="absolute inset-0 opacity-100 overflow-hidden">
            <Image 
-             src="/images/light-cad-blueprint.png" 
+             src={getImage("contact.bg_blueprint") || ""}
              fill 
              className="object-cover object-center"
              alt="Architectural Blueprint Blueprint"

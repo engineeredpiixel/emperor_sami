@@ -86,6 +86,15 @@ export function LeadsCRM() {
     setSavingId(null);
   };
 
+  const deleteLead = async (id: string) => {
+    if (!confirm("Are you sure you want to permanently delete this lead?")) return;
+    setSavingId(id);
+    await supabase.from("leads").delete().eq("id", id);
+    setLeads(prev => prev.filter(l => l.id !== id));
+    setSavingId(null);
+    setExpandedId(null);
+  };
+
   const filtered = leads.filter(l => {
     if (filterStatus !== "all" && l.status !== filterStatus) return false;
     if (filterSource !== "all" && l.source !== filterSource) return false;
@@ -213,7 +222,11 @@ export function LeadsCRM() {
                         rows={2} placeholder="Add notes about this lead..."
                         className="w-full text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 bg-white resize-none" />
                     </div>
-                    <div className="flex items-end">
+                    <div className="flex items-end gap-2">
+                      <button onClick={() => deleteLead(lead.id)} disabled={savingId === lead.id}
+                        className="px-4 py-2 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 disabled:opacity-50 text-sm font-bold rounded-lg transition-colors flex items-center gap-2">
+                        Delete
+                      </button>
                       <button onClick={() => saveLead(lead.id)} disabled={savingId === lead.id}
                         className="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white text-sm font-bold rounded-lg transition-colors flex items-center gap-2">
                         {savingId === lead.id ? (
@@ -251,6 +264,12 @@ export function SubscribersCRM() {
     const newStatus = sub.status === "active" ? "unsubscribed" : "active";
     await supabase.from("subscribers").update({ status: newStatus }).eq("id", sub.id);
     setSubscribers(prev => prev.map(s => s.id === sub.id ? { ...s, status: newStatus } : s));
+  };
+
+  const deleteSub = async (id: string) => {
+    if (!confirm("Are you sure you want to permanently delete this subscriber?")) return;
+    await supabase.from("subscribers").delete().eq("id", id);
+    setSubscribers(prev => prev.filter(s => s.id !== id));
   };
 
   const activeCount = subscribers.filter(s => s.status === "active").length;
@@ -304,10 +323,14 @@ export function SubscribersCRM() {
                         {sub.status}
                       </span>
                     </td>
-                    <td className="px-5 py-3.5 text-right">
+                    <td className="px-5 py-3.5 text-right flex justify-end gap-4">
                       <button onClick={() => toggle(sub)}
-                        className="text-xs font-bold text-slate-500 hover:text-slate-900 underline underline-offset-2 transition-colors">
+                        className="text-xs font-bold text-slate-500 hover:text-slate-900 transition-colors">
                         {sub.status === "active" ? "Unsubscribe" : "Reactivate"}
+                      </button>
+                      <button onClick={() => deleteSub(sub.id)}
+                        className="text-xs font-bold text-red-500 hover:text-red-700 transition-colors">
+                        Delete
                       </button>
                     </td>
                   </tr>

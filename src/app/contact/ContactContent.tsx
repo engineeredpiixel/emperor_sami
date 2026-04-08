@@ -11,7 +11,7 @@ import { createClient } from "@/utils/supabase/client";
 export default function ContactPage() {
   const [isMounted, setIsMounted] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
-  const { t } = useCMS();
+  const { t, getImage } = useCMS();
 
   // 3D Architectural Envelope Sealing States
   const [isSubmitting, setIsSubmitting] = useState(false);   // Letter slides down inside
@@ -104,7 +104,7 @@ export default function ContactPage() {
         {/* CAD Technical Blueprint Background */}
         <div className="absolute inset-0 z-0 opacity-100 overflow-hidden">
           <Image 
-            src="/images/light-cad-blueprint.png"
+            src={getImage("contact.bg_blueprint") || ""}
             fill
             sizes="100vw"
             quality={75}
