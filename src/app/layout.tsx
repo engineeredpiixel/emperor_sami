@@ -7,6 +7,7 @@ import { headers } from "next/headers";
 import { CMSProvider } from "@/components/CMSProvider";
 import { unstable_cache } from "next/cache";
 import { createClient } from "@supabase/supabase-js";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 // Create a static client for global read-only CMS fetches
 const getStaticSupabase = () => createClient(
@@ -135,6 +136,7 @@ export default async function RootLayout({
           </main>
           <Footer />
         </CMSProvider>
+        <SpeedInsights />
       </body>
     </html>
   );
